@@ -1,0 +1,55 @@
+pyChing -- a Python program to cast and interpret I Ching hexagrams
+======================================================================
+
+pyChing is a program that allows you to 'consult' the I Ching. The I Ching
+is an ancient Chinese book of wisdom, which, apart from being read as a 
+book, has also traditionally been consulted as an oracle. pyChing allows 
+you to perform an I Ching 'reading' using the coin oracle, and then look 
+up a brief interpretation from the I Ching.
+
+pyChing is completely written in Python, a cross platform, object 
+oriented, programming language, using the Tkinter oop interface to the 
+Tk GUI toolkit.
+
+Highlights:
+-----------
+  - allows saving/restoring of readings for use within pyChing
+  - user configurable colors
+  - nifty coin animations
+  - readings may also be saved as text, for subsequent printing or whatever
+  - information on the hexagrams cast are available within the program
+  - hexagram information may be browsed at any time
+  - formatted hypertext help and information viewer
+  - pyChing should be portable across Linix/Unix/X11, Windows and MacOS/OSX
+
+For installation information consult the file INSTALL.
+
+I'm awaiting your detailed bug reports ;-)
+
+Have fun,
+
+Stephen M. Gava
+<elguavas@users.sourceforge.net>
+http://pyching.sourceforge.net
+
+Python website: http://www.python.org
+
+---------
+
+pyching is Copyright (C) 1999-2003 Stephen M. Gava
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be of some
+interest to somebody, but WITHOUT ANY WARRANTY; without even the 
+implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; see the file COPYING or COPYING.txt. If not, 
+ write to the Free Software Foundation, Inc.,
+59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+The license can also be found at the GNU/FSF website: http://www.gnu.org

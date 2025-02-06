@@ -1,0 +1,71 @@
+pyChing - changes
+==================
+
+27 Feb 2006
+-------------
+1.2.2
+- module deprecation warning addressed
+
+28 May 2003
+-------------
+1.2.1
+- many improvements and rewrites to hexagram information texts
+- new hexagram information browser impemented
+- manpage now provided for unix style systems
+- sample shell script now provided for unix style systems
+- improved hexagram information data handling mechanism
+- improved and corrected online help and I Ching introductory text
+- pyching.png colour icon now included
+- fixed dialog button resizing bug
+- fixed submodule imports on mac platform
+- improved user config directory handling
+- improved program module directory handling
+ 
+16 Sep 2000
+-------------
+1.0.4
+- replaced .pyw file missing from .zip archive
+
+15 Sep 2000
+-------------
+1.0.3
+- many minor bug fixes and internal rewrites and tidy-ups
+
+6 Mar 2000
+-------------
+0.9.65
+- help and information display completely rewritten to 
+  show formatted hypertext instead of plain text
+- chinese ideograms now displayed in hexgram information
+- line drawing code additions to compensate for differences
+  of behaviour in tk canvas widget on win32 platforms
+- much more efficient implementation of program data 
+- many small changes to documentation
+- miscellaneous code tweaks and tidyups
+
+22 Feb 2000
+-------------
+0.9.10
+- complete rewrite of help and data files, 
+based on new sources. Minor changes to help and data
+display routines.
+
+14 Feb 2000
+-------------
+0.9.3
+- updated source and documentation to new website and
+  contact information.
+- source, data and build changes to allow one set of
+  release files for all supported platforms.
+
+15 Sep 1999,2000
+-------------
+0.9.2
+- bug in user colour selection code fixed
+- a few other minor tidy-ups in the code
+- a few minor fixes in the documentation and data files
+
+1 Sep 1999,2000
+-------------
+0.9.1
+- first public release  

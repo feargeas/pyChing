@@ -1,0 +1,52 @@
+pyChing - install
+================== 
+
+There is no need to compile anything since the whole program is a
+collection of Python script modules. Just follow the instructions below 
+and then run it, that's all. If you need to get Python and/or Tk, the 
+Python website is at http://www.python.org , and the Tcl/Tk website is 
+at http://tcl.sourceforge.net .
+
+Quick installation guide for Linux/Unix/X11:
+----------------------------------------------
+For those of you who are using Debian or Ubuntu GNU/Linux:
+apt-get install pyching    ...that's all!  ;-)
+
+Otherwise, to install from the tarball:
+1) make sure you've installed Python 1.5.1 or better with Tkinter support
+2) make sure you've installed Tcl/Tk 8.0.0 or better
+3) make a directory for pyChing and unpack the archive there
+4) check the pyChing file permissions: pyching.py needs to executable
+   by whoever wants to run it, the other files and directories need to
+   be able to be read by whoever wants to run it
+5) A pyChing manpage (pyching.1) and a sample shell script (pyching.sh)
+   are provided for use if desired.
+
+pyChing creates a directory called .pyching in the user's home directory, 
+to store its configuration file and any save files.
+
+Quick installation guide for Windows:
+-------------------------------------
+1) 32bit windows is required (windows 95/98/NT/2000/XP etc.)
+2) make sure you've installed Python 1.5.1 or better
+3) make sure you've installed Tcl/Tk 8.0.0 or better: actually, there's
+   a Windows installer for Python, avilable at the Python website (see 
+   above), that will install both Python and Tk for you in one go
+4) make a directory for pyChing and unpack the archive there:  make sure
+   to use the correct command line switches or settings so that the 
+   directories in the pyChing archive will be retained by whatever program
+   you use to unpack the archives, otherwise pyChing won't work, also, the
+   unpacking program must be able to handle long filenames
+5) in a DOS shell change to the directory that has pyching.pyw in 
+   it and run "pythonw pyching.pyw" to start pyChing, or you may be able
+   to double click on pyching.pyw in the windows explorer
+6) make a shortcut in your start menu, with the working directory set
+   to your preferred default save file directory
+
+Quick installation guide for Macintosh MacOs and OSX:
+-----------------------------------------------------
+Python and Tcl/Tk are also available on this platform, but as I don't have 
+any access to a Mac I'd appreciate any detailed feedback on how pyChing works,
+if at all, and on the installation process and the look & feel. 'Porting' from 
+X11 to Windows only required some minor tweaks to some of pyChing's default 
+settings, so I hope the situation on Macs is similar.

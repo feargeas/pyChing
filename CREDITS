@@ -1,0 +1,22 @@
+pyChing - credits
+==================
+
+Many thanks to all who have commented on pyChing, sent suggestions and
+bug reports and helped in testing. 
+
+In particular, thanks to my wife, for being so great.  8^)
+
+The notes on the hexagrams within pyChing are based on the translation
+of the I Ching by James Legge which was published in 1882.
+
+Thanks to Jorgen Schaefer (forcer@debian.org) for originally packaging 
+pyching for my personal development platform of choice: Debian GNU/Linux.
+
+Thanks also to Colin Watson of the Debian project for drafting the
+original pyching manpage.
+
+Thanks to Markus F.X.J. Oberhumer, the author of PySol (a wonderful
+graphical solitaire card program with very many games and features). 
+Looking at his code helped me understand how to implement my own much 
+more basic hypertext help viewer within pyChing. Give PySol a try, 
+website: http://www.oberhumer.com/opensource/pysol/ , it's great!
