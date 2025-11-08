@@ -1,5 +1,4 @@
-##! /usr/bin/env python
-#! /usr/bin/python2
+#!/usr/bin/env python3
 ##---------------------------------------------------------------------------##
 ##
 ## pyChing -- a Python program to cast and interpret I Ching hexagrams
@@ -36,41 +35,46 @@ import sys
 #handle command line switches
 def CommandLineSwitches():
     if ('-h' in sys.argv) or ('/h' in sys.argv) or('--help' in sys.argv):
-        print ' pyChing - command line switches\n'
-        print ' -h, --help                   display this help message'
-        print ' -v, --version                display pyching version'
-        print ' -d, --disable-version-check  disable Python and Tk version check'
-        #print ' -c, --console                run the console version of pyChing 
+        print(' pyChing - command line switches\n')
+        print(' -h, --help                   display this help message')
+        print(' -v, --version                display pyching version')
+        print(' -d, --disable-version-check  disable Python and Tk version check')
+        #print(' -c, --console                run the console version of pyChing')
         sys.exit(0)
     elif ('-v' in sys.argv) or ('/v' in sys.argv) or('--version' in sys.argv):
-        from pyching_engine import PychingAppDetails 
+        from pyching_engine import PychingAppDetails
         pyching = PychingAppDetails(createConfigDir=0)
-        print 'pyChing version:',pyching.version
+        print('pyChing version:', pyching.version)
         sys.exit(0)
 
     if ('-d' in sys.argv) or ('/d' in sys.argv) or('--disable-version-check' in sys.argv):
         sys.stderr.write("warning - Python and Tk version checking disabled!\n")
     else: #do version checking
-        import string
-        from Tkinter import TkVersion
-        if string.split(sys.version)[0] < '1.5.1': #python version check
-            sys.stderr.write("Sorry, pyChing requires at least Python 1.5.1\n")
+        from tkinter import TkVersion
+        if sys.version_info < (3, 10): #python version check
+            sys.stderr.write("Sorry, pyChing requires at least Python 3.10\n")
             sys.exit(1)
-        if `TkVersion` < '8.0': #tk version check
+        if TkVersion < 8.0: #tk version check
             sys.stderr.write("Sorry, pyChing requires at least Tk 8.0\n")
             sys.exit(1)
 
-CommandLineSwitches()
+def main():
+    """Main entry point for pyChing"""
+    CommandLineSwitches()
 
-#run pyching
+    #run pyching
 
-#if ('-c' in sys.argv) or ('/c' in sys.argv) or('--console' in sys.argv):
-# #run the console version of pyChing - needs tidying up first
-# import pyching_interface_console 
-#else:
+    #if ('-c' in sys.argv) or ('/c' in sys.argv) or('--console' in sys.argv):
+    # #run the console version of pyChing - needs tidying up first
+    # import pyching_interface_console
+    #else:
 
-#run pyching Tkinter GUI
-import pyching_interface_tkinter
+    #run pyching Tkinter GUI
+    import pyching_interface_tkinter
 
-#if we got to here exit cleanly
-sys.exit(0)
+    #if we got to here exit cleanly
+    sys.exit(0)
+
+
+if __name__ == '__main__':
+    main()
