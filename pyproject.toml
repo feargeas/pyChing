@@ -1,0 +1,66 @@
+[project]
+name = "pyching"
+version = "2.0.0-dev"
+description = "A Python program to cast and interpret I Ching hexagrams"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "GPL-2.0-or-later"}
+authors = [
+    {name = "Stephen M. Gava", email = "elguavas@users.sourceforge.net"},
+]
+maintainers = [
+    {name = "pyChing Modernization Project"},
+]
+keywords = ["iching", "i-ching", "oracle", "divination", "hexagram", "wisdom"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Religion",
+    "Topic :: Games/Entertainment :: Fortune Cookies",
+]
+
+[project.urls]
+"Homepage" = "http://pyching.sourceforge.net"
+"Repository" = "https://github.com/feargeas/pyChing"
+"Bug Tracker" = "https://github.com/feargeas/pyChing/issues"
+
+[project.scripts]
+pyching = "pyching:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--tb=short",
+]
+
+[tool.coverage.run]
+source = ["."]
+omit = [
+    "tests/*",
+    "setup.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]

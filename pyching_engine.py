@@ -26,11 +26,12 @@
 ##
 ##---------------------------------------------------------------------------##
 """
-engine module for pyching 
+engine module for pyching
 classes and utility functions
 """
 #python library imports
-import sys, os, string, random, pickle, time
+import sys, os, random, pickle, time
+from functools import reduce
 
 #
 # classes
@@ -320,9 +321,9 @@ class Hexagrams:
         
         textReadingParts = []
 
-        textReadingParts.append( '\n              '+string.ljust(self.hex1.number, 2)+\
-                        ' '+string.ljust(self.hex1.name, 30)+\
-                        ' '+string.ljust(self.hex2.number, 2)+' '+self.hex2.name+'\n\n' )
+        textReadingParts.append( '\n              '+self.hex1.number.ljust(2)+\
+                        ' '+self.hex1.name.ljust(30)+\
+                        ' '+self.hex2.number.ljust(2)+' '+self.hex2.name+'\n\n' )
         
         for i in range(5,-1,-1):
             if i == 3: 
@@ -332,13 +333,13 @@ class Hexagrams:
                     separator = '  no moving lines'
             else:
                     separator = '           '
-            textReadingParts.append( ' '+string.rjust(linePositions[i +1], 9)+'   '+lineStrings[self.hex1.lineValues[i]]+\
-                            ' '+string.ljust(lineTypes[self.hex1.lineValues[i]], 15)+separator+\
+            textReadingParts.append( ' '+linePositions[i +1].rjust(9)+'   '+lineStrings[self.hex1.lineValues[i]]+\
+                            ' '+lineTypes[self.hex1.lineValues[i]].ljust(15)+separator+\
                             lineStrings[self.hex2.lineValues[i]]+' '+lineTypes[self.hex2.lineValues[i]]+'\n'  )
         
         textReadingParts.append('\n '+self.question+'\n\n')
 
-        textReading = string.join(textReadingParts)
+        textReading = ''.join(textReadingParts)
 
         return textReading
 
@@ -353,18 +354,17 @@ def Storage(file, data=None):
     data should be a list of data items if storing, or None if loading
     returns an unpickled list of data items on successful load
 
-    this function should be called in a 
+    this function should be called in a
     try:
     except IOError:
-    except pychingPickleError:
-    except pychingUnpickleError:
+    except Exception:
     block, to handle potential disk IO and pickle/unpickle errors
     """
-    if data: openType = 'w'
-    else: openType = 'r'
+    if data: openType = 'wb'
+    else: openType = 'rb'
     try:
         pickleFile = open(file, openType)
-    except IOError: 
+    except IOError:
         raise #re-raise the exception to pass it back up the line
     else: #no exception, so proceed
         try:
@@ -374,7 +374,9 @@ def Storage(file, data=None):
                 else: #unpickle data
                     pickleData = pickle.load(pickleFile)
                     return pickleData
-            except:
-                if data: raise 'pychingPickleError' #raise an error indicating that the pickle failed
-                else: raise 'pychingUnpickleError' #raise an error indicating that the unpickle failed      
+            except Exception as e:
+                if data:
+                    raise Exception('pychingPickleError') from e
+                else:
+                    raise Exception('pychingUnpickleError') from e
         finally: pickleFile.close()

@@ -30,10 +30,10 @@ tkinter about dialog base module
 """
 
 #python library imports
-import sys, string
+import sys
 
 #tkinter imports
-from Tkinter import *
+from tkinter import *
 
 #smg library module imports
 from smgDialog import smgDialog
@@ -97,15 +97,15 @@ class smgAbout(smgDialog):
         frameDivider = Frame(frameBg,borderwidth=1,relief=SUNKEN,bg=self.bg,
                         height=2).grid(row=7,column=0,sticky=(E,W),columnspan=3,padx=5,pady=5)
         if self.showToolVersions:
-            labelPythonVer = Label(frameBg,text='Python version: '+string.split(sys.version)[0],
+            labelPythonVer = Label(frameBg,text='Python version: '+sys.version.split()[0],
                             font=self.fontText,fg=self.fg,bg=self.bg)
             labelPythonVer.grid(row=8,column=0,sticky=W,padx=10,pady=0)
             #handle wierd tk version num in windoze python >= 1.6 (?!?)
-            tkVer = string.split(`TkVersion`,'.')
+            tkVer = str(TkVersion).split('.')
             tkVer[len(tkVer)-1] = str('%.3g' % (float('.'+tkVer[len(tkVer)-1])))[2:]
-            if tkVer[len(tkVer)-1] == '': 
+            if tkVer[len(tkVer)-1] == '':
                 tkVer[len(tkVer)-1] = '0'
-            tkVer = string.join(tkVer,'.')
+            tkVer = '.'.join(tkVer)
             labelTkVer = Label(frameBg,text='Tk version: '+tkVer,
                             font=self.fontText,fg=self.fg,bg=self.bg)
             labelTkVer.grid(row=8,column=1,sticky=W,padx=2,pady=0)

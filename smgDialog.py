@@ -29,7 +29,7 @@
 tkinter generic dialog base module
 """
 
-from Tkinter import *
+from tkinter import *
 
 class smgDialog(Toplevel):
     """
@@ -118,14 +118,14 @@ class smgDialog(Toplevel):
             exec ('self.'+ button['name'] + ' = Button(self.frameButtonBox, text="' +
                         button['title'] + '",command=self.' + button['binding'] + ')' )
             #place button
-            exec ('self.'+ button['name'] + '.grid(row=' + `bRow` +
-                        ', column=' + `bCol` + ', padx=' + `bPad` + ', pady=' + `bPad` + ')' )
+            exec ('self.'+ button['name'] + '.grid(row=' + str(bRow) +
+                        ', column=' + str(bCol) + ', padx=' + str(bPad) + ', pady=' + str(bPad) + ')' )
             #configure optional button hot key
             if button['hotKey']:
                 exec ('self.bind("' + button['hotKey'] + '", self.' + button['binding'] + ')' )
-                if button['underline']: 
-                    exec ('self.'+ button['name'] + 
-                            '.configure(underline=' + `button['underline']` + ')' )
+                if button['underline']:
+                    exec ('self.'+ button['name'] +
+                            '.configure(underline=' + str(button['underline']) + ')' )
             #get largest button width so far
             wdth = len(button['title']) + 2 
             if wdth > bGreatestWidth: bGreatestWidth = wdth
@@ -138,10 +138,10 @@ class smgDialog(Toplevel):
             bCol = bCol + 1
     
         #set button widths
-        if bWidth < bGreatestWidth: bWidth = bGreatestWidth 
-        for button in buttons:  
-            exec ('self.'+ button['name'] + 
-                        '.configure(width=' + `bWidth` + ')' )
+        if bWidth < bGreatestWidth: bWidth = bGreatestWidth
+        for button in buttons:
+            exec ('self.'+ button['name'] +
+                        '.configure(width=' + str(bWidth) + ')' )
 
     def showButtonBox(self): #, bPos
         #show the button box
