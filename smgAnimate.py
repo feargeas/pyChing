@@ -31,9 +31,8 @@ tkinter generic canvas based animation
 
 from sys import version
 from time import sleep
-from string import split
-from Tkinter import Canvas
-from Tkinter import Label
+from tkinter import Canvas
+from tkinter import Label
 
 class smgAnimate(Canvas):
     """

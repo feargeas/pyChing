@@ -29,7 +29,7 @@
 image data/class module for pyching
 """
 
-from Tkinter import Image
+from tkinter import Image
 
 class CoinImages:
     """
