@@ -30,7 +30,7 @@ tkinter interface module for pyching
 """
 
 #python library imports
-import sys, os, time, copy, htmllib, formatter
+import sys, os, time, copy
 
 #tkinter imports
 from tkinter import *

@@ -30,7 +30,8 @@ tkinter html viewer dialog module
 """
 
 #python library imports
-import os, htmllib, formatter
+import os
+from html.parser import HTMLParser
 
 #tkinter imports
 from tkinter import *
@@ -39,6 +40,18 @@ import tkinter.simpledialog as tkSimpleDialog
 
 #smg library module imports
 from smgDialog import smgDialog
+
+# Python 3 compatibility shims for removed formatter module
+class DumbWriter:
+    """Minimal replacement for formatter.DumbWriter"""
+    def __init__(self, textWidget=None, maxcol=9999):
+        self.col = 0
+        self.atbreak = 0
+
+class AbstractFormatter:
+    """Minimal replacement for formatter.AbstractFormatter"""
+    def __init__(self, writer):
+        self.writer = writer
 
 class smgHtmlView(smgDialog):
     """
@@ -260,7 +273,7 @@ class smgHtmlView(smgDialog):
             self.textDisplay.delete("1.0", "end")
             if self.sourceIsStr or (not plainText): #render html
                 htmlWriter = HtmlWriter(self.textDisplay, self)
-                htmlFormatter = formatter.AbstractFormatter(htmlWriter)
+                htmlFormatter = AbstractFormatter(htmlWriter)
                 htmlParser = HtmlParser(htmlFormatter)
                 #print source #debug
                 htmlParser.feed(htmlData)
@@ -292,9 +305,9 @@ class smgHtmlView(smgDialog):
                 self.buttonNext.configure(state=NORMAL)
         
 
-class HtmlWriter(formatter.DumbWriter):
+class HtmlWriter(DumbWriter):
     def __init__(self, textWidget, htmlViewer):
-        formatter.DumbWriter.__init__(self, self, maxcol=9999)
+        DumbWriter.__init__(self, textWidget, maxcol=9999)
         self.textWidget = textWidget
         self.htmlViewer = htmlViewer
         font, size = "Times", 12
@@ -368,7 +381,7 @@ class HtmlWriter(formatter.DumbWriter):
         # start the new font
         if font:
                 self.font_mark = self.textWidget.index("insert")
-                if self.fontmap.has_key(font[0]):
+                if font[0] in self.fontmap:
                         self.font = font[0]
                 elif font[3]:
                         self.font = "pre"
@@ -404,18 +417,48 @@ class HtmlWriter(formatter.DumbWriter):
         self.atbreak = 0
         #print 'send_hor_rule called'
 
-class HtmlParser(htmllib.HTMLParser):
-    def anchor_bgn(self, href, name, type):
-        htmllib.HTMLParser.anchor_bgn(self, href, name, type)
-        self.formatter.writer.anchor_bgn(href, name, type)
+class HtmlParser(HTMLParser):
+    """Python 3 compatible HTML parser using html.parser"""
 
-    def anchor_end(self):
-        if self.anchor: self.anchor = None
-        self.formatter.writer.anchor_end()
+    def __init__(self, formatter):
+        HTMLParser.__init__(self)
+        self.formatter = formatter
+        self.anchor = None
 
-    def do_dt(self, attrs):
-        self.formatter.end_paragraph(1)
-        self.ddpop()
-    
-    def handle_image(self, source, alt, ismap, align, width, height):
-        self.formatter.writer.handleImage(source, alt, align)
+    def handle_starttag(self, tag, attrs):
+        attrs_dict = dict(attrs)
+
+        if tag == 'a':
+            href = attrs_dict.get('href', '')
+            name = attrs_dict.get('name', '')
+            self.anchor = href
+            self.formatter.writer.anchor_bgn(href, name, '')
+        elif tag == 'img':
+            source = attrs_dict.get('src', '')
+            alt = attrs_dict.get('alt', '')
+            align = attrs_dict.get('align', '')
+            self.formatter.writer.handleImage(source, alt, align)
+        elif tag in ('h1', 'h2', 'h3', 'h4', 'h5', 'h6'):
+            self.formatter.writer.new_font((tag, None, None, None))
+        elif tag == 'b':
+            self.formatter.writer.new_font(('bold', None, 1, None))
+        elif tag == 'i':
+            self.formatter.writer.new_font(('italic', 1, None, None))
+        elif tag == 'p':
+            self.formatter.writer.send_paragraph(1)
+        elif tag == 'br':
+            self.formatter.writer.write("\n")
+        elif tag == 'hr':
+            self.formatter.writer.send_hor_rule()
+
+    def handle_endtag(self, tag):
+        if tag == 'a':
+            self.formatter.writer.anchor_end()
+            self.anchor = None
+        elif tag in ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'b', 'i'):
+            self.formatter.writer.new_font(None)
+        elif tag == 'p':
+            self.formatter.writer.send_paragraph(0)
+
+    def handle_data(self, data):
+        self.formatter.writer.write(data)
