@@ -214,8 +214,10 @@ class smgHtmlView(smgDialog):
         imageType = source[-4:] #image type indicator
         if imageType[-2:] == '()': #internal image data
             try:
-                exec ( 'import ' + source.split('.',1)[0] )
-                self.images.append(Image('photo', data=eval(source) ) )
+                # Python 3: exec/eval need explicit namespace
+                namespace = {}
+                exec ( 'import ' + source.split('.',1)[0], namespace )
+                self.images.append(Image('photo', data=eval(source, namespace) ) )
             except (NameError,AttributeError): #no such image data
                 self.textDisplay.insert("insert", ' [image error] ')
                 print("no such image data:", source)
@@ -250,9 +252,11 @@ class smgHtmlView(smgDialog):
             sourceIsData = ( source[-2:] == '()' )
             if sourceIsData:
                 try:
-                    #module =
-                    exec ( 'import ' + source.split('.',1)[0] )
-                    exec ( 'htmlData = ' + source )
+                    # Python 3: exec needs explicit namespace to modify variables
+                    namespace = {}
+                    exec ( 'import ' + source.split('.',1)[0], namespace )
+                    exec ( 'htmlData = ' + source, namespace )
+                    htmlData = namespace['htmlData']
                 except (ImportError,NameError,AttributeError): #no such html data
                     self.textDisplay.insert("insert", ' [hypertext data error] ')
                     print("html data module or function error:", source)
