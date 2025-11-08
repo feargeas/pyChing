@@ -30,11 +30,13 @@ tkinter interface module for pyching
 """
 
 #python library imports
-import string, sys, os, time, copy, htmllib, formatter
+import sys, os, time, copy, htmllib, formatter
 
 #tkinter imports
-from Tkinter import *
-import tkFileDialog, tkMessageBox, tkColorChooser
+from tkinter import *
+import tkinter.filedialog as tkFileDialog
+import tkinter.messagebox as tkMessageBox
+import tkinter.colorchooser as tkColorChooser
 
 #pyChing source specific imports
 import pyching_engine, pyching_cimages, pyching_idimage_data
@@ -393,8 +395,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.CastLine()
         self.buttonCast.configure(state=NORMAL)
         if self.hexes.hex1.lineValues[5] == 0:#if hex1 is'nt fully built yet
-            self.buttonCast.configure(text='Cast Line '+`self.hexes.currentLine+1`+' of 6')
-            self.labelStatus.configure(text='Waiting to cast line '+`self.hexes.currentLine+1`+ ' of 6 ...')
+            self.buttonCast.configure(text='Cast Line '+str(self.hexes.currentLine+1)+' of 6')
+            self.labelStatus.configure(text='Waiting to cast line '+str(self.hexes.currentLine+1)+ ' of 6 ...')
         else:#hex1 is fully built now
             for menuItem in range(3,5):#re-enable cast-type changing
                 self.menuMainSettings.entryconfigure(menuItem,state=NORMAL)
@@ -419,7 +421,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
     def CastLine(self,loadingFromFile=0):
         if not loadingFromFile:
             self.hexes.NewLine()
-            self.labelStatus.configure(text='Casting Line '+`self.hexes.currentLine`+' of 6 ...')
+            self.labelStatus.configure(text='Casting Line '+str(self.hexes.currentLine)+' of 6 ...')
             #for spins in range(3):
             for spins in range(2):
                     for frameNum in range(14):
@@ -642,11 +644,11 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
  
     def DEBUG(self):
         #run any routines in test or debug from here
-        print 'begin debug\n'
+        print('begin debug\n')
         #
-        print sys.path
+        print(sys.path)
         #
-        print '\nend debug'
+        print('\nend debug')
         
     def RepaintColors(self,newColors):
         oldColors=self.colors #save them for comparison below

@@ -30,12 +30,12 @@ tkinter html viewer dialog module
 """
 
 #python library imports
-import os, string, htmllib, formatter
+import os, htmllib, formatter
 
 #tkinter imports
-from Tkinter import *
-import tkMessageBox
-import tkSimpleDialog
+from tkinter import *
+import tkinter.messagebox as tkMessageBox
+import tkinter.simpledialog as tkSimpleDialog
 
 #smg library module imports
 from smgDialog import smgDialog
@@ -165,7 +165,7 @@ class smgHtmlView(smgDialog):
             displayFile = open(fileName, 'r')
         except IOError:
             tkMessageBox.showerror(title='File Load Error',
-                    message='Unable to load data file '+`fileName`+' .')
+                    message='Unable to load data file '+repr(fileName)+' .')
         #else:
         return displayFile #will be = None if there was an error
     
@@ -199,28 +199,28 @@ class smgHtmlView(smgDialog):
     def showImage(self,source,alt,align):
         #print source,source[-4:],source[:-4],alt,align
         imageType = source[-4:] #image type indicator
-        if imageType[-2:] == '()': #internal image data 
+        if imageType[-2:] == '()': #internal image data
             try:
-                exec ( 'import ' + string.split(source,'.',1)[0] )
+                exec ( 'import ' + source.split('.',1)[0] )
                 self.images.append(Image('photo', data=eval(source) ) )
             except (NameError,AttributeError): #no such image data
                 self.textDisplay.insert("insert", ' [image error] ')
-                print "no such image data:", source
+                print("no such image data:", source)
                 return #get out
         else: #image file stored on disk
             if imageType in ('.gif','.xbm'): #supported disk file image formats
                 try:
                     if imageType == '.gif': #a gif file
                         self.images.append(Image('photo',file=source) )
-                    elif imageCheck == '.xbm': #an x bitmap file  
+                    elif imageCheck == '.xbm': #an x bitmap file
                         self.images.append(Image('bitmap',file=source) )
                 except TclError: #most likely no such image file
                     self.textDisplay.insert("insert", ' [image error] ')
-                    print "image display error:", source
+                    print("image display error:", source)
                     return #get out
             else: #can't handle this image type
                 self.textDisplay.insert("insert", ' [unknown image type] ') #:'+source+'
-                print "can't display image type:", source
+                print("can't display image type:", source)
                 return #skip the image creation
         #if we got here then insert the new image in the document
         self.textDisplay.image_create(index='insert',
@@ -235,14 +235,14 @@ class smgHtmlView(smgDialog):
             #that will return the html data string
             #print source #debug
             sourceIsData = ( source[-2:] == '()' )
-            if sourceIsData: 
+            if sourceIsData:
                 try:
-                    #module = 
-                    exec ( 'import ' + string.split(source,'.',1)[0] )
-                    exec ( 'htmlData = ' + source )       
+                    #module =
+                    exec ( 'import ' + source.split('.',1)[0] )
+                    exec ( 'htmlData = ' + source )
                 except (ImportError,NameError,AttributeError): #no such html data
                     self.textDisplay.insert("insert", ' [hypertext data error] ')
-                    print "html data module or function error:", source
+                    print("html data module or function error:", source)
 #                 return #get out
             else: #the source is a plain string holding html data
                htmlData=source
@@ -272,7 +272,7 @@ class smgHtmlView(smgDialog):
             self.config(cursor=self.oldCursor)
         else: #no html data
             self.textDisplay.insert("insert", ' [hypertext data error] ')
-            print "no html data available:", source
+            print("no html data available:", source)
             return #get out
 
         if self.index: #we have an index button
