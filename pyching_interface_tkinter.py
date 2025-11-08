@@ -1079,7 +1079,7 @@ class DialogSetColors(smgDialog):
 
         self.menubuttonOptions = Menubutton(self.frameColorSelect,width=32,
                         text=self.colorButtonDetails[0][0],font=self.fonts.menu,indicatoron=TRUE,
-                        underline=string.find(self.colorButtonDetails[0][0],'e'),
+                        underline=self.colorButtonDetails[0][0].find('e'),
                         relief=RAISED,highlightthickness=0)
         self.menubuttonOptions.grid(row=0,column=1,padx=2,sticky=(N,S))#sticky=(N,S) makes the menubutton the smae height as buttonGetCOlor
         self.menuOptions = Menu(self.menubuttonOptions,tearoff=0,font=self.fonts.menu)
@@ -1154,7 +1154,7 @@ class DialogSetColors(smgDialog):
             self.colorExampleDetails['name']=self.colorButtonDetails[6][0]
             self.colorExampleDetails['color']=self.colorButtonDetails[6][1]
         elif event.widget in self.lineDemos:
-            tags = string.split(event.widget.itemcget('current','tags'))
+            tags = event.widget.itemcget('current','tags').split()
             #print tags
             if 'SHADOW' in tags:
                 self.colorExampleDetails['name']=self.colorButtonDetails[9][0]
@@ -1178,7 +1178,7 @@ class DialogSetColors(smgDialog):
             self.colorExampleDetails['color']=self.colorButtonDetails[self.menuOptions.index('active')][1]
         
         self.menubuttonOptions.configure(text=self.colorExampleDetails['name'],
-                underline=string.find(self.colorExampleDetails['name'],'e'))
+                underline=self.colorExampleDetails['name'].find('e'))
         self.frameColorSelect.configure(bg=self.colorExampleDetails['color'])
         
     def GetColor(self):
@@ -1273,7 +1273,7 @@ class DialogGetQuestion(smgDialog):
             tkMessageBox.showerror(title='Question Too Long',
                                                 message='The question you have entered is longer than 70 characters.')
             return 0
-        elif len(string.strip(self.questionText.get())) == 0:#null question
+        elif len(self.questionText.get().strip()) == 0:#null question
             tkMessageBox.showerror(title='No Question Entered',
                                                 message='You have entered a blank question.')
             return 0
