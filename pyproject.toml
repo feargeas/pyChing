@@ -32,10 +32,20 @@ classifiers = [
 
 [project.scripts]
 pyching = "pyching:main"
+pyching-console = "pyching_interface_console:main"
+
+[project.gui-scripts]
+pyching-gui = "pyching_interface_tkinter:main"
 
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.package-data]
+"*" = ["data/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

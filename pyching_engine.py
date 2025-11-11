@@ -35,6 +35,7 @@ import os
 import random
 import pickle
 import time
+from dataclasses import dataclass, field
 from functools import reduce
 from pathlib import Path
 from typing import Optional, Any
@@ -44,6 +45,7 @@ from typing import Optional, Any
 ################
 
 #private classes - should not be directly accessed from outside this module
+@dataclass
 class Hexagram:
     """
     single Hexagram data structure template, private class
@@ -51,11 +53,10 @@ class Hexagram:
     should only be accessed as an attribute of an instance of the Hexagrams class (below)
     this class is defined at module level to enable pickling of Hexagrams instances
     """
-    def __init__(self) -> None:
-        self.number: str = ''
-        self.name: str = ''
-        self.lineValues: list[int] = [0,0,0,0,0,0]
-        self.infoSource: Optional[str] = None
+    number: str = ''
+    name: str = ''
+    lineValues: list[int] = field(default_factory=lambda: [0, 0, 0, 0, 0, 0])
+    infoSource: Optional[str] = None
 
 #public classes
 class PychingAppDetails:
@@ -241,7 +242,7 @@ class Hexagrams:
                 else: hex1Key[i] = item #no change
                 i = i + 1 #increment counter    
             [self.hex1.number, self.hex1.name] = self.__GetHexDetails(hex1Key) #lookup Hex1 details
-            self.hex1.infoSource = 'pyching_int_data.in'+self.hex1.number+'data()'
+            self.hex1.infoSource = f'pyching_data.in{self.hex1.number}data()'
             if self.hex1.lineValues != hex1Key: #if there are some moving lines in Hex1
                 i = 0 #used as a counter in the loop below
                 for item in self.hex1.lineValues: #populate Hex2.lineValues
@@ -250,7 +251,7 @@ class Hexagrams:
                     else: self.hex2.lineValues[i] = item #no change
                     i = i + 1 #increment counter      
                 [self.hex2.number, self.hex2.name] = self.__GetHexDetails(self.hex2.lineValues) #lookup Hex2 details
-                self.hex2.infoSource = 'pyching_int_data.in'+self.hex2.number+'data()'
+                self.hex2.infoSource = f'pyching_data.in{self.hex2.number}data()'
 
     def SetQuestion(self, questionText: str) -> None:
         """
@@ -370,18 +371,13 @@ def Storage(file: Path | str, data: Any = None) -> Any:
     except Exception:
     block, to handle potential disk IO and pickle/unpickle errors
     """
-    if data: openType = 'wb'
-    else: openType = 'rb'
+    openType = 'wb' if data else 'rb'
     try:
-        pickleFile = open(file, openType)
-    except IOError:
-        raise #re-raise the exception to pass it back up the line
-    else: #no exception, so proceed
-        try:
+        with open(file, openType) as pickleFile:
             try:
-                if data: #pickle required data
+                if data:  # pickle required data
                     pickle.dump(data, pickleFile)
-                else: #unpickle data
+                else:  # unpickle data
                     pickleData = pickle.load(pickleFile)
                     return pickleData
             except Exception as e:
@@ -389,4 +385,5 @@ def Storage(file: Path | str, data: Any = None) -> Any:
                     raise Exception('pychingPickleError') from e
                 else:
                     raise Exception('pychingUnpickleError') from e
-        finally: pickleFile.close()
+    except IOError:
+        raise  # re-raise the exception to pass it back up the line

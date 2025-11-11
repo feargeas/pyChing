@@ -45,7 +45,7 @@ import tkinter.colorchooser as tkColorChooser
 
 #pyChing source specific imports
 import pyching_engine, pyching_cimages, pyching_idimage_data
-import pyching_int_data, pyching_hlhtx_data 
+import pyching_data, pyching_hlhtx_data 
 
 #smg library module imports
 from smgDialog import smgDialog
@@ -779,21 +779,12 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         textData = self.hexes.ReadingAsText()
         #print textData #debug
         try:
-            textFile = open(fileName, 'w')
-        except IOError: 
-            #print '\n error: unable to create text file', fileName
+            with open(fileName, 'w') as textFile:
+                textFile.write(textData)
+        except IOError:
+            #print '\n error: unable to create or write text file', fileName
             tkMessageBox.showerror(title='File Error',
-                            message='Unable to create text file:\n'+fileName)
-        else: #no exception, so proceed
-            try:
-                try:
-                    textFile.write(textData)
-                except IOError:
-                    #print '\n error: unable to write text file', fileName
-                    tkMessageBox.showerror(title='File Error',
-                                    message='Unable to write text file:\n'+fileName)
-            finally:
-                textFile.close()
+                            message=f'Unable to create or write text file:\n{fileName}')
 
 class HexLine(Canvas):
     """
