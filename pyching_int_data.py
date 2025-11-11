@@ -26,11 +26,13 @@
 ##---------------------------------------------------------------------------##
 """"
 data return routines for pyching.
-each of the numbered functions below returns the information text data for one 
+each of the numbered functions below returns the information text data for one
 hexagram, after converting it to an html string
 """
 
-def BuildHtml(dict):
+from typing import Any
+
+def BuildHtml(dict: dict[Any, Any]) -> str:
     """
     build an html hexagram info string from the passed in dict
     """
@@ -56,7 +58,7 @@ def BuildHtml(dict):
     return htmlStr
 
 
-def in1data():
+def in1data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id1data()",
                 'title':""" 1. Tch'ien / The Creative""", 
                 'text':"""
@@ -71,7 +73,7 @@ Tch'ien represents what is great and originating, penetrating, advantageous, cor
                 5:"""nine: we see the dragon on the wing in the sky. It will be advantageous to meet with the great person. """,
                 6:"""nine: we see the dragon exceeding the proper limits. There will be occasion for repentance."""
 })
-def in2data():
+def in2data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id2data()",
                 'title':""" 2. Koun / The Receptive""", 
                 'text':"""
@@ -87,7 +89,7 @@ Koun represents what is great and originating, penetrating, advantageous, correc
                 6:"""six: shows dragons fighting in the wild. Their blood is purple and yellow."""
 })
 
-def in3data():
+def in3data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id3data()",
                 'title':""" 3. T'oun / Difficult Beginnings""", 
                 'text':"""
@@ -103,7 +105,7 @@ T'oun indicates that there can be great progress and success, and the advantage 
                 6:"""six: shows its subject with the horses of their chariot obliged to retreat, and weeping tears of blood in streams."""
 })
 
-def in4data():
+def in4data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id4data()",
                 'title':""" 4. Mong / The Immature""", 
                 'text':"""
@@ -119,7 +121,7 @@ Mong indicates that there will be progress and success. I do not go and seek the
                 6:"""nine: we see one smiting the ignorant youth. But no advantage will come from doing them an injury. Advantage would come from warding off injury from them."""
 })
 
-def in5data():
+def in5data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id5data()",
                 'title':""" 5. Hsu / The Obstacles""", 
                 'text':"""
@@ -135,7 +137,7 @@ Hsu intimates that, with the sincerity which is declared in it, there will be br
                 6:"""six: shows its subject entered into the cavern. But there are three guests coming, to help them, without being urged. If they receive them respectfully, there will be good fortune in the end."""
 })
 
-def in6data():
+def in6data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id6data()",
                 'title':""" 6. Song / The Conflict""", 
                 'text':"""
@@ -151,7 +153,7 @@ Song intimates how, though there is sincerity in one's contention, they will mee
                 6:"""nine: shows how its subject may have the leathern belt conferred on them by the sovereign, and thrice it shall be taken from them in a morning."""
 })
 
-def in7data():
+def in7data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id7data()",
                 'title':""" 7. Cheu / The Army""", 
                 'text':"""
@@ -167,7 +169,7 @@ Cheu indicates how, in the case which it purposes, with firmness and correctness
                 6:"""six: shows the great ruler delivering their charges, appointing some to be rulers of states, and others to undertake the leadership of clans ; but inferior people should not be employed in such positions."""
 })
 
-def in8data():
+def in8data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id8data()",
                 'title':""" 8. Pi / Concord""", 
                 'text':"""
@@ -183,7 +185,7 @@ Pi indicates that under the conditions which it supposes, there is good fortune.
                 6:"""six: we see one seeking union and attachment without having taken the first step to such an end. There will be evil."""
 })
 
-def in9data():
+def in9data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id9data()",
                 'title':""" 9. Siao Tch'ou / Accumulating Gradually""", 
                 'text':"""
@@ -199,7 +201,7 @@ Siao Tch'ou indicates that under its conditions there will be progress and succe
                 6:"""nine: shows how the rain has fallen, and the onward progress is stayed; so must we value the full accumulation of the virtue represented by the upper trigram. But a wife exercising excessive restraint, however firm and correct she may be, is in a position of peril, and like the moon approaching to the full. If the superior person prosecutes their measures in such circumstances, there will be evil."""
 })
 
-def in10data():
+def in10data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id10data()",
                 'title':""" 10. Li / Careful Conduct""", 
                 'text':"""
@@ -215,7 +217,7 @@ Li suggests the idea of one treading on the tail of a tiger, which does not bite
                 6:"""nine: tells us to look at the whole course that is trodden, and examine the presage which that gives. If it be complete and without failure, there will be great good fortune."""
 })
 
-def in11data():
+def in11data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id11data()",
                 'title':""" 11. T'ai / Peace, Restful Fluidity""", 
                 'text':"""
@@ -231,7 +233,7 @@ In T'ai we see the small gone and the great coming. It indicates that there will
                 6:"""six: shows us the city wall returned into the moat. It is not the time to use the army. The subject of the line may, indeed, announce their orders to the people of their own city; but however correct and firm they may be, they will have cause for regret."""
 })
 
-def in12data():
+def in12data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id12data()",
                 'title':""" 12. P'i / Stagnation, Obstruction""", 
                 'text':"""
@@ -247,7 +249,7 @@ In P'i there is the want of good understanding between people at different level
                 6:"""nine: shows the overthrow and removal of the condition of distress and obstruction. Before this there was that condition. Hereafter there will be joy."""
 })
 
-def in13data():
+def in13data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id13data()",
                 'title':""" 13. Tong Jen / Community""", 
                 'text':"""
@@ -263,7 +265,7 @@ Tong Jen or 'Community' appears here as we find it in the remote district of the
                 6:"""nine: shows the representative of the community in the suburbs. There will be no occasion for repentance."""
 })
 
-def in14data():
+def in14data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id14data()",
                 'title':""" 14. Ta You / Big Strength""", 
                 'text':"""
@@ -279,7 +281,7 @@ Ta You indicates that, under the circumstances which it implies, there will be g
                 6:"""nine: shows its subject with help accorded to them from Heaven. There will be good fortune, advantage in every respect."""
 })
 
-def in15data():
+def in15data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id15data()",
                 'title':""" 15. Tchien / Modesty""", 
                 'text':"""
@@ -295,7 +297,7 @@ Tchien indicates progress and success. The superior person, being humble as it i
                 6:"""six: shows us humility that has made itself recognised. The subject of it will with advantage put their hosts in motion; but they will only punish their own towns and state."""
 })
 
-def in16data():
+def in16data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id16data()",
                 'title':""" 16. Yu / Majesty in Connection""", 
                 'text':"""
@@ -311,7 +313,7 @@ Yu indicates that, in the state which it implies, feudal princes may be set up, 
                 6:"""six: shows its subject with darkened mind devoted to the pleasure and satisfaction of the time; but if they change their course even when it may be considered as completed, there will be no error."""
 })
 
-def in17data():
+def in17data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id17data()",
                 'title':""" 17. Souei / Submission to the Duty""", 
                 'text':"""
@@ -327,7 +329,7 @@ Souei indicates that under its conditions there will be great progress and succe
                 6:"""six: shows us sincerity firmly held and clung to, yea, and bound fast. We see the king with this presenting his offerings on the western mountain."""
 })
 
-def in18data():
+def in18data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id18data()",
                 'title':""" 18. Kou / Toward Corruption""",   
                 'text':"""
@@ -343,7 +345,7 @@ Kou indicates great progress and success to them who deals properly with the con
                 6:"""nine: shows us one who does not serve either king or feudal lord, whose lofty spirit prefers to attend to their own affairs."""
 })
 
-def in19data():
+def in19data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id19data()",
                 'title':""" 19. Lin / Approach""", 
                 'text':"""
@@ -359,7 +361,7 @@ Lin indicates that under the conditions supposed in it there will be great progr
                 6:"""six: shows the advance of honesty and generosity. There will be good fortune, and no error.""",
 })
 
-def in20data():
+def in20data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id20data()",
                 'title':""" 20. Kouan / Looking Down""", 
                 'text':"""
@@ -375,7 +377,7 @@ Kouan shows how they whom it represents should be like the worshipper who has wa
                 6:"""nine: shows its subject contemplating their character to see if it is indeed that of a superior person. They will not fall into error."""
 })
 
-def in21data():
+def in21data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id21data()",
                 'title':""" 21. Che Ho / Bite Through""", 
                 'text':"""
@@ -391,7 +393,7 @@ Che Ho indicates successful progress in the condition of things which it suppose
                 6:"""nine: shows one wearing the yoke, and deprived of their ears. There will be evil."""
 })
 
-def in22data():
+def in22data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id22data()",
                 'title':""" 22. Pi / Elegance""", 
                 'text':"""
@@ -407,7 +409,7 @@ Pi indicates that there should be free course in what it denotes. There will be 
                 6:"""nine: has its subject with white as their only ornament. There will be no error."""
 })
 
-def in23data():
+def in23data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id23data()",
                 'title':""" 23. Po / Bursting""", 
                 'text':"""
@@ -423,7 +425,7 @@ Po indicates that in the state which it symbolises it will not be advantageous t
                 6:"""nine: shows as a great fruit which has not been eaten. The superior person finds the people again as a chariot carrying them. The small people by their course overthrow their own dwellings."""
 })
 
-def in24data():
+def in24data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id24data()",
                 'title':""" 24. Fou / The Return, Amendment""", 
                 'text':"""
@@ -439,7 +441,7 @@ Fou indicates that where will be free course and progress in what it denotes; th
                 6:"""six: shows its subject all astray on the subject of returning. There will be evil. There will be calamities and errors. If with their views they put the hosts in motion, the end will be a great defeat, whose issues will extend to the ruler of the state. Even in ten years they will not they able to repair the disaster."""
 })
 
-def in25data():
+def in25data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id25data()",
                 'title':""" 25. Wou Wang / Integrity""", 
                 'text':"""
@@ -455,7 +457,7 @@ Wou Wang indicates great progress and success, while there will be advantage in 
                 6:"""nine: shows its subject free from insincerity, yet sure to fall into error if they take action. Their action will not be advantageous in any way."""
 })
 
-def in26data():
+def in26data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id26data()",
                 'title':""" 26. Ta Tch'ou / The Great Accumulating""", 
                 'text':"""
@@ -471,7 +473,7 @@ Under the condition of Ta Tch'ou it will be advantageous to be firm and correct.
                 6:"""nine: shows itself in command of the firmament of heaven. There will be progress."""
 })
 
-def in27data():
+def in27data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id27data()",
                 'title':""" 27. I / Nourishment""", 
                 'text':"""
@@ -487,7 +489,7 @@ I indicates that with firm correctness there will be good fortune in what is den
                 6:"""nine: shows they from whom comes the nourishing. One's position is perilous, but there will be good fortune. It will be advantageous to cross the great stream."""
 })
 
-def in28data():
+def in28data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id28data()",
                 'title':""" 28. Ta Kouo / Excess""", 
                 'text':"""
@@ -503,7 +505,7 @@ Ta Kouo suggest to us a beam that is weak. There will be advantage in moving und
                 6:"""six: shows its subject with extraordinary boldness wading through a stream, till the water hides the crown of their head. There will be evil, but no ground for blame."""
 })
 
-def in29data():
+def in29data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id29data()",
                 'title':""" 29. K'an / The Abyss, Danger""", 
                 'text':"""
@@ -519,7 +521,7 @@ K'an, here repeated, shows the possession of sincerity, though which the mind is
                 6:"""six: shows its subject bound with cords of three strands or two strands, and placed in a thicket of thorns. Still in three years they do not learn the course for them to pursue. There will be evil."""
 })
 
-def in30data():
+def in30data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id30data()",
                 'title':""" 30. Li / Strength and Beauty""", 
                 'text':"""
@@ -535,7 +537,7 @@ Li indicates that, in regard to what it denotes, it will be advantageous to be f
                 6:"""nine: shows the king employing the subject in his punitive expeditions. Achieving admirable merit, they break only the chief of the rebels. Where their prisoners were not their associates, they do not punish. There will be no error.""",
 })
 
-def in31data():
+def in31data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id31data()",
                 'title':""" 31. Hsien / Attraction""", 
                 'text':"""
@@ -551,7 +553,7 @@ Hsien indicates that, on the fulfilment of the conditions implied in it, there w
                 6:"""six: shows one moving their jaws and tongue."""
 })
 
-def in32data():
+def in32data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id32data()",
                 'title':""" 32. Hong / The Long Enduring""", 
                 'text':"""
@@ -567,7 +569,7 @@ Hong indicates successful progress and no error in what it denotes. But the adva
                 6:"""six: shows its subject exciting themself to long continuance. There will be evil."""
 })
 
-def in33data():
+def in33data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id33data()",
                 'title':""" 33. Toun / Withdrawal""", 
                 'text':"""
@@ -583,7 +585,7 @@ Toun indicates successful progress in its circumstances. To a small extent it wi
                 6:"""nine: shows its subject withdrawing in a noble way. It will be advantageous in every respect."""
 })
 
-def in34data():
+def in34data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id34data()",
                 'title':""" 34. Ta Tch'ouang / Big Strength""", 
                 'text':"""
@@ -599,7 +601,7 @@ Ta Tch'ouang indicates that under the conditions which it symbolises it will be 
                 6:"""six: shows one who may be compared to the ram butting against the fence, and unable either to retreat, or to advance as they would fain do. There will not be advantage in any respect; but if they realise the difficulty of their position, there will be good fortune."""
 })
 
-def in35data():
+def in35data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id35data()",
                 'title':""" 35. Tchin / Progress""", 
                 'text':"""
@@ -615,7 +617,7 @@ In Tchin we see a prince who secures the tranquillity of the people presented in
                 6:"""nine: shows one advancing their horns. But they only use them to punish the rebellious people of their own city. The position is perilous, but there will be good fortune. Still, however firm and correct they may be, there will be occasion for regret."""
 })
 
-def in36data():
+def in36data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id36data()",
                 'title':""" 36. Ming Yi / The Darkening of the Light""", 
                 'text':"""
@@ -631,7 +633,7 @@ Ming Yi indicates that in the circumstances which it denotes, it will be advanta
                 6:"""six: shows the case where there is no light, but only obscurity. Its subject had at first ascended to the top of the sky; their future shall be to go into the earth."""
 })
 
-def in37data():
+def in37data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id37data()",
                 'title':""" 37. Tchia Jen / The Family""", 
                 'text':"""
@@ -647,7 +649,7 @@ For the realisation of what is taught in Tchia Jen, or for the regulation of the
                 6:"""nine: shows its subject possessed of sincerity and arrayed in majesty. In the end there will be good fortune."""
 })
 
-def in38data():
+def in38data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id38data()",
                 'title':""" 38. K'ouei / Opposition""", 
                 'text':"""
@@ -663,7 +665,7 @@ K'ouei indicates that, notwithstanding the condition of things which it denotes,
                 6:"""nine: shows its subject solitary amidst the prevailing disunion. In the subject of the third line, they seem to see a pig bearing on its back a load of mud, or fancy there is a carrriage full of ghosts. They first bend their bow against them, and afterwards unbend it, for they discover that there is not an assailant to injure, but a near relative. Going forward, they shall meet with genial rain, and there will be good fortune."""
 })
 
-def in39data():
+def in39data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id39data()",
                 'title':""" 39. Tch'ien / Trouble""", 
                 'text':"""
@@ -679,7 +681,7 @@ In the state indicated by Tch'ien advantage will be found in the south-west, and
                 6:"""six: shows its subject going forward, only to increase the difficulties, while their remaining stationary will be productive of great merit. There will be good fortune, and it will be advantageous to meet with the great person."""
 })
 
-def in40data():
+def in40data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id40data()",
                 'title':""" 40. Tchieh / The Release, The Outcome""", 
                 'text':"""
@@ -695,7 +697,7 @@ In the state indicated by Tchieh advantage will be found in the south-west. If n
                 6:"""six: shows a feudal prince with their bow shooting at a falcon on the top of a high wall, and hitting it. The effect of their action will be in every way advantageous."""
 })
 
-def in41data():
+def in41data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id41data()",
                 'title':""" 41. Soun / Reduction""", 
                 'text':"""
@@ -711,7 +713,7 @@ In what is denoted by Soun, if there be sincerity in they who employs it, there 
                 6:"""nine: shows its subject giving increase to others without taking from themselves. There will be no error. With firm correctness there will be good fortune. There will be advantage in every movement that shall be made. They will find ministers more than can be counted by their clans."""
 })
 
-def in42data():
+def in42data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id42data()",
                 'title':""" 42. Yi / Increase""", 
                 'text':"""
@@ -727,7 +729,7 @@ Yi indicates that in the state which it denotes there will be advantage in every
                 6:"""nine: we see one to whose increase none will contribute, while persons will seek to assail them. They observe no regular rule in the ordering of their heart. There will be evil."""
 })
 
-def in43data():
+def in43data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id43data()",
                 'title':""" 43. Kouai / Resolution""", 
                 'text':"""
@@ -743,7 +745,7 @@ Kouai requires in those who would fulfil its meaning the exhibition of the culpr
                 6:"""six: shows its subject without any helpers on whom to call. Their end will be evil."""
 })
 
-def in44data():
+def in44data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id44data()",
                 'title':""" 44. Keou / Contacting""", 
                 'text':"""
@@ -759,7 +761,7 @@ Keou shows a subordinate who is bold and strong. It will not be good to partner 
                 6:"""nine: shows its subject receiving others on their horns. There will be occasion for regret, but there will be no error."""
 })
 
-def in45data():
+def in45data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id45data()",
                 'title':""" 45. Ts'ouei / The Gathering""", 
                 'text':"""
@@ -775,7 +777,7 @@ In the state denoted by Ts'ouei, the king will repair to their ancestral temple.
                 6:"""six: shows its subject sighing and weeping; but there will be no error."""
 })
 
-def in46data():
+def in46data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id46data()",
                 'title':""" 46. Cheng / Promotion""", 
                 'text':"""
@@ -791,7 +793,7 @@ Cheng indicates that under its conditions there will be great progress and succe
                 6:"""six: shows its subject advancing upwards blindly. Advantage will be found in a ceaseless maintenance of firm correctness."""
 })
 
-def in47data():
+def in47data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id47data()",
                 'title':""" 47. K'oun / Weariness""", 
                 'text':"""
@@ -807,7 +809,7 @@ In the condition denoted by K'oun there may yet be progress and success. For the
                 6:"""six: shows its subject straitened, as if bound with creepers; or in a high and dangerous position, and saying to themselves,  'If  I move, I shall repent it.' If they do repent of former errors, there will be good fortune in their going forward."""
 })
 
-def in48data():
+def in48data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id48data()",
                 'title':""" 48. Tsing / A Well""", 
                 'text':"""
@@ -823,7 +825,7 @@ Looking at Tsing, we think of how the site of a town may be changed, while the f
                 6:"""six: shows the water from the well brought to the top, which is not allowed to be covered. This suggests the idea of sincerity. There will be great good fortune."""
 })
 
-def in49data():
+def in49data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id49data()",
                 'title':""" 49. Keu / The Revolution""", 
                 'text':"""
@@ -839,7 +841,7 @@ What takes place as indicated by Keu is believed in only after it has been accom
                 6:"""six: shows the superior person producing their changes as the leopard does when it changes its spots, while small people change their faces and show their obedience. To go forward now would lead to evil, but there will be good fortune in abiding in the firm and correct."""
 })
 
-def in50data():
+def in50data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id50data()",
                 'title':""" 50. Ting / The Cauldron""", 
                 'text':"""
@@ -855,7 +857,7 @@ Ting gives the intimation of great progress and success.
                 6:"""nine: shows the caldron with rings of jade. There will be great good fortune, and all action taken will be in every way advantageous."""
 })
 
-def in51data():
+def in51data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id51data()",
                 'title':""" 51. Tchen / The Thunder""", 
                 'text':"""
@@ -871,7 +873,7 @@ Tchen gives the intimation of ease and development. When the time of movement wh
                 6:"""six: shows its subject, amidst the startling movements of the time, in breathless dismay and looking round them with trembling apprehension. If they take action, there will be evil. If, while the startling movements have not reached their own person and their neighbourhood, they were to take precautions, there would be no error, but their relatives might still speak against them."""
 })
 
-def in52data():
+def in52data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id52data()",
                 'title':""" 52. Ken / The Stilling, The Mountain""", 
                 'text':"""
@@ -887,7 +889,7 @@ When one's resting is like that of the back, and they lose all consciousness of 
                 6:"""nine: shows its subject devotedly maintaining their restfulness. There will be good fortune."""
 })
 
-def in53data():
+def in53data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id53data()",
                 'title':""" 53. Tchien / Gradual Progress""", 
                 'text':"""
@@ -903,7 +905,7 @@ Tchien suggest to us the marriage of a young lady, and the good fortune attendin
                 6:"""nine: shows the geese gradually advanced to the large heights beyond. Their feathers can be used as ornaments. There will be good fortune."""
 })
 
-def in54data():
+def in54data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id54data()",
                 'title':""" 54. Kouei Mei / The Marriageable Maiden""", 
                 'text':"""
@@ -919,7 +921,7 @@ Kouei Mei indicates that under the conditions which it denotes action will be ev
                 6:"""six: shows the young lady bearing the basket, but without anything in it, and the gentleman slaughtering the sheep, but without blood flowing from it. There will be no advantage in any way."""
 })
 
-def in55data():
+def in55data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id55data()",
                 'title':""" 55. Fong / Abundance, Fullness""", 
                 'text':"""
@@ -935,7 +937,7 @@ Fong intimates progress and development. When a king has reached the point which
                 6:"""six: shows its subject with their house made large, but only serving as a screen to their household. When they look at their door, it is still, and there is nobody about it. For three years no one is to be seen. There will be evil."""
 })
 
-def in56data():
+def in56data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id56data()",
                 'title':""" 56. Lu / The Traveler""", 
                 'text':"""
@@ -951,7 +953,7 @@ Lu intimates that in the condition which it denotes there may be some little att
                 6:"""nine: suggests the idea of a bird burning its nest. The stranger, thus represented, first laughs and then cries out. They have lost their ox-like docility too readily and easily. There will be evil."""
 })
 
-def in57data():
+def in57data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id57data()",
                 'title':""" 57. Hsuan / Willing Submission, The Wind""", 
                 'text':"""
@@ -967,7 +969,7 @@ Hsuan intimates that under the conditions which it denotes there will be some li
                 6:"""nine: shows the representative of Hsuan beneath a couch, and having lost the axe with which they executed their decisions. However firm and correct they may try to they, there will be evil."""
 })
 
-def in58data():
+def in58data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id58data()",
                 'title':""" 58. Touei / Happyness, The Lake""", 
                 'text':"""
@@ -983,7 +985,7 @@ Touei intimates that under its conditions there will be progress and attainment,
                 6:"""six: shows the pleasure of its subject in leading and attracting others."""
 })
 
-def in59data():
+def in59data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id59data()",
                 'title':""" 59. Houan / The Dissolution, The Scattering""", 
                 'text':"""
@@ -999,7 +1001,7 @@ Houan intimates that under its conditions there will be progress and success. Th
                 6:"""nine: shows its subject disposing of what may be called its bloody wounds, and going and separating themselves from their anxious fears. There will be no error."""
 })
 
-def in60data():
+def in60data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id60data()",
                 'title':""" 60. Tchieh / Limitation""", 
                 'text':"""
@@ -1015,7 +1017,7 @@ Tchieh intimates that under its conditions there will be progress and attainment
                 6:"""six: shows its subject enacting regulations severe and difficult. Even with Firmness and correctness there will be evil. But though there will be cause for repentance, it will by and by disappear."""
 })
 
-def in61data():
+def in61data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id61data()",
                 'title':""" 61. Tchong Fou / The Interior Truth""", 
                 'text':"""
@@ -1031,7 +1033,7 @@ Tchong Fou moves even pigs and fish, and leads to good fortune. There will be ad
                 6:"""nine: shows its subject on a rooster trying to mount to heaven. Even with firm correctness there will be evil."""
 })
 
-def in62data():
+def in62data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id62data()",
                 'title':""" 62. Siao Kouo / The Small Get By""", 
                 'text':"""
@@ -1047,7 +1049,7 @@ Siao Kouo indicates that in the circumstances which it implies there will be pro
                 6:"""six: shows its subject not meeting the exigency of their situation, and exceeding their proper course. It suggests the idea of a bird flying far aloft. There will be evil. The case is one of calamity and self-produced injury."""
 })
 
-def in63data():
+def in63data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id63data()",
                 'title':""" 63. Tchi Tchi / After The Achievement""", 
                 'text':"""
@@ -1063,7 +1065,7 @@ Tchi Tchi intimates progress and success in small matters. There will be advanta
                 6:"""six: shows its subject with even their head immersed. The position is perilous."""
 })
 
-def in64data():
+def in64data() -> str:
         return BuildHtml({ 'imgSrc':"pyching_idimage_data.id64data()",
                 'title':""" 64. Wei Tchi / Before The Achievement""", 
                 'text':"""

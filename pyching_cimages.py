@@ -35,7 +35,7 @@ class CoinImages:
     """
     creates coin images
     """
-    def __init__(self):
+    def __init__(self) -> None:
         #graphic for a coin animation frame
         coinFrame0Data = """R0lGODlhSgBKAOcAAAIGBLaGBPrGDN6mDGJGBMaWDIZmBPK2DCoiBP7mFNqeBJ52FMKKBBoW
 BP7WDO6qBNKWBPa+DHJWBD4uBK56BAoOBLqOFP7ODJJuBP72FOquDMKSBNaeBIJeBOamBOKi
