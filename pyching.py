@@ -39,7 +39,7 @@ def CommandLineSwitches():
         print(' -h, --help                   display this help message')
         print(' -v, --version                display pyching version')
         print(' -d, --disable-version-check  disable Python and Tk version check')
-        #print(' -c, --console                run the console version of pyChing')
+        print(' -c, --console                run the console version of pyChing')
         sys.exit(0)
     elif ('-v' in sys.argv) or ('/v' in sys.argv) or('--version' in sys.argv):
         from pyching_engine import PychingAppDetails
@@ -64,13 +64,13 @@ def main():
 
     #run pyching
 
-    #if ('-c' in sys.argv) or ('/c' in sys.argv) or('--console' in sys.argv):
-    # #run the console version of pyChing - needs tidying up first
-    # import pyching_interface_console
-    #else:
-
-    #run pyching Tkinter GUI
-    import pyching_interface_tkinter
+    if ('-c' in sys.argv) or ('/c' in sys.argv) or('--console' in sys.argv):
+        #run the console version of pyChing
+        import pyching_interface_console
+        pyching_interface_console.main()
+    else:
+        #run pyching Tkinter GUI
+        import pyching_interface_tkinter
 
     #if we got to here exit cleanly
     sys.exit(0)
