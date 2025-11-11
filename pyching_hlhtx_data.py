@@ -32,7 +32,7 @@ for one help page back to pyching_interface_tkinter for
 display
 """
 
-def hlHelpData() -> str:
+def hlHelpData():
  return """
 <html><body><p>
 <h2>Using pyChing - Help Index</h2>
@@ -58,7 +58,7 @@ How to operate the various dialog boxes that you will see while using pyChing.
 <p></body></html>
 """
 
-def hlIntroData() -> str:
+def hlIntroData():
  return """
 <html><body><p>
 <h2>Introduction to the I Ching</h2>
@@ -139,7 +139,7 @@ On the subject of Taoism, one of the most interesting books I have read is 'The 
 <p></body></html>
 """
 
-def hlReadingData() -> str:
+def hlReadingData():
  return """
 <html><body><p>
 <h2>Performing a Reading</h2>
@@ -158,7 +158,7 @@ Take note of which 'place' (the place names appear to the left of the first hexa
 <p></body></html>
 """
 
-def hlMenuData() -> str:
+def hlMenuData():
  return """
 <html><body><p>
 <h2>Menu Commands</h2>
@@ -201,7 +201,7 @@ Here follows a brief description of the actions performed by each menu choice in
 <p></body></html>
 """
 
-def hlButtonData() -> str:
+def hlButtonData():
  return """
 <html><body><p>
 <h2>Command Buttons in the Reading Area</h2>
@@ -216,7 +216,7 @@ def hlButtonData() -> str:
 <p></body></html>
 """
 
-def hlDialogData() -> str:
+def hlDialogData():
  return """
 <html><body><p>
 <h2>Dialog Boxes</h2>
