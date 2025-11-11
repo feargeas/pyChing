@@ -324,7 +324,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 #tkMessageBox.showerror(title='File Error',
                 #       message='Unable to read configuration file:\n'+pyching.configFile)
                 pass
-            except 'pychingUnpickleError': #just silently let this past??
+            except Exception: #just silently let this past??
                 #print '\n error: invalid configuration file', pyching.configFile
                 sys.stderr.write('\n error (pychingUnpickleError): invalid configuration file'+pyching.configFile+'\n')
                 #tkMessageBox.showerror(title='File Error',
@@ -734,13 +734,13 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             return #user cancelled so get out
 
         tempHexes = pyching_engine.Hexagrams()
-        try: 
+        try:
             saveFileID = tempHexes.Load(fileName)
         except IOError:
             #print '\n error: unable to read save file', fileName
             tkMessageBox.showerror(title='File Error',
                             message='Unable to load save file:\n'+fileName)
-        except 'pychingUnpickleError': #the file couldn't be unpickled, most likely it isn't a pickled file
+        except Exception: #the file couldn't be unpickled, most likely it isn't a pickled file
             #print '\n error: unable to unpickle file', fileName
             tkMessageBox.showerror(title='Not A Save File',
                             message='The file you attempted to load:\n\n'+fileName+\
