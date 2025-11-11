@@ -122,7 +122,7 @@ class WindowMain:
         #self.master.colormapwindows([self.master])#debug, does this solve the 256 color problem??
         self.images = pyching_cimages.CoinImages()
         try:
-            self.master.iconbitmap(bitmap='@'+pyching.execPath+'/icon.xbm')
+            self.master.iconbitmap(bitmap=f'@{pyching.execPath / "icon.xbm"}')
         except TclError:
             #sys.stderr.write("can't load icon bitmap")
             pass #just ignore this
