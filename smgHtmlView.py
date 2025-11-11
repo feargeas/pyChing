@@ -172,17 +172,17 @@ class smgHtmlView(smgDialog):
 
     def MakeBrowseSource(self,hexNum):
         self.hexNum=hexNum
-        return 'pyching_int_data.in%sdata()'%(hexNum)
+        return f'pyching_data.in{hexNum}data()'
     
     def openDataFile(self, fileName):
-        displayFile = None
+        """Read and return file contents, or None if error occurs."""
         try:
-            displayFile = open(fileName, 'r')
+            with open(fileName, 'r') as displayFile:
+                return displayFile.read()
         except IOError:
             tkMessageBox.showerror(title='File Load Error',
-                    message='Unable to load data file '+repr(fileName)+' .')
-        #else:
-        return displayFile #will be = None if there was an error
+                    message=f'Unable to load data file {repr(fileName)}.')
+            return None
     
     def Body(self,master):
         self.configure(borderwidth=4)
@@ -266,10 +266,8 @@ class smgHtmlView(smgDialog):
             else: #the source is a plain string holding html data
                htmlData=source
         else:
-            displayFile = None
-            displayFile = self.openDataFile(source) #open disk file
-            htmlData = displayFile.read()
-        if self.sourceIsStr or displayFile:
+            htmlData = self.openDataFile(source)  # read file content
+        if self.sourceIsStr or htmlData:
             self.oldCursor = self.cget("cursor")
             self.textDisplay.config(cursor="watch")
             self.textDisplay.update_idletasks()

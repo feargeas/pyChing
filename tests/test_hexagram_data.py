@@ -16,7 +16,7 @@ from pathlib import Path
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-import pyching_int_data
+import pyching_data
 
 
 class TestAllHexagramsExist:
@@ -26,11 +26,11 @@ class TestAllHexagramsExist:
         """Each hexagram from 1-64 must have a data function that returns HTML"""
         for i in range(1, 65):
             func_name = f'in{i}data'
-            assert hasattr(pyching_int_data, func_name), \
+            assert hasattr(pyching_data, func_name), \
                 f"Missing data function: {func_name}"
 
             # Call the function to ensure it works
-            func = getattr(pyching_int_data, func_name)
+            func = getattr(pyching_data, func_name)
             html_data = func()
 
             assert html_data is not None, \
@@ -48,7 +48,7 @@ class TestHexagramHTMLStructure:
         """Each hexagram HTML should contain basic HTML tags"""
         for i in range(1, 65):
             func_name = f'in{i}data'
-            func = getattr(pyching_int_data, func_name)
+            func = getattr(pyching_data, func_name)
             html = func()
 
             assert '<html>' in html, \
@@ -64,7 +64,7 @@ class TestHexagramHTMLStructure:
         """Each hexagram HTML should contain a title in h2 tags"""
         for i in range(1, 65):
             func_name = f'in{i}data'
-            func = getattr(pyching_int_data, func_name)
+            func = getattr(pyching_data, func_name)
             html = func()
 
             assert '<h2>' in html, \
@@ -85,7 +85,7 @@ class TestHexagramHTMLStructure:
 
         for i in range(1, 65):
             func_name = f'in{i}data'
-            func = getattr(pyching_int_data, func_name)
+            func = getattr(pyching_data, func_name)
             html = func()
 
             for line_marker in line_markers:
@@ -96,7 +96,7 @@ class TestHexagramHTMLStructure:
         """Each hexagram HTML should reference an ideogram image"""
         for i in range(1, 65):
             func_name = f'in{i}data'
-            func = getattr(pyching_int_data, func_name)
+            func = getattr(pyching_data, func_name)
             html = func()
 
             assert '<img SRC=' in html, \
@@ -110,7 +110,7 @@ class TestSpecificHexagrams:
 
     def test_hexagram_1_tch_ien(self):
         """Test Hexagram 1 - Tch'ien (The Creative)"""
-        html = pyching_int_data.in1data()
+        html = pyching_data.in1data()
 
         assert "Tch'ien" in html, "Should contain Tch'ien"
         assert "Creative" in html, "Should contain 'Creative'"
@@ -118,7 +118,7 @@ class TestSpecificHexagrams:
 
     def test_hexagram_2_koun(self):
         """Test Hexagram 2 - Koun (The Receptive)"""
-        html = pyching_int_data.in2data()
+        html = pyching_data.in2data()
 
         assert "Koun" in html, "Should contain Koun"
         assert "Receptive" in html, "Should contain 'Receptive'"
@@ -126,7 +126,7 @@ class TestSpecificHexagrams:
 
     def test_hexagram_64_wei_tchi(self):
         """Test Hexagram 64 - Wei Tchi (Before Completion/Achievement)"""
-        html = pyching_int_data.in64data()
+        html = pyching_data.in64data()
 
         assert "Wei Tchi" in html, "Should contain Wei Tchi"
         assert len(html) > 100, "Should have substantial content"
@@ -137,9 +137,9 @@ class TestBuildHtmlFunction:
 
     def test_build_html_function_exists(self):
         """BuildHtml function should exist and be callable"""
-        assert hasattr(pyching_int_data, 'BuildHtml'), \
+        assert hasattr(pyching_data, 'BuildHtml'), \
             "BuildHtml function should exist"
-        assert callable(pyching_int_data.BuildHtml), \
+        assert callable(pyching_data.BuildHtml), \
             "BuildHtml should be callable"
 
     def test_build_html_creates_valid_html(self):
@@ -148,15 +148,17 @@ class TestBuildHtmlFunction:
             'imgSrc': 'test.png',
             'title': 'Test Title',
             'text': 'Test text content',
-            1: 'Line 1',
-            2: 'Line 2',
-            3: 'Line 3',
-            4: 'Line 4',
-            5: 'Line 5',
-            6: 'Line 6'
+            'lines': {
+                '1': 'Line 1',
+                '2': 'Line 2',
+                '3': 'Line 3',
+                '4': 'Line 4',
+                '5': 'Line 5',
+                '6': 'Line 6'
+            }
         }
 
-        html = pyching_int_data.BuildHtml(test_dict)
+        html = pyching_data.BuildHtml(test_dict)
 
         assert '<html>' in html
         assert 'Test Title' in html
