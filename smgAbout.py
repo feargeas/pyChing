@@ -31,6 +31,7 @@ tkinter about dialog base module
 
 #python library imports
 import sys
+from typing import Any, Optional
 
 #tkinter imports
 from tkinter import *
@@ -43,10 +44,12 @@ class smgAbout(smgDialog):
     """
     display an 'about' box
     """
-    def __init__(self,parent,title='', appTitle='', version='', copyright='', licence='',
-                email='', www='', pictureData='', licenceFile='', creditsFile='',
-                showToolVersions = 1, 
-                fontAppTitle=None, fontText=None, fg=None, bg=None):
+    def __init__(self, parent: Any, title: str = '', appTitle: str = '', version: str = '',
+                copyright: str = '', licence: str = '', email: str = '', www: str = '',
+                pictureData: str = '', licenceFile: str = '', creditsFile: str = '',
+                showToolVersions: int = 1,
+                fontAppTitle: Optional[str] = None, fontText: Optional[str] = None,
+                fg: Optional[str] = None, bg: Optional[str] = None) -> None:
         self.appTitle=appTitle
         self.version=version
         self.copyright=copyright

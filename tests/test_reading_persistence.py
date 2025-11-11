@@ -8,11 +8,11 @@ THESE TESTS MUST PASS AFTER PYTHON 3 MIGRATION.
 """
 
 import sys
-import os
 import tempfile
+from pathlib import Path
 
 # Add parent directory to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import pyching_engine
 
@@ -91,8 +91,9 @@ class TestReadingSaveLoad:
 
         finally:
             # Clean up temp file
-            if os.path.exists(temp_file):
-                os.remove(temp_file)
+            temp_path = Path(temp_file)
+            if temp_path.exists():
+                temp_path.unlink()
 
     def test_save_and_load_partial_reading(self):
         """A partial reading should save and load correctly"""
@@ -122,8 +123,9 @@ class TestReadingSaveLoad:
                 "First 3 lines should match"
 
         finally:
-            if os.path.exists(temp_file):
-                os.remove(temp_file)
+            temp_path = Path(temp_file)
+            if temp_path.exists():
+                temp_path.unlink()
 
     def test_load_returns_version(self):
         """Loading should return the save file version"""
@@ -148,8 +150,9 @@ class TestReadingSaveLoad:
             assert isinstance(version, tuple), "Version should be a tuple"
 
         finally:
-            if os.path.exists(temp_file):
-                os.remove(temp_file)
+            temp_path = Path(temp_file)
+            if temp_path.exists():
+                temp_path.unlink()
 
 
 class TestReadingAsText:

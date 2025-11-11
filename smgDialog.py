@@ -30,15 +30,17 @@ tkinter generic dialog base module
 """
 
 from tkinter import *
+from typing import Any, Optional
 
 class smgDialog(Toplevel):
     """
     tkinter generic dialog, base class
-    """ 
-    def __init__(self,parent,title=None,buttons=[{'name':'buttonOk','title':'Ok',
+    """
+    def __init__(self, parent: Any, title: Optional[str] = None,
+                buttons: list[dict[str, Any]] = [{'name':'buttonOk','title':'Ok',
                 'binding':'Ok','underline':None,'hotKey':'<Return>'}],
-                buttonsDef=-1,buttonsWidth=0,buttonsPad=5, 
-                resizeable=0, transient=1, wait=1): # buttonsPos='BOTTOM',
+                buttonsDef: int = -1, buttonsWidth: int = 0, buttonsPad: int = 5,
+                resizeable: int = 0, transient: int = 1, wait: int = 1) -> None:  # buttonsPos='BOTTOM',
         """
         buttons - a list of button dictionaries, in placement order
                             keys -  'name'      button name, required

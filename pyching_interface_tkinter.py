@@ -30,7 +30,12 @@ tkinter interface module for pyching
 """
 
 #python library imports
-import sys, os, time, copy
+import sys
+import os
+import time
+import copy
+from pathlib import Path
+from typing import Optional, Any
 
 #tkinter imports
 from tkinter import *
@@ -51,7 +56,7 @@ class WidgetColors:
     """
     colours for widgets in the reading display area
     """
-    def __init__(self):
+    def __init__(self) -> None:
         #maybe colour defaults for all platforms
         #and platform defaults if started with a --mono switch (?)
         #if pyching.osType in ('posix','nt'): #non-default values for X & win32 style tk widgets
@@ -87,7 +92,7 @@ class WidgetFonts:
     """
     fonts for widgets in the main window
     """
-    def __init__(self):
+    def __init__(self) -> None:
         if pyching.osType == 'posix': #non-default values for X style tk widgets
             self.menu = '-*-Helvetica-Normal-R-*--*-120-*-*-*-*-ISO8859-1'
             self.button = '-*-Helvetica-Normal-R-*--*-120-*-*-*-*-ISO8859-1'
@@ -111,7 +116,7 @@ class WindowMain:
     """
     main application window
     """
-    def __init__(self, master): 
+    def __init__(self, master: Any) -> None: 
         self.master = master
         self.master.resizable(height=FALSE,width=FALSE)
         #self.master.colormapwindows([self.master])#debug, does this solve the 256 color problem??
@@ -296,10 +301,13 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         if dialogSetColors.result: #user didn't cancel
             self.RepaintColors(dialogSetColors.result)    
 
-    def SaveSettings(self):
-        if os.path.expanduser('~') != '~': #unix-style home directories
-            if not os.path.exists(pyching.configPath): #failsafe if user deleted ~/.pyching while program running :)
-                os.mkdir(pyching.configPath)#make the config dir
+    def SaveSettings(self) -> None:
+        try:
+            # Failsafe if user deleted ~/.pyching while program running
+            if not pyching.configPath.exists():
+                pyching.configPath.mkdir(parents=True, exist_ok=True)
+        except (RuntimeError, OSError):
+            pass  # If we can't create config dir, Storage() will handle the error
         castAllValue = self.castAll.get()
         showPlacesValue = self.showPlaces.get()
         showLineHintsValue = self.showLineHints.get()
@@ -314,8 +322,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             #print '\n saved file:', fileName
             self.labelStatus.configure(text='saved settings')
 
-    def LoadSettings(self):
-        if os.path.exists(pyching.configFile): #if a saved configuration exists
+    def LoadSettings(self) -> None:
+        if pyching.configFile.exists():  # if a saved configuration exists
             try:
                     configData= pyching_engine.Storage(pyching.configFile, data=None)
             except IOError: #just silently let this past??
@@ -791,7 +799,8 @@ class HexLine(Canvas):
     """
     creates a hexagram line object
     """
-    def __init__(self,parent,bindingEnter=None,bindingLeave=None,currentColors=None):
+    def __init__(self, parent: Any, bindingEnter: Optional[Any] = None,
+                 bindingLeave: Optional[Any] = None, currentColors: Optional[WidgetColors] = None) -> None:
         self.value=None
         self.hint=None
         if currentColors: self.colors = currentColors
@@ -993,7 +1002,7 @@ class DialogSetColors(smgDialog):
     """
     display a colour configuration dialog
     """
-    def __init__(self,parent,currentColors=None):
+    def __init__(self, parent: Any, currentColors: Optional[WidgetColors] = None) -> None:
         if currentColors: self.colors=currentColors
         else: self.colors=WidgetColors()
         self.fonts=WidgetFonts()
@@ -1248,8 +1257,8 @@ class DialogSetColors(smgDialog):
 class DialogGetQuestion(smgDialog):
     """
     gets the question for a reading
-    """ 
-    def __init__(self,parent):
+    """
+    def __init__(self, parent: Any) -> None:
         smgDialog.__init__(self,parent,title='Enter Question',
                     buttons=[{'name':'buttonOk','title':'Ok','binding':'Ok','underline':None,'hotKey':'<Return>'},
                                 {'name':'buttonCancel','title':'Cancel','binding':'Cancel','underline':None,'hotKey':'<Escape>'}],

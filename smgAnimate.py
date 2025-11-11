@@ -33,13 +33,16 @@ from sys import version
 from time import sleep
 from tkinter import Canvas
 from tkinter import Label
+from typing import Any, Optional, Callable
 
 class smgAnimate(Canvas):
     """
     tkinter generic canvas based animation, base class
-    """ 
-    def __init__(self,parent,width=0,height=0,frames=None,framesCentre=None,
-                framePersist=0,plays=1,bg=None,triggerFunc=None,triggerPlays=0):
+    """
+    def __init__(self, parent: Any, width: int = 0, height: int = 0,
+                frames: Optional[list[Any]] = None, framesCentre: Optional[tuple[int, int]] = None,
+                framePersist: int = 0, plays: int = 1, bg: Optional[str] = None,
+                triggerFunc: Optional[Callable[[], None]] = None, triggerPlays: int = 0) -> None:
         """
         width, height - canvas dimensions, if 0 default to width and/or height of 
                                         frame[0]

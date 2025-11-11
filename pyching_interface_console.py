@@ -32,6 +32,8 @@ import sys
 import os
 import re
 from html.parser import HTMLParser
+from pathlib import Path
+from typing import Optional
 
 # Import the pyChing oracle engine
 import pyching_engine
@@ -42,12 +44,12 @@ import pyching_int_data
 
 class HTMLToText(HTMLParser):
     """Simple HTML to plain text converter for displaying hexagram interpretations"""
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
-        self.text_parts = []
-        self.current_tag = None
+        self.text_parts: list[str] = []
+        self.current_tag: Optional[str] = None
 
-    def handle_starttag(self, tag, attrs):
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, Optional[str]]]) -> None:
         self.current_tag = tag
         if tag == 'p':
             self.text_parts.append('\n')
@@ -56,19 +58,19 @@ class HTMLToText(HTMLParser):
         elif tag in ('h1', 'h2', 'h3', 'h4', 'h5', 'h6'):
             self.text_parts.append('\n')
 
-    def handle_endtag(self, tag):
+    def handle_endtag(self, tag: str) -> None:
         if tag in ('p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'):
             self.text_parts.append('\n')
         self.current_tag = None
 
-    def handle_data(self, data):
+    def handle_data(self, data: str) -> None:
         # Clean up whitespace but preserve intentional line breaks
         text = data.strip()
         if text:
             self.text_parts.append(text)
             self.text_parts.append(' ')
 
-    def get_text(self):
+    def get_text(self) -> str:
         """Return the extracted plain text"""
         text = ''.join(self.text_parts)
         # Clean up multiple spaces and newlines
@@ -77,14 +79,14 @@ class HTMLToText(HTMLParser):
         return text.strip()
 
 
-def html_to_text(html_string):
+def html_to_text(html_string: str) -> str:
     """Convert HTML string to plain text"""
     parser = HTMLToText()
     parser.feed(html_string)
     return parser.get_text()
 
 
-def print_banner():
+def print_banner() -> None:
     """Display the pyChing console banner"""
     pyching = pyching_engine.PychingAppDetails(createConfigDir=0)
     print("\n" + "="*70)
@@ -96,7 +98,7 @@ def print_banner():
     print("to generate hexagrams that provide wisdom and guidance.\n")
 
 
-def get_question():
+def get_question() -> Optional[str]:
     """Prompt user for their question"""
     print("What question do you wish to ask the oracle?")
     print("(Maximum 70 characters, or press Ctrl+C to cancel)")
@@ -116,7 +118,7 @@ def get_question():
             return None
 
 
-def cast_reading(hexes):
+def cast_reading(hexes: pyching_engine.Hexagrams) -> bool:
     """Cast all six lines of the reading"""
     print("\n" + "-"*70)
     print("Casting hexagram lines...")
@@ -153,7 +155,7 @@ def cast_reading(hexes):
         return False
 
 
-def display_reading(hexes):
+def display_reading(hexes: pyching_engine.Hexagrams) -> None:
     """Display the complete reading in ASCII art"""
     print("\n" + "="*70)
     print("YOUR READING")
@@ -165,7 +167,7 @@ def display_reading(hexes):
     print("="*70 + "\n")
 
 
-def display_interpretation(hexes):
+def display_interpretation(hexes: pyching_engine.Hexagrams) -> None:
     """Display the hexagram interpretation(s)"""
     print("\n" + "="*70)
     print("INTERPRETATION")
@@ -205,7 +207,7 @@ def display_interpretation(hexes):
     print("\n" + "="*70 + "\n")
 
 
-def wrap_text(text, width):
+def wrap_text(text: str, width: int) -> str:
     """Simple text wrapper for console display"""
     words = text.split()
     lines = []
@@ -229,7 +231,7 @@ def wrap_text(text, width):
     return '\n'.join(lines)
 
 
-def save_reading(hexes):
+def save_reading(hexes: pyching_engine.Hexagrams) -> None:
     """Offer to save the reading to a file"""
     print("\nWould you like to save this reading?")
 
@@ -261,7 +263,7 @@ def save_reading(hexes):
         if not filename.endswith(pyching.saveFileExt):
             filename += pyching.saveFileExt
 
-        filepath = os.path.join(pyching.savePath, filename)
+        filepath = pyching.savePath / filename
 
         try:
             hexes.Save(filepath)
@@ -270,7 +272,7 @@ def save_reading(hexes):
             print(f"\nError saving reading: {e}")
 
 
-def main_menu():
+def main_menu() -> None:
     """Display main menu and handle user choices"""
     while True:
         try:
@@ -302,7 +304,7 @@ def main_menu():
             sys.exit(0)
 
 
-def new_reading():
+def new_reading() -> None:
     """Perform a new oracle reading"""
     # Get the question
     question = get_question()
@@ -327,7 +329,7 @@ def new_reading():
     save_reading(hexes)
 
 
-def load_reading():
+def load_reading() -> None:
     """Load and display a saved reading"""
     pyching = pyching_engine.PychingAppDetails()
 
@@ -335,8 +337,8 @@ def load_reading():
 
     # List available save files
     try:
-        files = [f for f in os.listdir(pyching.savePath)
-                if f.endswith(pyching.saveFileExt)]
+        files = [f.name for f in pyching.savePath.iterdir()
+                if f.is_file() and f.name.endswith(pyching.saveFileExt)]
 
         if not files:
             print("No saved readings found.")
@@ -359,7 +361,7 @@ def load_reading():
         try:
             file_index = int(choice) - 1
             if 0 <= file_index < len(files):
-                filepath = os.path.join(pyching.savePath, files[file_index])
+                filepath = pyching.savePath / files[file_index]
 
                 # Load the reading
                 hexes = pyching_engine.Hexagrams()
@@ -378,7 +380,7 @@ def load_reading():
         print(f"Error loading readings: {e}")
 
 
-def main():
+def main() -> None:
     """Main entry point for console interface"""
     print_banner()
     main_menu()

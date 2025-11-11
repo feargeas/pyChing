@@ -32,6 +32,7 @@ tkinter html viewer dialog module
 #python library imports
 import os
 from html.parser import HTMLParser
+from typing import Any, Optional
 
 #tkinter imports
 from tkinter import *
@@ -44,27 +45,28 @@ from smgDialog import smgDialog
 # Python 3 compatibility shims for removed formatter module
 class DumbWriter:
     """Minimal replacement for formatter.DumbWriter"""
-    def __init__(self, textWidget=None, maxcol=9999):
-        self.col = 0
-        self.atbreak = 0
+    def __init__(self, textWidget: Optional[Any] = None, maxcol: int = 9999) -> None:
+        self.col: int = 0
+        self.atbreak: int = 0
 
 class AbstractFormatter:
     """Minimal replacement for formatter.AbstractFormatter"""
-    def __init__(self, writer):
-        self.writer = writer
+    def __init__(self, writer: DumbWriter) -> None:
+        self.writer: DumbWriter = writer
 
 class smgHtmlView(smgDialog):
     """
-    display a html file (or a plain text file if plainText=1), or html data 
-    from a string (which may be a repr of a function name). optionally show 
-    an 'index' button, which jumps straight to indexFile (which can also be a 
-    disk file or a string as above) if specified. only a small subset of html 
-    tags are rendered. ony links to files, specified without any urltype, or 
+    display a html file (or a plain text file if plainText=1), or html data
+    from a string (which may be a repr of a function name). optionally show
+    an 'index' button, which jumps straight to indexFile (which can also be a
+    disk file or a string as above) if specified. only a small subset of html
+    tags are rendered. ony links to files, specified without any urltype, or
     internal html and image data returned by functions are supported.
     """
-    def __init__(self,parent,title=None,htmlSource=None,sourceIsStr=1,
-                internalLink=None,index=None,plainText=0,modal=1,hexBrowser=0,
-                imageModule=None,bg='#e8e8e8',fg='#000000'):
+    def __init__(self, parent: Any, title: Optional[str] = None, htmlSource: Optional[str] = None,
+                sourceIsStr: int = 1, internalLink: Optional[str] = None, index: Optional[str] = None,
+                plainText: int = 0, modal: int = 1, hexBrowser: int = 0,
+                imageModule: Optional[Any] = None, bg: str = '#e8e8e8', fg: str = '#000000') -> None:
         """
         title - string, dialog title
         htmlSource - either a filename or a string containing html data

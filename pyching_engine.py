@@ -30,81 +30,88 @@ engine module for pyching
 classes and utility functions
 """
 #python library imports
-import sys, os, random, pickle, time
+import sys
+import os
+import random
+import pickle
+import time
 from functools import reduce
+from pathlib import Path
+from typing import Optional, Any
 
 #
 # classes
 ################
 
 #private classes - should not be directly accessed from outside this module
-class Hexagram: 
+class Hexagram:
     """
     single Hexagram data structure template, private class
-    
+
     should only be accessed as an attribute of an instance of the Hexagrams class (below)
     this class is defined at module level to enable pickling of Hexagrams instances
     """
-    def __init__(self):
-        self.number = ''
-        self.name = ''
-        self.lineValues = [0,0,0,0,0,0]
-        self.infoSource = None
+    def __init__(self) -> None:
+        self.number: str = ''
+        self.name: str = ''
+        self.lineValues: list[int] = [0,0,0,0,0,0]
+        self.infoSource: Optional[str] = None
 
 #public classes
 class PychingAppDetails:
     """
     holds information about a running instance of the pyching application, public class
     """
-    def __init__(self,createConfigDir=1):
-        self.title = 'pyChing'
-        self.version = '1.2.2'
-        self.os = sys.platform
-        self.osType = os.name
-        self.execPath = self.GetProgramDir() + os.sep
-        self.configPath=self.GetUserCfgDir('.pyching')
-        self.savePath=self.configPath
-        self.configFile=os.path.join(self.configPath,'pychingrc')
-        self.saveFileExt = '.psv'
-        self.internalImageExt = '.#@~'
-        self.internalHtmlExt = '.~@#'
-        self.saveFileID = ('pyching_save_file',self.version)
-        self.emailAddress = 'elguavas@users.sourceforge.net'
-        self.webAddress = 'http://pyching.sourceforge.net'
+    def __init__(self, createConfigDir: int = 1) -> None:
+        self.title: str = 'pyChing'
+        self.version: str = '1.2.2'
+        self.os: str = sys.platform
+        self.osType: str = os.name
+        self.execPath: Path = self.GetProgramDir()
+        self.configPath: Path = self.GetUserCfgDir('.pyching')
+        self.savePath: Path = self.configPath
+        self.configFile: Path = self.configPath / 'pychingrc'
+        self.saveFileExt: str = '.psv'
+        self.internalImageExt: str = '.#@~'
+        self.internalHtmlExt: str = '.~@#'
+        self.saveFileID: tuple[str, str] = ('pyching_save_file', self.version)
+        self.emailAddress: str = 'elguavas@users.sourceforge.net'
+        self.webAddress: str = 'http://pyching.sourceforge.net'
 
-    def GetProgramDir(self):
+    def GetProgramDir(self) -> Path:
         """
         return the filesystem directory where this program file resides.
         (ie the applications exec or import directory.)
         """
-        if __name__ != '__main__': # we were imported
-            appDir=os.path.dirname(__file__)
-        else: # we were exec'ed (for testing only)
-            appDir=os.path.abspath(sys.path[0])
+        if __name__ != '__main__':  # we were imported
+            appDir = Path(__file__).parent
+        else:  # we were exec'ed (for testing only)
+            appDir = Path(sys.path[0]).resolve()
         return appDir
 
-    def GetUserCfgDir(self,cfgDir):
+    def GetUserCfgDir(self, cfgDir: str) -> Path:
         """
-        Creates (if required) and returns a filesystem directory for storing 
+        Creates (if required) and returns a filesystem directory for storing
         user config files.
         """
-        userDir=os.path.expanduser('~')
-        if userDir != '~': #'HOME' exists as a key in os.environ
-            if not os.path.exists(userDir):
-                warn=('\n Warning: HOME environment variable points to\n '+
-                        userDir+'\n but the path does not exist.\n')
+        userDir = Path.home()
+        try:
+            # Verify home directory exists
+            if not userDir.exists():
+                warn = (f'\n Warning: HOME environment variable points to\n {userDir}\n'
+                        ' but the path does not exist.\n')
                 sys.stderr.write(warn)
-                userDir='~'
-        if userDir=='~': #we still don't have a home directory
-            #I guess we must simply default to os.getcwd()
-            userDir = os.getcwd() #hack for no real homedir
-        userDir=os.path.join(userDir,cfgDir)    
-        if not os.path.exists(userDir):
-            try: #make the config dir if it doesn't exist yet 
-                os.mkdir(userDir)
+                userDir = Path.cwd()
+        except (RuntimeError, OSError):
+            # Path.home() can raise RuntimeError if home not found
+            userDir = Path.cwd()  # hack for no real homedir
+
+        userDir = userDir / cfgDir
+        if not userDir.exists():
+            try:  # make the config dir if it doesn't exist yet
+                userDir.mkdir(parents=True, exist_ok=True)
             except IOError:
-                warn=('\n Warning: unable to create user config directory\n '+
-                        userDir+'\n')
+                warn = f'\n Warning: unable to create user config directory\n {userDir}\n'
                 sys.stderr.write(warn)
         return userDir
 
@@ -118,7 +125,7 @@ class Hexagrams:
     """
     holds both Hexagrams for a reading, public class
     """
-    def __init__(self, oracleType='coin'):
+    def __init__(self, oracleType: str = 'coin') -> None:
         """
         initialise self by setting oracle type
         defaults to coin, if specified must be a valid oracle type (coin or yarrow)
@@ -126,20 +133,20 @@ class Hexagrams:
         #public data attributes - should read but not written to from outside this module
         #any attributes that need to be modified from outside this module have a 'set_xxx'
         #method available below
-        self.question = ''#use SetQuestion (below) to set this attribute from outside this module
-        self.oracle = oracleType #oracle being used
-        self.hex1 = Hexagram() #Hexagram 1 data structure
-        self.hex2 = Hexagram() #Hexagram 2 data structure
-        self.currentLine = 0 #current line being cast in Hex1
-        self.currentOracleValues = [] #list of oracle values for current line
+        self.question: str = ''  # use SetQuestion (below) to set this attribute from outside this module
+        self.oracle: str = oracleType  # oracle being used
+        self.hex1: Hexagram = Hexagram()  # Hexagram 1 data structure
+        self.hex2: Hexagram = Hexagram()  # Hexagram 2 data structure
+        self.currentLine: int = 0  # current line being cast in Hex1
+        self.currentOracleValues: list[int] = []  # list of oracle values for current line
 
-    def __GetHexDetails(self, hexKey):
+    def __GetHexDetails(self, hexKey: list[int]) -> tuple[str, str]:
         """
         lookup hex name and number, private method
-        
-        hexKey value should be a list of the non-moving line numbers for the 
+
+        hexKey value should be a list of the non-moving line numbers for the
         Hexagram being enquired upon (Hex?.Key)
-        returns a list of Hexagram details in the form [number, name]
+        returns a tuple of Hexagram details in the form (number, name)
         """
         if hexKey == [7,7,7,7,7,7]: return ('1', "Tch'ien")
         elif hexKey == [8,8,8,8,8,8]: return ('2', "Koun")
@@ -209,7 +216,7 @@ class Hexagrams:
             return (0, "lookup error")
             # pass
 
-    def NewLine(self):
+    def NewLine(self) -> None:
         """
         builds next line in Hex1 and completes both Hexagrams after line 6, public method
         """
@@ -245,23 +252,26 @@ class Hexagrams:
                 [self.hex2.number, self.hex2.name] = self.__GetHexDetails(self.hex2.lineValues) #lookup Hex2 details
                 self.hex2.infoSource = 'pyching_int_data.in'+self.hex2.number+'data()'
 
-    def SetQuestion(self, questionText):
+    def SetQuestion(self, questionText: str) -> None:
         """
         used to set the Hexagrams.question attribute from outside this module, public method
         """
         self.question = questionText
     
-    def __HexStorage(self, file, action):
+    def __HexStorage(self, file: Path | str, action: str) -> Optional[tuple[str, str]]:
         """
         store or load a Hexagrams instance to/from disk file using the utility routine
         Storage(), private method
 
-        this private method should be called from the public load and save 
+        this private method should be called from the public load and save
         routines below. action should be 'save' or 'load' .
         """
-        if os.path.expanduser('~') != '~': #unix-style home directories
-            if not os.path.exists(pyching.savePath): #failsafe if user deleted ~/.pyching while program running :-)
-                os.mkdir(pyching.savePath)#make the save dir
+        try:
+            # Failsafe if user deleted ~/.pyching while program running
+            if not pyching.savePath.exists():
+                pyching.savePath.mkdir(parents=True, exist_ok=True)
+        except (RuntimeError, OSError):
+            pass  # If we can't determine home, Storage() will handle the error
         try:
             if action == 'save':
                 hexData = (pyching.saveFileID, self.question, self.oracle, self.hex1, 
@@ -277,11 +287,11 @@ class Hexagrams:
                                 self.currentLine, self.currentOracleValues = hexData
                 return saveFileID #to enable savefile verification and version checking
 
-    def Save(self, file):
+    def Save(self, file: Path | str) -> None:
         """
         save instance data to disk file, public method
 
-        this function should be called in a 
+        this function should be called in a
         try:
         except IOError:
         block, to handle potential disk IO errors
@@ -289,26 +299,26 @@ class Hexagrams:
         #fileName = time.strftime('%Y_%m_%d_%H_%M_%S.sav', time.localtime(time.time()))
         try:
             self.__HexStorage(file, 'save')
-        except IOError: #pass the error back up the line
-            raise #re-raise the exception
+        except IOError:  # pass the error back up the line
+            raise  # re-raise the exception
 
-    def Load(self, file):
+    def Load(self, file: Path | str) -> Optional[tuple[str, str]]:
         """
         load instance data from disk file, public method, returns savefile version
 
-        this function should be called in a 
+        this function should be called in a
         try:
         except IOError:
         block, to handle potential disk IO errors
         """
         try:
             version = self.__HexStorage(file, 'load')
-        except IOError: #pass the error back up the line
-            raise #re-raise the exception
+        except IOError:  # pass the error back up the line
+            raise  # re-raise the exception
         else:
-            return version #to enable savefile version check if required
+            return version  # to enable savefile version check if required
             
-    def ReadingAsText(self):
+    def ReadingAsText(self) -> str:
         """
         create a multi-line text representation of the reading as a formatted string, public method,
         returns the string
@@ -347,12 +357,12 @@ class Hexagrams:
 # utility routines 
 ######################
 
-def Storage(file, data=None):
+def Storage(file: Path | str, data: Any = None) -> Any:
     """
     store or load data to/from file using pickler
 
-    data should be a list of data items if storing, or None if loading
-    returns an unpickled list of data items on successful load
+    data should be a tuple of data items if storing, or None if loading
+    returns an unpickled tuple of data items on successful load
 
     this function should be called in a
     try:

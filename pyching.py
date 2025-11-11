@@ -33,7 +33,7 @@ start-up module for pyching
 import sys
 
 #handle command line switches
-def CommandLineSwitches():
+def CommandLineSwitches() -> None:
     if ('-h' in sys.argv) or ('/h' in sys.argv) or('--help' in sys.argv):
         print(' pyChing - command line switches\n')
         print(' -h, --help                   display this help message')
@@ -58,7 +58,7 @@ def CommandLineSwitches():
             sys.stderr.write("Sorry, pyChing requires at least Tk 8.0\n")
             sys.exit(1)
 
-def main():
+def main() -> None:
     """Main entry point for pyChing"""
     CommandLineSwitches()
 
