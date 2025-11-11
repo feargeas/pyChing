@@ -99,17 +99,21 @@ def print_banner():
 def get_question():
     """Prompt user for their question"""
     print("What question do you wish to ask the oracle?")
-    print("(Maximum 70 characters)")
+    print("(Maximum 70 characters, or press Ctrl+C to cancel)")
     print()
     while True:
-        question = input("Question: ").strip()
-        if len(question) == 0:
-            print("Please enter a question.")
-            continue
-        if len(question) > 70:
-            print(f"Question too long ({len(question)} characters). Please limit to 70.")
-            continue
-        return question
+        try:
+            question = input("Question: ").strip()
+            if len(question) == 0:
+                print("Please enter a question.")
+                continue
+            if len(question) > 70:
+                print(f"Question too long ({len(question)} characters). Please limit to 70.")
+                continue
+            return question
+        except (EOFError, KeyboardInterrupt):
+            print("\n\nReading cancelled.")
+            return None
 
 
 def cast_reading(hexes):
@@ -117,6 +121,7 @@ def cast_reading(hexes):
     print("\n" + "-"*70)
     print("Casting hexagram lines...")
     print("Press ENTER to cast each line (three coins will be tossed)")
+    print("(Press Ctrl+C to cancel)")
     print("-"*70 + "\n")
 
     coin_faces = {2: 'Tails', 3: 'Heads'}
@@ -127,20 +132,25 @@ def cast_reading(hexes):
         9: 'Old Yang (changing)'
     }
 
-    for line_num in range(1, 7):
-        input(f"Press ENTER to cast line {line_num} of 6...")
+    try:
+        for line_num in range(1, 7):
+            input(f"Press ENTER to cast line {line_num} of 6...")
 
-        # Cast the line using the oracle engine
-        hexes.NewLine()
+            # Cast the line using the oracle engine
+            hexes.NewLine()
 
-        # Get the coin values and line value
-        coins = hexes.currentOracleValues
-        line_value = hexes.hex1.lineValues[line_num - 1]
+            # Get the coin values and line value
+            coins = hexes.currentOracleValues
+            line_value = hexes.hex1.lineValues[line_num - 1]
 
-        # Display the coin toss results
-        print(f"  Coins: {coin_faces[coins[0]]}, {coin_faces[coins[1]]}, {coin_faces[coins[2]]}")
-        print(f"  Sum: {sum(coins)} = {line_names[line_value]}")
-        print()
+            # Display the coin toss results
+            print(f"  Coins: {coin_faces[coins[0]]}, {coin_faces[coins[1]]}, {coin_faces[coins[2]]}")
+            print(f"  Sum: {sum(coins)} = {line_names[line_value]}")
+            print()
+        return True
+    except (EOFError, KeyboardInterrupt):
+        print("\n\nReading cancelled.")
+        return False
 
 
 def display_reading(hexes):
@@ -222,14 +232,28 @@ def wrap_text(text, width):
 def save_reading(hexes):
     """Offer to save the reading to a file"""
     print("\nWould you like to save this reading?")
-    response = input("Save? (y/n): ").strip().lower()
+
+    while True:
+        try:
+            response = input("Save? (y/n): ").strip().lower()
+            if response in ('y', 'yes', 'n', 'no', ''):
+                break
+            print("Please enter 'y' for yes or 'n' for no.")
+        except (EOFError, KeyboardInterrupt):
+            print("\nCancelled.")
+            return
 
     if response in ('y', 'yes'):
         pyching = pyching_engine.PychingAppDetails()
         default_name = "reading"
 
         print(f"\nReadings are saved to: {pyching.savePath}")
-        filename = input(f"Filename (default: {default_name}): ").strip()
+
+        try:
+            filename = input(f"Filename (default: {default_name}): ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nCancelled.")
+            return
 
         if not filename:
             filename = default_name
@@ -249,39 +273,49 @@ def save_reading(hexes):
 def main_menu():
     """Display main menu and handle user choices"""
     while True:
-        print("\n" + "="*70)
-        print("MAIN MENU")
-        print("="*70)
-        print("\n1. New Reading")
-        print("2. Load Saved Reading")
-        print("3. Quit")
-        print()
+        try:
+            print("\n" + "="*70)
+            print("MAIN MENU")
+            print("="*70)
+            print("\n1. New Reading")
+            print("2. Load Saved Reading")
+            print("3. Quit")
+            print()
 
-        choice = input("Choose an option (1-3): ").strip()
+            choice = input("Choose an option (1-3): ").strip()
 
-        if choice == '1':
-            new_reading()
-        elif choice == '2':
-            load_reading()
-        elif choice == '3':
-            print("\nMay the wisdom of the I Ching guide your path.")
+            if choice == '1':
+                new_reading()
+            elif choice == '2':
+                load_reading()
+            elif choice in ('3', 'q', 'quit', 'exit'):
+                print("\nMay the wisdom of the I Ching guide your path.")
+                print("Farewell.\n")
+                sys.exit(0)
+            elif choice == '':
+                continue
+            else:
+                print("\nInvalid choice. Please enter 1, 2, or 3.")
+        except (EOFError, KeyboardInterrupt):
+            print("\n\nMay the wisdom of the I Ching guide your path.")
             print("Farewell.\n")
             sys.exit(0)
-        else:
-            print("\nInvalid choice. Please enter 1, 2, or 3.")
 
 
 def new_reading():
     """Perform a new oracle reading"""
     # Get the question
     question = get_question()
+    if question is None:
+        return  # User cancelled
 
     # Create new hexagrams object with coin oracle
     hexes = pyching_engine.Hexagrams('coin')
     hexes.question = question
 
     # Cast all six lines
-    cast_reading(hexes)
+    if not cast_reading(hexes):
+        return  # User cancelled
 
     # Display the reading
     display_reading(hexes)
@@ -313,7 +347,11 @@ def load_reading():
             print(f"  {i}. {filename}")
 
         print()
-        choice = input("Enter number to load (or press ENTER to cancel): ").strip()
+        try:
+            choice = input("Enter number to load (or press ENTER to cancel): ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nCancelled.")
+            return
 
         if not choice:
             return
@@ -333,7 +371,9 @@ def load_reading():
             else:
                 print("Invalid selection.")
         except ValueError:
-            print("Invalid input.")
+            print("Invalid input. Please enter a number.")
+    except FileNotFoundError:
+        print(f"Directory not found: {pyching.savePath}")
     except Exception as e:
         print(f"Error loading readings: {e}")
 
