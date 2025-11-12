@@ -39,20 +39,20 @@ def BuildHtml(dict):
     for i in range(0,len(textList)):
         #print textList[i].strip()
         if textList[i].strip()=='':
-            textList[i]="<p>"
+            textList[i]="<p>"                
     textHtmlStr='\n'.join(textList)
-    htmlStr = (
-        f"""<html><body><p><h2><img SRC={dict['imgSrc']}"""
-        f"""> {dict['title']}</h2><p>"""
-        f"""{textHtmlStr}<p>"""
-        f"""<b>The bottom line</b>, as {dict[1]}<p>"""
-        f"""<b>The second line</b>, as {dict[2]}<p>"""
-        f"""<b>The third line</b>, as {dict[3]}<p>"""
-        f"""<b>The fourth line</b>, as {dict[4]}<p>"""
-        f"""<b>The fifth line</b>, as {dict[5]}<p>"""
-        f"""<b>The topmost line</b>, as {dict[6]}<p>"""
-        f"""</body></html>"""
-    )
+    htmlStr=(
+            """<html><body><p><h2><img SRC=%s"""%(dict['imgSrc'])+
+            """> %s</h2><p>"""%(dict['title'])+
+            """%s<p>"""%(textHtmlStr)+
+            """<b>The bottom line</b>, as %s<p>"""%(dict[1])+
+            """<b>The second line</b>, as %s<p>"""%(dict[2])+
+            """<b>The third line</b>, as %s<p>"""%(dict[3])+
+            """<b>The fourth line</b>, as %s<p>"""%(dict[4])+
+            """<b>The fifth line</b>, as %s<p>"""%(dict[5])+
+            """<b>The topmost line</b>, as %s<p>"""%(dict[6])+
+            """</body></html>"""
+            )
     return htmlStr
 
 
