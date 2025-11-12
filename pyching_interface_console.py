@@ -39,7 +39,7 @@ from typing import Optional
 import pyching_engine
 
 # Import hexagram data modules
-import pyching_int_data
+import pyching_data
 
 
 class HTMLToText(HTMLParser):
@@ -179,7 +179,7 @@ def display_interpretation(hexes: pyching_engine.Hexagrams) -> None:
 
     try:
         # Get the HTML data for hexagram 1
-        hex1_func = getattr(pyching_int_data, f'in{hexes.hex1.number}data')
+        hex1_func = getattr(pyching_data, f'in{hexes.hex1.number}data')
         hex1_html = hex1_func()
         hex1_text = html_to_text(hex1_html)
 
@@ -195,7 +195,7 @@ def display_interpretation(hexes: pyching_engine.Hexagrams) -> None:
         print("-" * 70)
 
         try:
-            hex2_func = getattr(pyching_int_data, f'in{hexes.hex2.number}data')
+            hex2_func = getattr(pyching_data, f'in{hexes.hex2.number}data')
             hex2_html = hex2_func()
             hex2_text = html_to_text(hex2_html)
 
