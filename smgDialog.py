@@ -58,7 +58,8 @@ class smgDialog(Toplevel):
         Toplevel.__init__(self, parent)
         self.withdraw()#hide the window until it is fully built
         #place the window
-        self.geometry(f"+{parent.winfo_rootx()+10:d}+{parent.winfo_rooty()+10:d}")
+        self.geometry("+%d+%d" % (parent.winfo_rootx()+10,
+                                                            parent.winfo_rooty()+10))
         #transient window or not
         if transient: self.transient(parent)
         if resizeable: 
