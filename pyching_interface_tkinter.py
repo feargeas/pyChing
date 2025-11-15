@@ -56,13 +56,19 @@ from smgDialog import smgDialog
 from smgHtmlView import smgHtmlView
 from smgAbout import smgAbout
 
-# Global verbose flag for debugging output
+# Global verbose and debug flags for debugging output
 VERBOSE = False
+DEBUG = False
 
 def vprint(*args, **kwargs):
-    """Print only if verbose mode is enabled"""
+    """Print only if verbose mode is enabled (-v)"""
     if VERBOSE:
         print("[pyChing]", *args, **kwargs)
+
+def dprint(*args, **kwargs):
+    """Print only if debug mode is enabled (very verbose -vv)"""
+    if DEBUG:
+        print("[pyChing DEBUG]", *args, **kwargs)
 
 class WidgetColors:
     """
@@ -78,11 +84,15 @@ class WidgetColors:
         Args:
             theme_name: Name of the theme to load (e.g., 'default', 'solarized-dark')
         """
+        dprint(f"WidgetColors.__init__(theme_name='{theme_name}')")
         # Store theme name for config persistence
         self.theme_name = theme_name
 
         # Load the theme
         theme = pyching_themes.get_theme(theme_name)
+        dprint(f"  Loaded theme class: {theme.__class__.__name__}")
+        dprint(f"  Theme description: {theme.description}")
+        dprint(f"  Theme line_style: {theme.line_style}")
 
         # Copy all color attributes from theme
         self.bgReading = theme.bgReading
@@ -95,6 +105,7 @@ class WidgetColors:
         self.colorLineBody = theme.colorLineBody
         self.colorLineHighlight = theme.colorLineHighlight
         self.colorLineShadow = theme.colorLineShadow
+        dprint(f"  Colors: bg={self.bgReading}, lineBody={self.colorLineBody}")
 
         # Store the theme object for HexLine to access line_style settings
         self.theme = theme
@@ -116,12 +127,15 @@ class WidgetFonts:
         Args:
             scale: Font size multiplier (0.5 to 2.0). Default 1.0 = 100%
         """
+        dprint(f"WidgetFonts.__init__(scale={scale})")
         # Store scale for later adjustment
         self.scale = max(0.5, min(2.0, scale))  # Clamp between 50% and 200%
+        dprint(f"  Clamped scale to: {self.scale} ({int(self.scale*100)}%)")
 
         # Define font families with fallbacks
         # Tkinter will use the first available font from the list
         self.sans_serif = ('Helvetica', 'Arial', 'DejaVu Sans', 'sans-serif')
+        dprint(f"  Font family fallbacks: {self.sans_serif}")
 
         # Base font sizes (before scaling)
         self._base_sizes = {
@@ -137,6 +151,7 @@ class WidgetFonts:
         """Create or recreate all fonts with current scale"""
         small_size = int(self._base_sizes['small'] * self.scale)
         large_size = int(self._base_sizes['large'] * self.scale)
+        dprint(f"  Creating fonts: small={small_size}pt, large={large_size}pt")
 
         # Menu and button fonts - small size, regular weight
         self.menu = tkFont.Font(family=self.sans_serif, size=small_size, weight='normal')
@@ -150,6 +165,7 @@ class WidgetFonts:
 
         # Line hint font - small size, regular weight
         self.labelLineHint = tkFont.Font(family=self.sans_serif, size=small_size, weight='normal')
+        dprint(f"  Created 5 font objects")
 
     def set_scale(self, scale: float) -> None:
         """
@@ -160,11 +176,13 @@ class WidgetFonts:
         """
         old_scale = self.scale
         self.scale = max(0.5, min(2.0, scale))
+        dprint(f"WidgetFonts.set_scale({scale:.2f}) - old={old_scale:.2f}, new={self.scale:.2f}")
 
         if old_scale != self.scale:
             # Recalculate sizes
             small_size = int(self._base_sizes['small'] * self.scale)
             large_size = int(self._base_sizes['large'] * self.scale)
+            dprint(f"  Updating fonts: small={small_size}pt, large={large_size}pt")
 
             # Update existing Font objects
             self.menu.configure(size=small_size)
@@ -172,6 +190,9 @@ class WidgetFonts:
             self.label.configure(size=small_size)
             self.labelHexTitles.configure(size=large_size)
             self.labelLineHint.configure(size=small_size)
+            dprint(f"  All 5 font objects reconfigured")
+        else:
+            dprint(f"  No change needed (same scale)")
 
 class WindowMain:
     """
@@ -262,21 +283,30 @@ class WindowMain:
         return _menu
 
     def MakeMenus(self, parent):
+        dprint("Creating application menus...")
         self.menuMain = self.__AddMenu(parent,'')#create the menubar
-        self.menuMainFile = self.__AddMenu(self.menuMain,'File')#create the file menu 
-        self.menuMainSettings = self.__AddMenu(self.menuMain,'Settings')#create the settings menu 
-        self.menuMainHelp = self.__AddMenu(self.menuMain,'Help')#create the help menu 
-        
+        self.menuMainFile = self.__AddMenu(self.menuMain,'File')#create the file menu
+        dprint("  Created File menu")
+        self.menuMainSettings = self.__AddMenu(self.menuMain,'Settings')#create the settings menu
+        dprint("  Created Settings menu")
+        self.menuMainHelp = self.__AddMenu(self.menuMain,'Help')#create the help menu
+        dprint("  Created Help menu")
+
         def AddMenuItems(menu, items):
+            dprint(f"  Adding {len(items)} items to menu")
             for item in items:
                 if item[0] == 's':#add a separator
                     menu.add_separator()
-                elif item[0] == 'c':#add a command  
+                    dprint(f"    - separator")
+                elif item[0] == 'c':#add a command
                     menu.add_command(label=item[1],underline=item[2],command=item[3])
+                    dprint(f"    - command: {item[1]}")
                 elif item[0] == 'k':#add a checkbutton
-                    menu.add_checkbutton(label=item[1],underline=item[2],command=item[3],variable=item[4])  
+                    menu.add_checkbutton(label=item[1],underline=item[2],command=item[3],variable=item[4])
+                    dprint(f"    - checkbutton: {item[1]}")
                 elif item[0] == 'r':#add a radiobutton
-                    menu.add_radiobutton(label=item[1],underline=item[2],command=item[3],variable=item[4],value=item[5])  
+                    menu.add_radiobutton(label=item[1],underline=item[2],command=item[3],variable=item[4],value=item[5])
+                    dprint(f"    - radiobutton: {item[1]} (value={item[5]})")
                 #elif item[0] == 'm':#add a submenu
                 # pass #not implemented 
         
@@ -829,6 +859,10 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         print('\nend debug')
         
     def RepaintColors(self,newColors):
+        dprint(f"RepaintColors() called")
+        dprint(f"  Old theme: {getattr(self.colors, 'theme_name', 'unknown')}")
+        dprint(f"  New theme: {getattr(newColors, 'theme_name', 'unknown')}")
+        dprint(f"  Updating {12 + 6*2} widget backgrounds...")
         oldColors=self.colors #save them for comparison below
         self.colors=newColors
         #these are always repainted
@@ -1706,20 +1740,26 @@ if __name__ == '__main__':
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python pyching_interface_tkinter.py          # Run normally
+  python pyching_interface_tkinter.py          # Run normally (quiet)
   python pyching_interface_tkinter.py -v       # Run with verbose output
+  python pyching_interface_tkinter.py -vv      # Run with very verbose/debug output
   python pyching_interface_tkinter.py --verbose # Run with verbose output
 """)
     parser.add_argument('-v', '--verbose',
-                       action='store_true',
-                       help='Enable verbose output for debugging')
+                       action='count',
+                       default=0,
+                       help='Increase verbosity (-v for verbose, -vv for debug)')
 
     args = parser.parse_args()
 
-    # Set global verbose flag
-    VERBOSE = args.verbose
+    # Set global verbose and debug flags based on count
+    VERBOSE = args.verbose >= 1
+    DEBUG = args.verbose >= 2
 
-    if VERBOSE:
+    if DEBUG:
+        print("[pyChing DEBUG] Debug mode enabled (very verbose)")
+        print("[pyChing DEBUG] Starting pyChing I Ching Oracle...")
+    elif VERBOSE:
         print("[pyChing] Verbose mode enabled")
         print("[pyChing] Starting pyChing I Ching Oracle...")
 
