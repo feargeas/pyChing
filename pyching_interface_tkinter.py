@@ -363,9 +363,12 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 elif len(configData) == 5:
                     # Old format without theme_name (backward compatibility)
                     version,self.colors,castAllValue,showPlacesValue,showLineHintsValue = configData
-                    # Old configs don't have theme_name, default to 'default'
+                    # Old configs don't have theme attributes, add them
                     if not hasattr(self.colors, 'theme_name'):
                         self.colors.theme_name = 'default'
+                    if not hasattr(self.colors, 'theme'):
+                        # Add the missing theme object for HexLine compatibility
+                        self.colors.theme = pyching_themes.get_theme('default')
                 else:
                     # Unknown format, use defaults
                     sys.stderr.write(f'\n warning: unexpected config format, using defaults\n')
