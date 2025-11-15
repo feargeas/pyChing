@@ -289,8 +289,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 email='email:  '+pyching.emailAddress,
                 www='web:  '+pyching.webAddress,
                 pictureData=aboutPicData,
-                licenceFile=pyching.execPath+'COPYING',
-                creditsFile=pyching.execPath+'CREDITS',
+                licenceFile=pyching.execPath / 'COPYING',
+                creditsFile=pyching.execPath / 'CREDITS',
                 fontAppTitle=self.fonts.labelHexTitles,  
                 fontText=self.fonts.label,
                 fg=self.colors.fgLabelHexTitles,
@@ -328,13 +328,13 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                     configData= pyching_engine.Storage(pyching.configFile, data=None)
             except IOError: #just silently let this past??
                 #print '\n error: unable to read configuration file', pyching.configFile
-                sys.stderr.write('\n error (IOError): unable to read configuration file'+pyching.configFile+'\n')
+                sys.stderr.write(f'\n error (IOError): unable to read configuration file {pyching.configFile}\n')
                 #tkMessageBox.showerror(title='File Error',
                 #       message='Unable to read configuration file:\n'+pyching.configFile)
                 pass
             except Exception: #just silently let this past??
                 #print '\n error: invalid configuration file', pyching.configFile
-                sys.stderr.write('\n error (pychingUnpickleError): invalid configuration file'+pyching.configFile+'\n')
+                sys.stderr.write(f'\n error (pychingUnpickleError): invalid configuration file {pyching.configFile}\n')
                 #tkMessageBox.showerror(title='File Error',
                 #       message='Invalid configuration file:\n'+pyching.configFile)
                 pass
@@ -464,7 +464,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         for line in self.hexLines[1]:#display hexagram 2
             if self.hexes.hex2.lineValues[i] == 0:#empty hexagram 2
                 #for lines 3,4,5 display 'no, moving, lines' message
-                if self.labelsNoMovingLines.has_key(i):
+                if i in self.labelsNoMovingLines:
                     self.labelsNoMovingLines[i].tkraise()
                     #self.labelsNoMovingLines[i].update()
                     #print self.labelsNoMovingLines[i].cget('text') #debug
