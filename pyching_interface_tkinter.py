@@ -34,6 +34,7 @@ import sys
 import os
 import time
 import copy
+import argparse
 from pathlib import Path
 from typing import Optional, Any
 
@@ -54,6 +55,14 @@ import pyching_themes
 from smgDialog import smgDialog
 from smgHtmlView import smgHtmlView
 from smgAbout import smgAbout
+
+# Global verbose flag for debugging output
+VERBOSE = False
+
+def vprint(*args, **kwargs):
+    """Print only if verbose mode is enabled"""
+    if VERBOSE:
+        print("[pyChing]", *args, **kwargs)
 
 class WidgetColors:
     """
@@ -169,26 +178,34 @@ class WindowMain:
     main application window
     """
     def __init__(self, master: Any) -> None:
+        vprint("Initializing WindowMain...")
         self.master = master
         # Enable window resizing (changed from non-resizable)
         self.master.resizable(height=True, width=True)
         # Set minimum size to prevent window from becoming too small
         self.master.minsize(600, 500)
+        vprint("Window configured: resizable=True, minsize=600x500")
+
         #self.master.colormapwindows([self.master])#debug, does this solve the 256 color problem??
         self.images = pyching_cimages.CoinImages()
+        vprint("Loaded coin images")
+
         try:
             self.master.iconbitmap(bitmap=f'@{pyching.execPath / "icon.xbm"}')
+            vprint("Loaded application icon")
         except TclError:
             #sys.stderr.write("can't load icon bitmap")
+            vprint("Could not load icon bitmap (not critical)")
             pass #just ignore this
         self.master.title(pyching.title + '  ' + pyching.version)
-        
+
         #application-wide event bindings
         self.master.bind('<F1>',self.HelpBinding) #help key #bind_all
         self.master.bind('<Alt-c>',self.CastButtonBinding) #cast button
         self.master.bind('<Alt-v>',self.ViewHex1InfoButtonBinding) #view hex 1 info button
         self.master.bind('<Alt-i>',self.ViewHex2InfoButtonBinding) #view hex 2 info button
-        
+        vprint("Registered keyboard bindings: F1, Alt-c, Alt-v, Alt-i")
+
         #application-wide protocol bindings
         self.master.protocol("WM_DELETE_WINDOW", self.Quit)
 
@@ -199,9 +216,13 @@ class WindowMain:
         self.showLineHints.set(True)
         self.castAll = BooleanVar()
         self.castAll.set(True)
+        vprint("Default settings: showPlaces=True, showLineHints=True, castAll=True")
+
         #instantiate default colour and font values
-        self.colors = WidgetColors() 
-        self.fonts = WidgetFonts() 
+        self.colors = WidgetColors()
+        self.fonts = WidgetFonts()
+        vprint(f"Initialized colors: theme='{self.colors.theme_name}'")
+        vprint(f"Initialized fonts: scale={self.fonts.scale} (100% = {int(self.fonts.scale * 100)}%)")
 
         #load configuration file (if any)
         self.LoadSettings()
@@ -226,6 +247,7 @@ class WindowMain:
     
     def Quit(self):
         #print 'bye now'#debug
+        vprint("User quit - closing application...")
         self.master.quit()
         
     def __AddMenu(self,parent,title):
@@ -355,22 +377,35 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
 
     def SelectTheme(self):
         """Show theme selection dialog and apply the selected theme"""
+        vprint("Opening theme selection dialog...")
         dialogSelectTheme = DialogSelectTheme(self.master,
                                               current_theme=getattr(self.colors, 'theme', None))
         if dialogSelectTheme.result:  # user selected a theme
             # Apply the new theme
             theme_name = dialogSelectTheme.result
+            vprint(f"User selected theme: '{theme_name}'")
             self.colors = WidgetColors(theme_name)
+            vprint(f"Applied theme '{theme_name}' (line_style={self.colors.theme.line_style})")
             self.RepaintColors(self.colors)
+            vprint("Theme applied and GUI repainted")
+        else:
+            vprint("Theme selection cancelled")
 
     def AdjustFontSize(self):
         """Show font size adjustment dialog"""
+        old_scale = self.fonts.scale
+        vprint(f"Opening font size dialog (current scale={old_scale:.2f} = {int(old_scale*100)}%)...")
         dialogFontSize = DialogAdjustFontSize(self.master,
                                               current_scale=self.fonts.scale)
         if dialogFontSize.result is not None:  # user selected a new size
             # Apply the new font scale
-            self.fonts.set_scale(dialogFontSize.result)
+            new_scale = dialogFontSize.result
+            vprint(f"User selected font scale: {new_scale:.2f} ({int(new_scale*100)}%)")
+            self.fonts.set_scale(new_scale)
+            vprint(f"Font sizes updated: small={int(10*new_scale)}pt, large={int(12*new_scale)}pt")
             # Fonts are Font objects, so changes propagate automatically to all widgets
+        else:
+            vprint("Font size adjustment cancelled")
 
     def SetColors(self):
         dialogSetColors = DialogSetColors(self.master,currentColors=copy.copy(self.colors))
@@ -378,10 +413,12 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             self.RepaintColors(dialogSetColors.result)    
 
     def SaveSettings(self) -> None:
+        vprint("Saving settings...")
         try:
             # Failsafe if user deleted ~/.pyching while program running
             if not pyching.configPath.exists():
                 pyching.configPath.mkdir(parents=True, exist_ok=True)
+                vprint(f"Created config directory: {pyching.configPath}")
         except (RuntimeError, OSError):
             pass  # If we can't create config dir, Storage() will handle the error
         castAllValue = self.castAll.get()
@@ -391,29 +428,36 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         theme_name = getattr(self.colors, 'theme_name', 'default')
         # Save font scale
         font_scale = self.fonts.scale
+        vprint(f"  castAll={castAllValue}, showPlaces={showPlacesValue}, showLineHints={showLineHintsValue}")
+        vprint(f"  theme='{theme_name}', font_scale={font_scale:.2f} ({int(font_scale*100)}%)")
         configData = (pyching.version,self.colors,castAllValue,showPlacesValue,showLineHintsValue,theme_name,font_scale)
         try:
                 pyching_engine.Storage(pyching.configFile, data=configData)
         except IOError:
             #print '\n error: unable to write config file', pyching.configFile
+            vprint(f"ERROR: Unable to write config file: {pyching.configFile}")
             tkMessageBox.showerror(title='File Error',
                             message='Unable to write configuration file:\n'+pyching.configFile)
         else:
             #print '\n saved file:', fileName
+            vprint(f"Settings saved to: {pyching.configFile}")
             self.labelStatus.configure(text='saved settings')
 
     def LoadSettings(self) -> None:
         if pyching.configFile.exists():  # if a saved configuration exists
+            vprint(f"Loading settings from: {pyching.configFile}")
             try:
                     configData= pyching_engine.Storage(pyching.configFile, data=None)
             except IOError: #just silently let this past??
                 #print '\n error: unable to read configuration file', pyching.configFile
+                vprint(f"ERROR: Unable to read configuration file: {pyching.configFile}")
                 sys.stderr.write(f'\n error (IOError): unable to read configuration file {pyching.configFile}\n')
                 #tkMessageBox.showerror(title='File Error',
                 #       message='Unable to read configuration file:\n'+pyching.configFile)
                 pass
             except Exception: #just silently let this past??
                 #print '\n error: invalid configuration file', pyching.configFile
+                vprint(f"ERROR: Invalid configuration file: {pyching.configFile}")
                 sys.stderr.write(f'\n error (pychingUnpickleError): invalid configuration file {pyching.configFile}\n')
                 #tkMessageBox.showerror(title='File Error',
                 #       message='Invalid configuration file:\n'+pyching.configFile)
@@ -421,9 +465,11 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             else:
                 #version can be tested against pyching.version for config file compatability
                 # Handle old (5-item), newer (6-item), and newest (7-item) config formats
+                vprint(f"Config format: {len(configData)}-item tuple")
                 if len(configData) == 7:
                     # Newest format with theme_name and font_scale
                     version,self.colors,castAllValue,showPlacesValue,showLineHintsValue,theme_name,font_scale = configData
+                    vprint(f"  Loaded theme='{theme_name}', font_scale={font_scale:.2f} ({int(font_scale*100)}%)")
                     # Reload colors from theme to ensure line_style is applied
                     self.colors = WidgetColors(theme_name)
                     # Reload fonts with saved scale
@@ -431,6 +477,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 elif len(configData) == 6:
                     # Format with theme_name but no font_scale
                     version,self.colors,castAllValue,showPlacesValue,showLineHintsValue,theme_name = configData
+                    vprint(f"  Loaded theme='{theme_name}', using default font scale")
                     # Reload colors from theme to ensure line_style is applied
                     self.colors = WidgetColors(theme_name)
                     # Use default font scale
@@ -438,6 +485,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 elif len(configData) == 5:
                     # Old format without theme_name (backward compatibility)
                     version,self.colors,castAllValue,showPlacesValue,showLineHintsValue = configData
+                    vprint("  Old format detected, using defaults for theme and font")
                     # Old configs don't have theme attributes, add them
                     if not hasattr(self.colors, 'theme_name'):
                         self.colors.theme_name = 'default'
@@ -448,6 +496,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                     self.fonts = WidgetFonts(1.0)
                 else:
                     # Unknown format, use defaults
+                    vprint(f"WARNING: Unexpected config format ({len(configData)} items), using defaults")
                     sys.stderr.write(f'\n warning: unexpected config format, using defaults\n')
                     self.colors = WidgetColors('default')
                     self.fonts = WidgetFonts(1.0)
@@ -458,7 +507,10 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 self.castAll.set(castAllValue)
                 self.showPlaces.set(showPlacesValue)
                 self.showLineHints.set(showLineHintsValue)
+                vprint(f"  Settings loaded: castAll={castAllValue}, showPlaces={showPlacesValue}, showLineHints={showLineHintsValue}")
                 #print '\n loaded config file:', pyching.configFile
+        else:
+            vprint(f"No config file found at: {pyching.configFile}, using defaults")
         
     def __HideLabel(self,label):
         label.configure(fg=label.cget('bg'))#fg=bg to hide label  
@@ -491,14 +543,18 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.master.update()
     
     def CastHexes(self):
+        vprint("Cast button pressed - starting new reading...")
         self.labelLineHint.show = 0 #disable line hints
         #get the question
         questionDialog = DialogGetQuestion(self.master)
         self.master.update()#makes sure the main app window gets redrawn properly (seems only to be a problem on win32)
         if questionDialog.result: #the user didn't cancel
+            question = questionDialog.result
+            vprint(f"Question entered: '{question}'")
             self.ClearReading()
             for coin in self.labelsCoins:#initialise coins display
                 coin.configure(image=self.images.coinFrames[0])
+            vprint("Starting hexagram cast (method=coin)...")
             self.hexes = pyching_engine.Hexagrams('coin')
             self.hexes.question = questionDialog.result
             self.ShowQuestion()
@@ -1642,9 +1698,45 @@ class DialogGetQuestion(smgDialog):
         else:
             return 1
         
-#create an instance of the app details for use throughout this module
-pyching = pyching_engine.PychingAppDetails()
+# Main execution
+if __name__ == '__main__':
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(
+        description='pyChing - I Ching Oracle GUI',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python pyching_interface_tkinter.py          # Run normally
+  python pyching_interface_tkinter.py -v       # Run with verbose output
+  python pyching_interface_tkinter.py --verbose # Run with verbose output
+""")
+    parser.add_argument('-v', '--verbose',
+                       action='store_true',
+                       help='Enable verbose output for debugging')
 
-windowRoot = Tk()
-windowMain = WindowMain(windowRoot)
-windowRoot.mainloop()
+    args = parser.parse_args()
+
+    # Set global verbose flag
+    VERBOSE = args.verbose
+
+    if VERBOSE:
+        print("[pyChing] Verbose mode enabled")
+        print("[pyChing] Starting pyChing I Ching Oracle...")
+
+    # Create an instance of the app details for use throughout this module
+    pyching = pyching_engine.PychingAppDetails()
+
+    vprint(f"Application path: {pyching.execPath}")
+    vprint(f"Config path: {pyching.configPath}")
+    vprint(f"Config file: {pyching.configFile}")
+    vprint(f"OS type: {pyching.osType}")
+
+    windowRoot = Tk()
+    vprint("Creating main window...")
+    windowMain = WindowMain(windowRoot)
+    vprint("Entering main event loop...")
+    windowRoot.mainloop()
+    vprint("Application exited")
+else:
+    # Module imported, not run directly - initialize pyching for imports
+    pyching = pyching_engine.PychingAppDetails()
