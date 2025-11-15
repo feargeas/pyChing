@@ -61,19 +61,20 @@ class SystemTheme(Theme):
     def __init__(self):
         super().__init__()
 
-        # Use Tkinter system colors
-        self.bgReading = "SystemButtonFace"
-        self.fgLabelHexTitles = "SystemButtonText"
-        self.fgLabelPlaces = "SystemButtonText"
-        self.fgLabelLines = "SystemButtonText"
-        self.fgMessageQuestion = "SystemButtonText"
+        # Use neutral gray palette that matches most OS themes
+        # (System color names like "SystemButtonText" aren't universally supported)
+        self.bgReading = "#e0e0e0"          # Light gray background
+        self.bgLabelHint = "#f5f5f5"        # Very light gray
 
-        # Detect if system is dark or light (simple heuristic)
-        # For now, use a neutral gray palette
-        self.bgReading = "#e0e0e0"          # Light gray
-        self.colorLineBody = "#404040"      # Dark gray
-        self.colorLineHighlight = "#606060"
-        self.colorLineShadow = "#202020"
+        self.fgLabelHexTitles = "#202020"   # Very dark gray
+        self.fgLabelPlaces = "#404040"      # Dark gray
+        self.fgLabelLines = "#303030"       # Very dark gray
+        self.fgLabelHint = "#000000"        # Black
+        self.fgMessageQuestion = "#202020"  # Very dark gray
+
+        self.colorLineBody = "#404040"      # Dark gray lines
+        self.colorLineHighlight = "#606060" # Medium gray
+        self.colorLineShadow = "#202020"    # Very dark gray
 
         # Use flat style for modern OS look
         self.line_style = 'flat'
