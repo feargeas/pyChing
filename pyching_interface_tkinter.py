@@ -202,11 +202,9 @@ class WindowMain:
     def __init__(self, master: Any) -> None:
         vprint("Initializing WindowMain...")
         self.master = master
-        # Enable window resizing (changed from non-resizable)
+        # Enable window resizing
         self.master.resizable(height=True, width=True)
-        # Set minimum size to prevent window from becoming too small
-        self.master.minsize(600, 500)
-        vprint("Window configured: resizable=True, minsize=600x500")
+        vprint("Window configured: resizable=True")
 
         #self.master.colormapwindows([self.master])#debug, does this solve the 256 color problem??
         self.images = pyching_cimages.CoinImages()
@@ -264,6 +262,17 @@ class WindowMain:
         self.MakeQuestionDisplay(self.frameMain)
 
         self.MakeHexDisplay(self.frameMain)
+
+        # Set dynamic minimum size based on natural content size
+        # This ensures the window is never larger than needed initially
+        # while preventing users from shrinking it below usable size
+        self.master.update_idletasks()  # Force layout calculation
+        natural_width = self.master.winfo_reqwidth()
+        natural_height = self.master.winfo_reqheight()
+        self.master.minsize(natural_width, natural_height)
+        vprint(f"Set dynamic minsize: {natural_width}x{natural_height} (based on content)")
+        dprint(f"  Window will start at natural size and can be resized larger")
+        dprint(f"  Minimum prevents shrinking below usable dimensions")
 
         self.hexes = None #so we can test if a reading has been performed yet
     
@@ -435,6 +444,14 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             self.fonts.set_scale(new_scale)
             vprint(f"Font sizes updated: small={int(10*new_scale)}pt, large={int(12*new_scale)}pt")
             # Fonts are Font objects, so changes propagate automatically to all widgets
+
+            # Recalculate minimum size to accommodate new font sizes
+            self.master.update_idletasks()  # Force layout recalculation
+            natural_width = self.master.winfo_reqwidth()
+            natural_height = self.master.winfo_reqheight()
+            self.master.minsize(natural_width, natural_height)
+            vprint(f"Updated minsize to {natural_width}x{natural_height} (adjusted for font scale)")
+            dprint(f"  Window minimum size dynamically adjusted for new font size")
         else:
             vprint("Font size adjustment cancelled")
 
