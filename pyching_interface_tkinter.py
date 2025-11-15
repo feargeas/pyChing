@@ -35,6 +35,7 @@ import os
 import time
 import copy
 import argparse
+import json
 from pathlib import Path
 from typing import Optional, Any
 
@@ -443,104 +444,115 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             self.RepaintColors(dialogSetColors.result)    
 
     def SaveSettings(self) -> None:
+        """Save settings to JSON config file"""
         vprint("Saving settings...")
+        dprint(f"SaveSettings() called")
         try:
             # Failsafe if user deleted ~/.pyching while program running
             if not pyching.configPath.exists():
                 pyching.configPath.mkdir(parents=True, exist_ok=True)
                 vprint(f"Created config directory: {pyching.configPath}")
-        except (RuntimeError, OSError):
-            pass  # If we can't create config dir, Storage() will handle the error
+                dprint(f"  Created directory: {pyching.configPath}")
+        except (RuntimeError, OSError) as e:
+            dprint(f"  Failed to create config directory: {e}")
+            pass  # If we can't create config dir, write will handle the error
+
+        # Gather settings
         castAllValue = self.castAll.get()
         showPlacesValue = self.showPlaces.get()
         showLineHintsValue = self.showLineHints.get()
-        # Save theme name for proper theme restoration
         theme_name = getattr(self.colors, 'theme_name', 'default')
-        # Save font scale
         font_scale = self.fonts.scale
+
         vprint(f"  castAll={castAllValue}, showPlaces={showPlacesValue}, showLineHints={showLineHintsValue}")
         vprint(f"  theme='{theme_name}', font_scale={font_scale:.2f} ({int(font_scale*100)}%)")
-        configData = (pyching.version,self.colors,castAllValue,showPlacesValue,showLineHintsValue,theme_name,font_scale)
+
+        # Create JSON config structure
+        config = {
+            'version': pyching.version,
+            'appearance': {
+                'theme': theme_name,
+                'font_scale': font_scale
+            },
+            'display': {
+                'cast_all': castAllValue,
+                'show_places': showPlacesValue,
+                'show_line_hints': showLineHintsValue
+            }
+        }
+        dprint(f"  Config structure: {config}")
+
+        # Write JSON file
         try:
-                pyching_engine.Storage(pyching.configFile, data=configData)
-        except IOError:
-            #print '\n error: unable to write config file', pyching.configFile
-            vprint(f"ERROR: Unable to write config file: {pyching.configFile}")
-            tkMessageBox.showerror(title='File Error',
-                            message='Unable to write configuration file:\n'+pyching.configFile)
-        else:
-            #print '\n saved file:', fileName
+            with open(pyching.configFile, 'w') as f:
+                json.dump(config, f, indent=2)
             vprint(f"Settings saved to: {pyching.configFile}")
+            dprint(f"  JSON written successfully")
             self.labelStatus.configure(text='saved settings')
+        except (IOError, OSError) as e:
+            vprint(f"ERROR: Unable to write config file: {pyching.configFile}")
+            dprint(f"  Error: {e}")
+            tkMessageBox.showerror(title='File Error',
+                            message=f'Unable to write configuration file:\n{pyching.configFile}')
 
     def LoadSettings(self) -> None:
-        if pyching.configFile.exists():  # if a saved configuration exists
+        """Load settings from JSON config file"""
+        if pyching.configFile.exists():
             vprint(f"Loading settings from: {pyching.configFile}")
+            dprint(f"LoadSettings() - config file exists")
             try:
-                    configData= pyching_engine.Storage(pyching.configFile, data=None)
-            except IOError: #just silently let this past??
-                #print '\n error: unable to read configuration file', pyching.configFile
-                vprint(f"ERROR: Unable to read configuration file: {pyching.configFile}")
-                sys.stderr.write(f'\n error (IOError): unable to read configuration file {pyching.configFile}\n')
-                #tkMessageBox.showerror(title='File Error',
-                #       message='Unable to read configuration file:\n'+pyching.configFile)
-                pass
-            except Exception: #just silently let this past??
-                #print '\n error: invalid configuration file', pyching.configFile
-                vprint(f"ERROR: Invalid configuration file: {pyching.configFile}")
-                sys.stderr.write(f'\n error (pychingUnpickleError): invalid configuration file {pyching.configFile}\n')
-                #tkMessageBox.showerror(title='File Error',
-                #       message='Invalid configuration file:\n'+pyching.configFile)
-                pass
-            else:
-                #version can be tested against pyching.version for config file compatability
-                # Handle old (5-item), newer (6-item), and newest (7-item) config formats
-                vprint(f"Config format: {len(configData)}-item tuple")
-                if len(configData) == 7:
-                    # Newest format with theme_name and font_scale
-                    version,self.colors,castAllValue,showPlacesValue,showLineHintsValue,theme_name,font_scale = configData
-                    vprint(f"  Loaded theme='{theme_name}', font_scale={font_scale:.2f} ({int(font_scale*100)}%)")
-                    # Reload colors from theme to ensure line_style is applied
-                    self.colors = WidgetColors(theme_name)
-                    # Reload fonts with saved scale
-                    self.fonts = WidgetFonts(font_scale)
-                elif len(configData) == 6:
-                    # Format with theme_name but no font_scale
-                    version,self.colors,castAllValue,showPlacesValue,showLineHintsValue,theme_name = configData
-                    vprint(f"  Loaded theme='{theme_name}', using default font scale")
-                    # Reload colors from theme to ensure line_style is applied
-                    self.colors = WidgetColors(theme_name)
-                    # Use default font scale
-                    self.fonts = WidgetFonts(1.0)
-                elif len(configData) == 5:
-                    # Old format without theme_name (backward compatibility)
-                    version,self.colors,castAllValue,showPlacesValue,showLineHintsValue = configData
-                    vprint("  Old format detected, using defaults for theme and font")
-                    # Old configs don't have theme attributes, add them
-                    if not hasattr(self.colors, 'theme_name'):
-                        self.colors.theme_name = 'default'
-                    if not hasattr(self.colors, 'theme'):
-                        # Add the missing theme object for HexLine compatibility
-                        self.colors.theme = pyching_themes.get_theme('default')
-                    # Use default font scale
-                    self.fonts = WidgetFonts(1.0)
-                else:
-                    # Unknown format, use defaults
-                    vprint(f"WARNING: Unexpected config format ({len(configData)} items), using defaults")
-                    sys.stderr.write(f'\n warning: unexpected config format, using defaults\n')
-                    self.colors = WidgetColors('default')
-                    self.fonts = WidgetFonts(1.0)
-                    castAllValue = True
-                    showPlacesValue = True
-                    showLineHintsValue = True
+                with open(pyching.configFile, 'r') as f:
+                    config = json.load(f)
+                dprint(f"  JSON loaded successfully: {config}")
 
+                # Extract settings with defaults
+                theme_name = config.get('appearance', {}).get('theme', 'default')
+                font_scale = config.get('appearance', {}).get('font_scale', 1.0)
+                castAllValue = config.get('display', {}).get('cast_all', True)
+                showPlacesValue = config.get('display', {}).get('show_places', True)
+                showLineHintsValue = config.get('display', {}).get('show_line_hints', True)
+
+                vprint(f"  Loaded theme='{theme_name}', font_scale={font_scale:.2f} ({int(font_scale*100)}%)")
+                dprint(f"  Display settings: cast_all={castAllValue}, show_places={showPlacesValue}, show_line_hints={showLineHintsValue}")
+
+                # Apply theme and fonts
+                self.colors = WidgetColors(theme_name)
+                self.fonts = WidgetFonts(font_scale)
+
+                # Apply display settings
                 self.castAll.set(castAllValue)
                 self.showPlaces.set(showPlacesValue)
                 self.showLineHints.set(showLineHintsValue)
+
                 vprint(f"  Settings loaded: castAll={castAllValue}, showPlaces={showPlacesValue}, showLineHints={showLineHintsValue}")
-                #print '\n loaded config file:', pyching.configFile
+
+            except (IOError, OSError) as e:
+                vprint(f"ERROR: Unable to read configuration file: {pyching.configFile}")
+                dprint(f"  IOError: {e}")
+                sys.stderr.write(f'\n error (IOError): unable to read configuration file {pyching.configFile}\n')
+                # Use defaults on error
+                self.castAll.set(True)
+                self.showPlaces.set(True)
+                self.showLineHints.set(True)
+            except json.JSONDecodeError as e:
+                vprint(f"ERROR: Invalid JSON in configuration file: {pyching.configFile}")
+                dprint(f"  JSONDecodeError: {e}")
+                sys.stderr.write(f'\n error (JSONDecodeError): invalid JSON in configuration file {pyching.configFile}\n')
+                # Use defaults on error
+                self.castAll.set(True)
+                self.showPlaces.set(True)
+                self.showLineHints.set(True)
+            except Exception as e:
+                vprint(f"ERROR: Unexpected error loading configuration: {e}")
+                dprint(f"  Exception: {e}")
+                sys.stderr.write(f'\n error: unexpected error loading configuration file {pyching.configFile}\n')
+                # Use defaults on error
+                self.castAll.set(True)
+                self.showPlaces.set(True)
+                self.showLineHints.set(True)
         else:
             vprint(f"No config file found at: {pyching.configFile}, using defaults")
+            dprint("  Using default settings")
         
     def __HideLabel(self,label):
         label.configure(fg=label.cget('bg'))#fg=bg to hide label  
