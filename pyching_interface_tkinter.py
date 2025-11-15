@@ -266,7 +266,7 @@ class WindowMain:
         # Set dynamic minimum size based on natural content size
         # This ensures the window is never larger than needed initially
         # while preventing users from shrinking it below usable size
-        # Info buttons are now included (always grid()'ed but disabled/empty)
+        # Info buttons are grid()'ed during this calculation for accurate sizing
         self.master.update_idletasks()  # Force layout calculation
         natural_width = self.master.winfo_reqwidth()
         natural_height = self.master.winfo_reqheight()
@@ -274,7 +274,12 @@ class WindowMain:
         vprint(f"Set dynamic minsize: {natural_width}x{natural_height} (includes all elements)")
         dprint(f"  Window will start at natural size and can be resized larger")
         dprint(f"  Minimum prevents shrinking below usable dimensions")
-        dprint(f"  Info buttons are included in layout (disabled/empty initially)")
+        dprint(f"  Info buttons included in calculation")
+
+        # Hide info buttons initially (no reading yet)
+        # Frame stays grid()'ed during sizing, but removed now for clean initial appearance
+        self.frameInfoButtons.grid_remove()
+        dprint(f"  Info buttons hidden initially (will appear on first reading)")
 
         self.hexes = None #so we can test if a reading has been performed yet
     
@@ -448,12 +453,32 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             # Fonts are Font objects, so changes propagate automatically to all widgets
 
             # Recalculate minimum size to accommodate new font sizes
+            # If info buttons are hidden, temporarily show them for accurate size calculation
+            frame_was_hidden = False
+            try:
+                self.frameInfoButtons.grid_info()
+                dprint("  Info buttons frame is visible")
+            except:
+                # Frame is not grid()'ed, temporarily show it for sizing
+                frame_was_hidden = True
+                dprint("  Info buttons hidden, temporarily showing for size calculation")
+                self.frameInfoButtons.grid(column=1, row=0, columnspan=3, sticky='nw', pady=5)
+                # Set sample text with maximum expected length for accurate sizing
+                sample_text = 'View information on:  64. Before Completion'
+                self.buttonViewHex1Info.configure(text=sample_text)
+
             self.master.update_idletasks()  # Force layout recalculation
             natural_width = self.master.winfo_reqwidth()
             natural_height = self.master.winfo_reqheight()
             self.master.minsize(natural_width, natural_height)
             vprint(f"Updated minsize to {natural_width}x{natural_height} (adjusted for font scale)")
             dprint(f"  Window minimum size dynamically adjusted for new font size")
+
+            # Hide frame again if it was hidden
+            if frame_was_hidden:
+                self.frameInfoButtons.grid_remove()
+                self.buttonViewHex1Info.configure(text='')
+                dprint("  Info buttons re-hidden after size calculation")
         else:
             vprint("Font size adjustment cancelled")
 
@@ -750,8 +775,11 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.frameInfoButtons.grid(column=1, row=0, columnspan=3, sticky='nw', pady=5)
                 
     def ShowInfoButtons(self):
-        """Show and enable info buttons by setting text and state (already grid()'ed)"""
+        """Show and enable info buttons by setting text, state, and making frame visible"""
         textStub = 'View information on:  '
+
+        # Ensure frame is visible (in case it was hidden)
+        self.frameInfoButtons.grid(column=1, row=0, columnspan=3, sticky='nw', pady=5)
 
         # Always update hex1 button (always visible when there's a reading)
         self.buttonViewHex1Info.configure(
@@ -774,12 +802,15 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             self.buttonViewHex1Info.grid(column=0, row=0, pady=15)
 
     def HideInfoButtons(self):
-        """Hide info buttons by clearing text and disabling (keep grid()'ed for layout)"""
-        # Clear text and disable buttons but keep them in the grid
-        # This maintains consistent window size calculations
+        """Hide info buttons by removing frame from view (buttons stay grid()'ed inside frame)"""
+        # Clear text and disable buttons
         self.buttonViewHex1Info.configure(text='', state='disabled')
         self.buttonViewHex2Info.configure(text='', state='disabled')
         self.buttonViewHex2Info.grid_remove()  # Remove hex2 from layout when hidden
+
+        # Hide the entire frame so no empty button widgets are visible
+        # Buttons stay grid()'ed inside frame for proper sizing calculations
+        self.frameInfoButtons.grid_remove()
 
     def ViewHex1Info(self):
         self.ShowHtml(title='Hexagram Information - '+self.hexes.hex1.number+'. '+self.hexes.hex1.name,
