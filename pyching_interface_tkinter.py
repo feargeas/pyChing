@@ -266,17 +266,15 @@ class WindowMain:
         # Set dynamic minimum size based on natural content size
         # This ensures the window is never larger than needed initially
         # while preventing users from shrinking it below usable size
+        # Info buttons are now included (always grid()'ed but disabled/empty)
         self.master.update_idletasks()  # Force layout calculation
         natural_width = self.master.winfo_reqwidth()
         natural_height = self.master.winfo_reqheight()
         self.master.minsize(natural_width, natural_height)
-        vprint(f"Set dynamic minsize: {natural_width}x{natural_height} (based on content)")
+        vprint(f"Set dynamic minsize: {natural_width}x{natural_height} (includes all elements)")
         dprint(f"  Window will start at natural size and can be resized larger")
         dprint(f"  Minimum prevents shrinking below usable dimensions")
-
-        # Track if we need to recalculate minsize when info buttons are first shown
-        # (they're not in the initial layout, so will be added later)
-        self._minsize_recalc_needed = True
+        dprint(f"  Info buttons are included in layout (disabled/empty initially)")
 
         self.hexes = None #so we can test if a reading has been performed yet
     
@@ -736,51 +734,52 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                             bg=self.colors.bgReading) )
             self.labelsCoins[i].grid(column=i+1,row=0,padx=10,pady=10)
 
-        #the following widgets are not initially shown or enabled
+        # Info button frame and buttons
+        # These are always grid()'ed to be included in layout calculations,
+        # but disabled/invisible when not in use
         self.frameInfoButtons = Frame(self.frameCast, bg=self.colors.bgReading)
-        self.buttonViewHex1Info = Button(self.frameInfoButtons, text=None, underline=0,
+        self.buttonViewHex1Info = Button(self.frameInfoButtons, text='', underline=0,
                         width=30, bg=None, fg=None, font=self.fonts.button, highlightthickness=0,
                         takefocus=False, state='disabled', command=self.ViewHex1Info)
-        self.buttonViewHex2Info = Button(self.frameInfoButtons, text=None, underline=1,
+        self.buttonViewHex2Info = Button(self.frameInfoButtons, text='', underline=1,
                         width=30, bg=None, fg=None, font=self.fonts.button, highlightthickness=0,
                         takefocus=False, state='disabled', command=self.ViewHex2Info)
+
+        # Grid them immediately so they're always part of layout (ensures correct minsize)
+        self.buttonViewHex1Info.grid(column=0, row=0, pady=15)
+        self.frameInfoButtons.grid(column=1, row=0, columnspan=3, sticky='nw', pady=5)
                 
     def ShowInfoButtons(self):
-        #show, setup and enable the required info buttons
+        """Show and enable info buttons by setting text and state (already grid()'ed)"""
         textStub = 'View information on:  '
-        if self.hexes.hex2.lineValues[0] != 0:#there is a hex 2
-            self.buttonViewHex2Info.configure(text=textStub+self.hexes.hex2.number+
-                            '. '+self.hexes.hex2.name, state='normal')
+
+        # Always update hex1 button (always visible when there's a reading)
+        self.buttonViewHex1Info.configure(
+            text=textStub+self.hexes.hex1.number+'. '+self.hexes.hex1.name,
+            state='normal')
+
+        # Hex2 button only shown if there are moving lines
+        if self.hexes.hex2.lineValues[0] != 0:  # there is a hex 2
+            self.buttonViewHex2Info.configure(
+                text=textStub+self.hexes.hex2.number+'. '+self.hexes.hex2.name,
+                state='normal')
+            # Adjust hex1 button padding when both buttons are visible
+            self.buttonViewHex1Info.grid(column=0, row=0, pady=5)
             self.buttonViewHex2Info.grid(column=0, row=1)
-            button1Pad = 5
         else:
-            self.buttonViewHex2Info.grid_forget()
-            button1Pad = 15
-
-        self.buttonViewHex1Info.configure(text=textStub+self.hexes.hex1.number+
-                            '. '+self.hexes.hex1.name, state='normal')
-        self.buttonViewHex1Info.grid(column=0, row=0, pady=button1Pad)
-
-        self.frameInfoButtons.grid(column=1, row=0, columnspan=3, sticky='nw', pady=5)
-        #self.frameInfoButtons.lift()
-
-        # Recalculate minimum size on first reading to account for info buttons
-        # Info buttons (width=30) are not in initial layout, so initial minsize
-        # doesn't account for them. Now that they're grid()'ed, recalculate.
-        if self._minsize_recalc_needed:
-            self.master.update_idletasks()  # Force layout recalculation
-            natural_width = self.master.winfo_reqwidth()
-            natural_height = self.master.winfo_reqheight()
-            self.master.minsize(natural_width, natural_height)
-            vprint(f"Updated minsize to {natural_width}x{natural_height} (adjusted for info buttons)")
-            dprint(f"  Info buttons (width=30) now included in minimum window size")
-            self._minsize_recalc_needed = False  # Only do this once
+            # Hide hex2 button when there are no moving lines
+            self.buttonViewHex2Info.configure(text='', state='disabled')
+            self.buttonViewHex2Info.grid_remove()  # Remove from layout but keep grid position
+            # More padding when only hex1 button is visible
+            self.buttonViewHex1Info.grid(column=0, row=0, pady=15)
 
     def HideInfoButtons(self):
-        #hide and disable the info buttons
-        self.frameInfoButtons.grid_forget()
-        self.buttonViewHex1Info.configure(state='disabled')
-        self.buttonViewHex2Info.configure(state='disabled')
+        """Hide info buttons by clearing text and disabling (keep grid()'ed for layout)"""
+        # Clear text and disable buttons but keep them in the grid
+        # This maintains consistent window size calculations
+        self.buttonViewHex1Info.configure(text='', state='disabled')
+        self.buttonViewHex2Info.configure(text='', state='disabled')
+        self.buttonViewHex2Info.grid_remove()  # Remove hex2 from layout when hidden
 
     def ViewHex1Info(self):
         self.ShowHtml(title='Hexagram Information - '+self.hexes.hex1.number+'. '+self.hexes.hex1.name,
