@@ -40,6 +40,7 @@ from typing import Optional, Any
 #tkinter imports
 from tkinter import *
 from tkinter import TclError
+from tkinter import font as tkFont
 import tkinter.filedialog as tkFileDialog
 import tkinter.messagebox as tkMessageBox
 import tkinter.colorchooser as tkColorChooser
@@ -91,27 +92,32 @@ class WidgetColors:
 
 class WidgetFonts:
     """
-    fonts for widgets in the main window
+    Modern font system for widgets in the main window
+
+    Uses tkinter.font.Font objects for better cross-platform compatibility
+    and easier customization. Fonts automatically adapt to the platform
+    while maintaining consistent relative sizing.
     """
     def __init__(self) -> None:
-        if pyching.osType == 'posix': #non-default values for X style tk widgets
-            self.menu = '-*-Helvetica-Normal-R-*--*-120-*-*-*-*-ISO8859-1'
-            self.button = '-*-Helvetica-Normal-R-*--*-120-*-*-*-*-ISO8859-1'
-            self.label = '-*-Helvetica-Normal-R-*--*-120-*-*-*-*-ISO8859-1'
-            self.labelHexTitles = '-*-Helvetica-Bold-R-*--*-140-*-*-*-*-ISO8859-1'
-            self.labelLineHint = '-*-Helvetica-Normal-R-*--*-120-*-*-*-*-ISO8859-1'
-        elif pyching.osType == 'nt': #values for win32 style tk widgets
-            self.menu = None
-            self.button = None
-            self.label = None
-            self.labelHexTitles = '-*-Helvetica-Bold-R-*--*-150-*-*-*-*-ISO8859-1'
-            self.labelLineHint = None
-        else: #use default values for any other (untested :-) platform
-            self.menu = None
-            self.button = None
-            self.label = None
-            self.labelHexTitles = None
-            self.labelLineHint = None
+        # Define font families with fallbacks
+        # Tkinter will use the first available font from the list
+        sans_serif = ('Helvetica', 'Arial', 'DejaVu Sans', 'sans-serif')
+
+        # Create modern Font objects instead of X11 font strings
+        # These work consistently across all platforms
+
+        # Menu and button fonts - 10pt regular
+        self.menu = tkFont.Font(family=sans_serif, size=10, weight='normal')
+        self.button = tkFont.Font(family=sans_serif, size=10, weight='normal')
+
+        # Regular label font - 10pt regular
+        self.label = tkFont.Font(family=sans_serif, size=10, weight='normal')
+
+        # Hexagram title font - 12pt bold (larger and prominent)
+        self.labelHexTitles = tkFont.Font(family=sans_serif, size=12, weight='bold')
+
+        # Line hint font - 10pt regular
+        self.labelLineHint = tkFont.Font(family=sans_serif, size=10, weight='normal')
 
 class WindowMain:
     """
