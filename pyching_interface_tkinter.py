@@ -97,35 +97,83 @@ class WidgetFonts:
     Uses tkinter.font.Font objects for better cross-platform compatibility
     and easier customization. Fonts automatically adapt to the platform
     while maintaining consistent relative sizing.
+
+    Supports font size scaling from 50% to 200% of base size.
     """
-    def __init__(self) -> None:
+    def __init__(self, scale: float = 1.0) -> None:
+        """
+        Initialize fonts with optional scaling factor.
+
+        Args:
+            scale: Font size multiplier (0.5 to 2.0). Default 1.0 = 100%
+        """
+        # Store scale for later adjustment
+        self.scale = max(0.5, min(2.0, scale))  # Clamp between 50% and 200%
+
         # Define font families with fallbacks
         # Tkinter will use the first available font from the list
-        sans_serif = ('Helvetica', 'Arial', 'DejaVu Sans', 'sans-serif')
+        self.sans_serif = ('Helvetica', 'Arial', 'DejaVu Sans', 'sans-serif')
 
-        # Create modern Font objects instead of X11 font strings
+        # Base font sizes (before scaling)
+        self._base_sizes = {
+            'small': 10,   # Menu, button, label
+            'large': 12,   # Hexagram titles
+        }
+
+        # Create modern Font objects with scaled sizes
         # These work consistently across all platforms
+        self._create_fonts()
 
-        # Menu and button fonts - 10pt regular
-        self.menu = tkFont.Font(family=sans_serif, size=10, weight='normal')
-        self.button = tkFont.Font(family=sans_serif, size=10, weight='normal')
+    def _create_fonts(self) -> None:
+        """Create or recreate all fonts with current scale"""
+        small_size = int(self._base_sizes['small'] * self.scale)
+        large_size = int(self._base_sizes['large'] * self.scale)
 
-        # Regular label font - 10pt regular
-        self.label = tkFont.Font(family=sans_serif, size=10, weight='normal')
+        # Menu and button fonts - small size, regular weight
+        self.menu = tkFont.Font(family=self.sans_serif, size=small_size, weight='normal')
+        self.button = tkFont.Font(family=self.sans_serif, size=small_size, weight='normal')
 
-        # Hexagram title font - 12pt bold (larger and prominent)
-        self.labelHexTitles = tkFont.Font(family=sans_serif, size=12, weight='bold')
+        # Regular label font - small size, regular weight
+        self.label = tkFont.Font(family=self.sans_serif, size=small_size, weight='normal')
 
-        # Line hint font - 10pt regular
-        self.labelLineHint = tkFont.Font(family=sans_serif, size=10, weight='normal')
+        # Hexagram title font - large size, bold
+        self.labelHexTitles = tkFont.Font(family=self.sans_serif, size=large_size, weight='bold')
+
+        # Line hint font - small size, regular weight
+        self.labelLineHint = tkFont.Font(family=self.sans_serif, size=small_size, weight='normal')
+
+    def set_scale(self, scale: float) -> None:
+        """
+        Adjust font sizes by setting a new scale factor.
+
+        Args:
+            scale: New scale factor (0.5 to 2.0)
+        """
+        old_scale = self.scale
+        self.scale = max(0.5, min(2.0, scale))
+
+        if old_scale != self.scale:
+            # Recalculate sizes
+            small_size = int(self._base_sizes['small'] * self.scale)
+            large_size = int(self._base_sizes['large'] * self.scale)
+
+            # Update existing Font objects
+            self.menu.configure(size=small_size)
+            self.button.configure(size=small_size)
+            self.label.configure(size=small_size)
+            self.labelHexTitles.configure(size=large_size)
+            self.labelLineHint.configure(size=small_size)
 
 class WindowMain:
     """
     main application window
     """
-    def __init__(self, master: Any) -> None: 
+    def __init__(self, master: Any) -> None:
         self.master = master
-        self.master.resizable(height=False, width=False)
+        # Enable window resizing (changed from non-resizable)
+        self.master.resizable(height=True, width=True)
+        # Set minimum size to prevent window from becoming too small
+        self.master.minsize(600, 500)
         #self.master.colormapwindows([self.master])#debug, does this solve the 256 color problem??
         self.images = pyching_cimages.CoinImages()
         try:
@@ -219,6 +267,7 @@ class WindowMain:
             ('r','Cast Each Line Separately',10,None,self.castAll,False),
             ('r','Cast Entire Hexagram Automatically',12,None,self.castAll,True),('s',),
             ('c','Select Theme...',7,self.SelectTheme),
+            ('c','Adjust Font Size...',7,self.AdjustFontSize),
             ('c','Configure Colors...',10,self.SetColors),('s',),
             ('c','Save Settings',0,self.SaveSettings)) )
         AddMenuItems(self.menuMainHelp,(
@@ -314,6 +363,15 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             self.colors = WidgetColors(theme_name)
             self.RepaintColors(self.colors)
 
+    def AdjustFontSize(self):
+        """Show font size adjustment dialog"""
+        dialogFontSize = DialogAdjustFontSize(self.master,
+                                              current_scale=self.fonts.scale)
+        if dialogFontSize.result is not None:  # user selected a new size
+            # Apply the new font scale
+            self.fonts.set_scale(dialogFontSize.result)
+            # Fonts are Font objects, so changes propagate automatically to all widgets
+
     def SetColors(self):
         dialogSetColors = DialogSetColors(self.master,currentColors=copy.copy(self.colors))
         if dialogSetColors.result: #user didn't cancel
@@ -331,7 +389,9 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         showLineHintsValue = self.showLineHints.get()
         # Save theme name for proper theme restoration
         theme_name = getattr(self.colors, 'theme_name', 'default')
-        configData = (pyching.version,self.colors,castAllValue,showPlacesValue,showLineHintsValue,theme_name)
+        # Save font scale
+        font_scale = self.fonts.scale
+        configData = (pyching.version,self.colors,castAllValue,showPlacesValue,showLineHintsValue,theme_name,font_scale)
         try:
                 pyching_engine.Storage(pyching.configFile, data=configData)
         except IOError:
@@ -360,12 +420,21 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 pass
             else:
                 #version can be tested against pyching.version for config file compatability
-                # Handle both old (5-item) and new (6-item) config formats
-                if len(configData) == 6:
-                    # New format with theme_name
+                # Handle old (5-item), newer (6-item), and newest (7-item) config formats
+                if len(configData) == 7:
+                    # Newest format with theme_name and font_scale
+                    version,self.colors,castAllValue,showPlacesValue,showLineHintsValue,theme_name,font_scale = configData
+                    # Reload colors from theme to ensure line_style is applied
+                    self.colors = WidgetColors(theme_name)
+                    # Reload fonts with saved scale
+                    self.fonts = WidgetFonts(font_scale)
+                elif len(configData) == 6:
+                    # Format with theme_name but no font_scale
                     version,self.colors,castAllValue,showPlacesValue,showLineHintsValue,theme_name = configData
                     # Reload colors from theme to ensure line_style is applied
                     self.colors = WidgetColors(theme_name)
+                    # Use default font scale
+                    self.fonts = WidgetFonts(1.0)
                 elif len(configData) == 5:
                     # Old format without theme_name (backward compatibility)
                     version,self.colors,castAllValue,showPlacesValue,showLineHintsValue = configData
@@ -375,10 +444,13 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                     if not hasattr(self.colors, 'theme'):
                         # Add the missing theme object for HexLine compatibility
                         self.colors.theme = pyching_themes.get_theme('default')
+                    # Use default font scale
+                    self.fonts = WidgetFonts(1.0)
                 else:
                     # Unknown format, use defaults
                     sys.stderr.write(f'\n warning: unexpected config format, using defaults\n')
                     self.colors = WidgetColors('default')
+                    self.fonts = WidgetFonts(1.0)
                     castAllValue = True
                     showPlacesValue = True
                     showLineHintsValue = True
@@ -1201,6 +1273,81 @@ class DialogSelectTheme(smgDialog):
     def Ok(self, event=None):
         """Handle OK button - return selected theme name"""
         self.result = self.selected_theme.get()
+        self.Cancel()
+
+
+class DialogAdjustFontSize(smgDialog):
+    """
+    Display a font size adjustment dialog with slider
+    """
+    def __init__(self, parent: Any, current_scale: float = 1.0) -> None:
+        self.current_scale = current_scale
+        self.scale_var = DoubleVar()
+        self.scale_var.set(current_scale)
+
+        smgDialog.__init__(self, parent, title='Adjust Font Size',
+                    buttons=[{'name':'buttonOk','title':'Ok','binding':'Ok','underline':None,'hotKey':'<Return>'},
+                                {'name':'buttonCancel','title':'Cancel','binding':'Cancel','underline':None,'hotKey':'<Escape>'}],
+                    buttonsDef=0, buttonsWidth=0, buttonsPad=5,
+                    resizeable=0, transient=1, wait=1)
+
+    def Body(self, master):
+        """Create the font size adjustment UI"""
+        master.configure(borderwidth=2, relief='sunken', highlightthickness=4)
+
+        # Title
+        label_title = Label(master, text='Adjust Font Size:',
+                           font=('Helvetica', 11, 'bold'))
+        label_title.grid(row=0, column=0, columnspan=3, sticky='w', padx=10, pady=(10, 5))
+
+        # Instructions
+        label_inst = Label(master, text='Move the slider to adjust all font sizes proportionally.',
+                          font=('Helvetica', 9))
+        label_inst.grid(row=1, column=0, columnspan=3, sticky='w', padx=10, pady=5)
+
+        # Current size display
+        self.label_current = Label(master, text=f'{int(self.current_scale * 100)}%',
+                                   font=('Helvetica', 14, 'bold'))
+        self.label_current.grid(row=2, column=0, columnspan=3, pady=(5, 10))
+
+        # Scale slider
+        self.slider = Scale(master, from_=50, to=200, orient='horizontal',
+                           variable=self.scale_var, command=self.on_scale_change,
+                           length=300, showvalue=False, resolution=10)
+        self.slider.grid(row=3, column=0, columnspan=3, padx=20, pady=10)
+
+        # Size labels
+        label_small = Label(master, text='50%', font=('Helvetica', 8))
+        label_small.grid(row=4, column=0, sticky='w', padx=20)
+
+        label_normal = Label(master, text='100% (Normal)', font=('Helvetica', 9, 'bold'))
+        label_normal.grid(row=4, column=1)
+
+        label_large = Label(master, text='200%', font=('Helvetica', 8))
+        label_large.grid(row=4, column=2, sticky='e', padx=20)
+
+        # Preset buttons
+        frame_presets = Frame(master)
+        frame_presets.grid(row=5, column=0, columnspan=3, pady=(10, 10))
+
+        Button(frame_presets, text='Small (80%)', command=lambda: self.set_preset(0.8)).pack(side='left', padx=5)
+        Button(frame_presets, text='Normal (100%)', command=lambda: self.set_preset(1.0)).pack(side='left', padx=5)
+        Button(frame_presets, text='Large (120%)', command=lambda: self.set_preset(1.2)).pack(side='left', padx=5)
+        Button(frame_presets, text='Extra Large (150%)', command=lambda: self.set_preset(1.5)).pack(side='left', padx=5)
+
+    def on_scale_change(self, value):
+        """Update the percentage label when slider moves"""
+        scale = float(value) / 100
+        self.label_current.configure(text=f'{int(float(value))}%')
+
+    def set_preset(self, scale):
+        """Set a preset font size"""
+        self.scale_var.set(scale * 100)
+        self.label_current.configure(text=f'{int(scale * 100)}%')
+
+    def Ok(self, event=None):
+        """Handle OK button - return selected scale"""
+        self.result = self.scale_var.get() / 100  # Convert percentage to scale
         self.Cancel()
 
 
