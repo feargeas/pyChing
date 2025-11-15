@@ -72,7 +72,7 @@ class PychingAppDetails:
         self.configPath: Path = self.GetUserCfgDir('.pyching')
         self.savePath: Path = self.configPath
         self.configFile: Path = self.configPath / 'config.json'
-        self.saveFileExt: str = '.psv'
+        self.saveFileExt: str = '.json'
         self.internalImageExt: str = '.#@~'
         self.internalHtmlExt: str = '.~@#'
         self.saveFileID: tuple[str, str] = ('pyching_save_file', self.version)
@@ -359,12 +359,13 @@ class Hexagrams:
 
                     loaded_from_pickle = True
 
-                    # Auto-migrate: rename old pickle file and save as JSON
+                    # Auto-migrate: rename old pickle file and save as JSON with .json extension
                     backup_file = Path(str(file) + '.backup')
+                    json_file = file.with_suffix('.json')  # Change .psv to .json
                     try:
                         file.rename(backup_file)
-                        # Now save as JSON in the original location
-                        self.__HexStorage(file, 'save')
+                        # Now save as JSON with .json extension
+                        self.__HexStorage(json_file, 'save')
                     except (IOError, OSError):
                         # If migration fails, continue anyway - we have the data
                         pass

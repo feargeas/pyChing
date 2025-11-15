@@ -928,7 +928,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
     def SaveReading(self):
         fileName = tkFileDialog.asksaveasfilename(parent=self.master,
                         title='Save Reading',defaultextension=pyching.saveFileExt,
-                        filetypes=[(pyching.title+' save files','*'+pyching.saveFileExt)],
+                        filetypes=[(pyching.title+' reading files','*'+pyching.saveFileExt),
+                                   ('All files', '*.*')],
                         initialdir=pyching.savePath)
         #print fileName #debug
         if not fileName: return #user cancelled so get out
@@ -950,7 +951,10 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.labelLineHint.show = 0 #disable line hints
         fileName = tkFileDialog.askopenfilename(parent=self.master,
                         title='Load Saved Reading',defaultextension=pyching.saveFileExt,
-                        filetypes=[(pyching.title+' save files','*'+pyching.saveFileExt)],
+                        filetypes=[(pyching.title+' reading files','*.json *.psv'),
+                                   ('JSON files', '*.json'),
+                                   ('Legacy pickle files', '*.psv'),
+                                   ('All files', '*.*')],
                         initialdir=pyching.savePath)
         #print fileName #debug
         if not fileName: 

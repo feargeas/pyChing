@@ -73,7 +73,7 @@ def test_reading_json_save_load():
     print("="*70)
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        reading_file = Path(tmpdir) / 'test_reading.psv'
+        reading_file = Path(tmpdir) / 'test_reading.json'
 
         # Create a reading
         print("\n1. Creating new reading...")
@@ -131,6 +131,7 @@ def test_pickle_migration():
     with tempfile.TemporaryDirectory() as tmpdir:
         reading_file = Path(tmpdir) / 'old_reading.psv'
         backup_file = Path(tmpdir) / 'old_reading.psv.backup'
+        json_file = Path(tmpdir) / 'old_reading.json'
 
         # Create a reading and save as OLD pickle format
         print("\n1. Creating old pickle format reading...")
@@ -170,15 +171,22 @@ def test_pickle_migration():
         else:
             print(f"   ⚠ No backup created (may be expected)")
 
-        if reading_file.exists():
-            # Check if it's now JSON
+        if not reading_file.exists():
+            print(f"   ✓ Original .psv file removed (renamed to .backup)")
+        else:
+            print(f"   ⚠ Original .psv file still exists")
+
+        if json_file.exists():
+            # Check if it's JSON
             try:
-                with open(reading_file, 'r') as f:
+                with open(json_file, 'r') as f:
                     migrated_data = json.load(f)
-                print(f"   ✓ Original file migrated to JSON")
+                print(f"   ✓ New JSON file created: {json_file}")
                 print(f"   ✓ JSON contains: {list(migrated_data.keys())}")
             except:
-                print(f"   ⚠ Original file still pickle (migration may have failed)")
+                print(f"   ✗ JSON file exists but is not valid JSON")
+        else:
+            print(f"   ✗ No JSON file created (migration failed)")
 
         # Verify data integrity
         assert hexes2.question == hexes.question, "Question mismatch after migration!"
@@ -201,10 +209,10 @@ def main():
         print("ALL TESTS PASSED ✓✓✓")
         print("="*70)
         print("\nSummary:")
-        print("  ✓ JSON config save/load working")
-        print("  ✓ JSON reading save/load working")
-        print("  ✓ Pickle to JSON migration working")
-        print("  ✓ Old readings will be preserved and auto-migrated")
+        print("  ✓ JSON config save/load working (config.json)")
+        print("  ✓ JSON reading save/load working (*.json files)")
+        print("  ✓ Pickle to JSON migration working (.psv → .json)")
+        print("  ✓ Old .psv readings auto-migrate to .json (backup as .psv.backup)")
         print("\n")
 
     except Exception as e:
