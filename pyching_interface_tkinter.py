@@ -274,6 +274,10 @@ class WindowMain:
         dprint(f"  Window will start at natural size and can be resized larger")
         dprint(f"  Minimum prevents shrinking below usable dimensions")
 
+        # Track if we need to recalculate minsize when info buttons are first shown
+        # (they're not in the initial layout, so will be added later)
+        self._minsize_recalc_needed = True
+
         self.hexes = None #so we can test if a reading has been performed yet
     
     def Quit(self):
@@ -759,6 +763,18 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
 
         self.frameInfoButtons.grid(column=1, row=0, columnspan=3, sticky='nw', pady=5)
         #self.frameInfoButtons.lift()
+
+        # Recalculate minimum size on first reading to account for info buttons
+        # Info buttons (width=30) are not in initial layout, so initial minsize
+        # doesn't account for them. Now that they're grid()'ed, recalculate.
+        if self._minsize_recalc_needed:
+            self.master.update_idletasks()  # Force layout recalculation
+            natural_width = self.master.winfo_reqwidth()
+            natural_height = self.master.winfo_reqheight()
+            self.master.minsize(natural_width, natural_height)
+            vprint(f"Updated minsize to {natural_width}x{natural_height} (adjusted for info buttons)")
+            dprint(f"  Info buttons (width=30) now included in minimum window size")
+            self._minsize_recalc_needed = False  # Only do this once
 
     def HideInfoButtons(self):
         #hide and disable the info buttons
