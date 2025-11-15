@@ -36,6 +36,7 @@ from typing import Any, Optional
 
 #tkinter imports
 from tkinter import *
+from tkinter import TclError
 import tkinter.messagebox as tkMessageBox
 import tkinter.simpledialog as tkSimpleDialog
 

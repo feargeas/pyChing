@@ -39,6 +39,7 @@ from typing import Optional, Any
 
 #tkinter imports
 from tkinter import *
+from tkinter import TclError
 import tkinter.filedialog as tkFileDialog
 import tkinter.messagebox as tkMessageBox
 import tkinter.colorchooser as tkColorChooser

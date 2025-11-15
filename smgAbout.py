@@ -35,6 +35,7 @@ from typing import Any, Optional
 
 #tkinter imports
 from tkinter import *
+from tkinter import TkVersion
 
 #smg library module imports
 from smgDialog import smgDialog
