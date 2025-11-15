@@ -118,7 +118,7 @@ class WindowMain:
     """
     def __init__(self, master: Any) -> None: 
         self.master = master
-        self.master.resizable(height=FALSE,width=FALSE)
+        self.master.resizable(height=False, width=False)
         #self.master.colormapwindows([self.master])#debug, does this solve the 256 color problem??
         self.images = pyching_cimages.CoinImages()
         try:
@@ -139,11 +139,11 @@ class WindowMain:
 
         #configuration attributes
         self.showPlaces = BooleanVar()
-        self.showPlaces.set(TRUE)
+        self.showPlaces.set(True)
         self.showLineHints = BooleanVar()
-        self.showLineHints.set(TRUE)
+        self.showLineHints.set(True)
         self.castAll = BooleanVar()
-        self.castAll.set(TRUE)
+        self.castAll.set(True)
         #instantiate default colour and font values
         self.colors = WidgetColors() 
         self.fonts = WidgetFonts() 
@@ -156,10 +156,10 @@ class WindowMain:
         self.MakeStatusBar(self.master)
 
         #main frame
-        frameMainBevel = Frame(self.master,borderwidth=2,relief=SUNKEN,highlightthickness=0)
-        frameMainBevel.pack(expand=TRUE,fill=BOTH,padx=4)#used as a bevel for the main frame
-        self.frameMain = Frame(frameMainBevel,bg=self.colors.bgReading)#highlightthickness=4,borderwidth=4,relief=SUNKEN)#,borderwidth=1,relief=SOLID
-        self.frameMain.pack(expand=TRUE,fill=BOTH)
+        frameMainBevel = Frame(self.master, borderwidth=2, relief='sunken', highlightthickness=0)
+        frameMainBevel.pack(expand=True, fill='both', padx=4)#used as a bevel for the main frame
+        self.frameMain = Frame(frameMainBevel, bg=self.colors.bgReading)#highlightthickness=4,borderwidth=4,relief='sunken')#,borderwidth=1,relief='solid'
+        self.frameMain.pack(expand=True, fill='both')
         
         self.MakeCastDisplay(self.frameMain)
         
@@ -209,8 +209,8 @@ class WindowMain:
                                                     ('c','Exit',1,self.Quit)) )
         AddMenuItems(self.menuMainSettings,(('k','Show Places',5,self.__ToggleLabelsPlaces,self.showPlaces),
             ('k','Show Line Hints',10,None,self.showLineHints),('s',),
-            ('r','Cast Each Line Separately',10,None,self.castAll,FALSE),
-            ('r','Cast Entire Hexagram Automatically',12,None,self.castAll,TRUE),('s',),
+            ('r','Cast Each Line Separately',10,None,self.castAll,False),
+            ('r','Cast Entire Hexagram Automatically',12,None,self.castAll,True),('s',),
             ('c','Configure Colors...',10,self.SetColors),('s',),
             ('c','Save Settings',0,self.SaveSettings)) )
         AddMenuItems(self.menuMainHelp,(
@@ -220,8 +220,8 @@ class WindowMain:
             ('s',),
             ('c','About '+pyching.title+'...',0,self.ShowAbout)) )
         #self.ShowText(title='Help - Using '+pyching.title,textFile='help.txt')),
-        self.menuMainFile.entryconfigure(1,state=DISABLED)#disable save item by default
-        self.menuMainFile.entryconfigure(3,state=DISABLED)#disable save as text item by default
+        self.menuMainFile.entryconfigure(1, state='disabled')#disable save item by default
+        self.menuMainFile.entryconfigure(3, state='disabled')#disable save as text item by default
         
     def HelpBinding(self,event):
         #main window binding for the F1 key
@@ -392,27 +392,27 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 self.CastAllLines()
             else:#cast 1 line at a time
                 for menuItem in range(3,5):#disable cast-type changing while casting
-                    self.menuMainSettings.entryconfigure(menuItem,state=DISABLED)
+                    self.menuMainSettings.entryconfigure(menuItem, state='disabled')
                 self.buttonCast.configure(text='Cast Line 1 of 6',command=self.CastNextLine)
                 self.labelStatus.configure(text='Waiting to cast line 1 of 6 ...')
         else: #the user cancelled
             self.labelLineHint.show = 1 #re-enable line hints
         
     def CastNextLine(self):
-        self.buttonCast.configure(state=DISABLED)
+        self.buttonCast.configure(state='disabled')
         self.CastLine()
-        self.buttonCast.configure(state=NORMAL)
+        self.buttonCast.configure(state='normal')
         if self.hexes.hex1.lineValues[5] == 0:#if hex1 is'nt fully built yet
             self.buttonCast.configure(text='Cast Line '+str(self.hexes.currentLine+1)+' of 6')
             self.labelStatus.configure(text='Waiting to cast line '+str(self.hexes.currentLine+1)+ ' of 6 ...')
         else:#hex1 is fully built now
             for menuItem in range(3,5):#re-enable cast-type changing
-                self.menuMainSettings.entryconfigure(menuItem,state=NORMAL)
+                self.menuMainSettings.entryconfigure(menuItem, state='normal')
             self.buttonCast.configure(text='Create 2nd Hexagram',command=self.BuildHex2)
             self.labelStatus.configure(text='Waiting to create 2nd hexagram ...')
             
     def CastAllLines(self,loadingSaveFile=0):
-        self.buttonCast.configure(state=DISABLED)
+        self.buttonCast.configure(state='disabled')
         if loadingSaveFile: 
             self.hexes.currentLine = 0
             self.ShowQuestion()
@@ -423,7 +423,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             self.master.update_idletasks()
             if not loadingSaveFile: time.sleep(1)#pause to let user see the thrown coins
         self.BuildHex2()#show second hexagram
-        self.buttonCast.configure(state=NORMAL)
+        self.buttonCast.configure(state='normal')
         #self.master.update_idletasks()
 
     def CastLine(self,loadingFromFile=0):
@@ -484,18 +484,18 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         
         self.ShowInfoButtons()#show the info buttons
 
-        self.menuMainFile.entryconfigure(1,state=NORMAL)#enable save menuitem
-        self.menuMainFile.entryconfigure(3,state=NORMAL)#enable save as text menuitem
+        self.menuMainFile.entryconfigure(1, state='normal')#enable save menuitem
+        self.menuMainFile.entryconfigure(3, state='normal')#enable save as text menuitem
 
     def MakeCastDisplay(self, parent):
-        self.frameCast = Frame(parent,bg=self.colors.bgReading)
-        self.frameCast.pack(anchor=NW,side=TOP)#,padx=20,pady=20
-        
-        self.buttonCast = Button(self.frameCast,text='Cast New Hexagram',underline=0,
-                        width=20,bg=None,fg=None,font=self.fonts.button,highlightthickness=0,
-                        takefocus=FALSE,command=self.CastHexes)
+        self.frameCast = Frame(parent, bg=self.colors.bgReading)
+        self.frameCast.pack(anchor='nw', side='top')#,padx=20,pady=20
+
+        self.buttonCast = Button(self.frameCast, text='Cast New Hexagram', underline=0,
+                        width=20, bg=None, fg=None, font=self.fonts.button, highlightthickness=0,
+                        takefocus=False, command=self.CastHexes)
         #self.buttonCast.focus_set()
-        self.buttonCast.grid(column=0,row=0,sticky=NW,padx=20,pady=20)
+        self.buttonCast.grid(column=0, row=0, sticky='nw', padx=20, pady=20)
 
         self.labelsCoins = []
         for i in range(3):
@@ -504,38 +504,38 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             self.labelsCoins[i].grid(column=i+1,row=0,padx=10,pady=10)
 
         #the following widgets are not initially shown or enabled
-        self.frameInfoButtons = Frame(self.frameCast,bg=self.colors.bgReading)
-        self.buttonViewHex1Info = Button(self.frameInfoButtons,text=None,underline=0,
-                        width=30,bg=None,fg=None,font=self.fonts.button,highlightthickness=0,
-                        takefocus=FALSE,state=DISABLED,command=self.ViewHex1Info)
-        self.buttonViewHex2Info = Button(self.frameInfoButtons,text=None,underline=1,
-                        width=30,bg=None,fg=None,font=self.fonts.button,highlightthickness=0,
-                        takefocus=FALSE,state=DISABLED,command=self.ViewHex2Info)
+        self.frameInfoButtons = Frame(self.frameCast, bg=self.colors.bgReading)
+        self.buttonViewHex1Info = Button(self.frameInfoButtons, text=None, underline=0,
+                        width=30, bg=None, fg=None, font=self.fonts.button, highlightthickness=0,
+                        takefocus=False, state='disabled', command=self.ViewHex1Info)
+        self.buttonViewHex2Info = Button(self.frameInfoButtons, text=None, underline=1,
+                        width=30, bg=None, fg=None, font=self.fonts.button, highlightthickness=0,
+                        takefocus=False, state='disabled', command=self.ViewHex2Info)
                 
     def ShowInfoButtons(self):
         #show, setup and enable the required info buttons
         textStub = 'View information on:  '
         if self.hexes.hex2.lineValues[0] != 0:#there is a hex 2
             self.buttonViewHex2Info.configure(text=textStub+self.hexes.hex2.number+
-                            '. '+self.hexes.hex2.name,state=NORMAL)
-            self.buttonViewHex2Info.grid(column=0,row=1)
+                            '. '+self.hexes.hex2.name, state='normal')
+            self.buttonViewHex2Info.grid(column=0, row=1)
             button1Pad = 5
         else:
             self.buttonViewHex2Info.grid_forget()
             button1Pad = 15
 
         self.buttonViewHex1Info.configure(text=textStub+self.hexes.hex1.number+
-                            '. '+self.hexes.hex1.name,state=NORMAL)
-        self.buttonViewHex1Info.grid(column=0,row=0,pady=button1Pad)
+                            '. '+self.hexes.hex1.name, state='normal')
+        self.buttonViewHex1Info.grid(column=0, row=0, pady=button1Pad)
 
-        self.frameInfoButtons.grid(column=1,row=0,columnspan=3,sticky=NW,pady=5)
+        self.frameInfoButtons.grid(column=1, row=0, columnspan=3, sticky='nw', pady=5)
         #self.frameInfoButtons.lift()
 
     def HideInfoButtons(self):
         #hide and disable the info buttons
         self.frameInfoButtons.grid_forget()
-        self.buttonViewHex1Info.configure(state=DISABLED)
-        self.buttonViewHex2Info.configure(state=DISABLED)
+        self.buttonViewHex1Info.configure(state='disabled')
+        self.buttonViewHex2Info.configure(state='disabled')
 
     def ViewHex1Info(self):
         self.ShowHtml(title='Hexagram Information - '+self.hexes.hex1.number+'. '+self.hexes.hex1.name,
@@ -546,8 +546,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                             htmlSource=self.hexes.hex2.infoSource)
 
     def MakeHexDisplay(self, parent):
-        self.frameHexes = Frame(parent,bg=self.colors.bgReading)
-        self.frameHexes.pack(anchor=NW,side=TOP,padx=20)
+        self.frameHexes = Frame(parent, bg=self.colors.bgReading)
+        self.frameHexes.pack(anchor='nw', side='top', padx=20)
                         
         self.frameSpacerC4R1 = Frame(self.frameHexes,height=8,bg=self.colors.bgReading)
         self.frameSpacerC4R1.grid(column=4,row=1)
@@ -555,10 +555,10 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.labelsHexPlaces = []
         labelsTexts = ('topmost','fifth','fourth','third','second','bottom')
         for labelNum in range(6):
-            self.labelsHexPlaces.append(Label(self.frameHexes,text=labelsTexts[labelNum],
-                            bg=self.colors.bgReading,fg=self.colors.bgReading,font=self.fonts.label) )#fg=bg because label starts off hidden
+            self.labelsHexPlaces.append(Label(self.frameHexes, text=labelsTexts[labelNum],
+                            bg=self.colors.bgReading, fg=self.colors.bgReading, font=self.fonts.label) )#fg=bg because label starts off hidden
             self.__HideLabel(self.labelsHexPlaces[labelNum])
-            self.labelsHexPlaces[labelNum].grid(column=0,row=labelNum+2,sticky=E)
+            self.labelsHexPlaces[labelNum].grid(column=0, row=labelNum+2, sticky='e')
         self.labelsHexPlaces.reverse()#puts the labels in order of appearance
 
         self.labelH1Title = Label(self.frameHexes,text='',bg=self.colors.bgReading,
@@ -597,9 +597,9 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.frameSpacerC4R7 = Frame(self.frameHexes,width=20,bg=self.colors.bgReading)
         self.frameSpacerC4R7.grid(column=4,row=8)
 
-        self.labelLineHint = Label(self.master,text=None,bg=self.colors.bgLabelHint,
-                                            fg=self.colors.fgLabelHint,font=self.fonts.labelLineHint,
-                                            borderwidth=1,relief=SOLID,padx=6)
+        self.labelLineHint = Label(self.master, text=None, bg=self.colors.bgLabelHint,
+                                            fg=self.colors.fgLabelHint, font=self.fonts.labelLineHint,
+                                            borderwidth=1, relief='solid', padx=6)
         self.labelLineHint.place_forget() 
         #add an attribute to the hint label to indicate if it can currently be
         #shown or not (eg. hints should not be shown during hex building). 
@@ -622,14 +622,14 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 self.labelLineHint.configure(text=None)
                 self.labelLineHint.place_forget() 
 
-    def MakeQuestionDisplay(self,parent):
+    def MakeQuestionDisplay(self, parent):
         #print self.frameMain.winfo_width()#cget('width')#.winfo_width()#cget(key)
-        self.frameQuestion=Frame(parent,bg=self.colors.bgReading,borderwidth=2)
-        self.frameQuestion.pack(anchor=SW,side=BOTTOM,expand=TRUE,fill=X,padx=10,pady=5)
-        self.messageQuestion = Message(self.frameQuestion,width=20,text=None,justify=LEFT,
-                                                 bg=self.colors.bgReading,fg=self.colors.fgMessageQuestion,
+        self.frameQuestion = Frame(parent, bg=self.colors.bgReading, borderwidth=2)
+        self.frameQuestion.pack(anchor='sw', side='bottom', expand=True, fill='x', padx=10, pady=5)
+        self.messageQuestion = Message(self.frameQuestion, width=20, text=None, justify='left',
+                                                 bg=self.colors.bgReading, fg=self.colors.fgMessageQuestion,
                                                  font=self.fonts.label)
-        self.messageQuestion.pack(anchor=W)
+        self.messageQuestion.pack(anchor='w')
 
     def ShowQuestion(self):
         #self.frameQuestion.configure(relief=GROOVE)
@@ -640,8 +640,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.messageQuestion.configure(width=20,text=None)
 
     def MakeStatusBar(self, parent):
-        self.frameStatusBar = Frame(parent,borderwidth=2,relief=SUNKEN,highlightthickness=2)
-        self.frameStatusBar.pack(anchor=SW,side=BOTTOM,fill=X,padx=2)#,expand=TRUE
+        self.frameStatusBar = Frame(parent, borderwidth=2, relief='sunken', highlightthickness=2)
+        self.frameStatusBar.pack(anchor='sw', side='bottom', fill='x', padx=2)#,expand=True
         self.labelStatus = Label(self.frameStatusBar,
                         text=pyching.title + '  ' + pyching.version,font=self.fonts.label)
         self.labelStatus.pack()
@@ -805,8 +805,8 @@ class HexLine(Canvas):
         self.hint=None
         if currentColors: self.colors = currentColors
         else: self.colors = WidgetColors()
-        Canvas.__init__(self,parent,height=25,width=145,bg=self.colors.bgReading,
-                        takefocus=FALSE,highlightthickness=0)
+        Canvas.__init__(self, parent, height=25, width=145, bg=self.colors.bgReading,
+                        takefocus=False, highlightthickness=0)
         #self.tag_bind('all','<Enter>',bindingEnter)#when the mouse enters the drawing
         self.bind('<Enter>',bindingEnter)#when the mouse enters the canvas
         self.bind('<Leave>',bindingLeave)#when the mouse leaves the canvas
@@ -1006,16 +1006,16 @@ class DialogSetColors(smgDialog):
         if currentColors: self.colors=currentColors
         else: self.colors=WidgetColors()
         self.fonts=WidgetFonts()
-        smgDialog.__init__(self,parent,title='Configure Colors',
+        smgDialog.__init__(self, parent, title='Configure Colors',
                     buttons=[{'name':'buttonOk','title':'Ok','binding':'Ok','underline':None,'hotKey':'<Return>'},
                                 {'name':'buttonCancel','title':'Cancel','binding':'Cancel','underline':None,'hotKey':'<Escape>'}],
-                    buttonsDef=-1, buttonsWidth=0,buttonsPad=5, 
-                    resizeable=0, transient=1, wait=1)#buttonsPos='BOTTOM',
+                    buttonsDef=-1, buttonsWidth=0, buttonsPad=5,
+                    resizeable=0, transient=1, wait=1)#buttonsPos='bottom',
 
-    def Body(self,master):
-        master.configure(borderwidth=2,relief=SUNKEN,highlightthickness=4)
-        
-        self.frameDemo = Frame(master,bg=self.colors.bgReading,borderwidth=2,relief=FLAT)
+    def Body(self, master):
+        master.configure(borderwidth=2, relief='sunken', highlightthickness=4)
+
+        self.frameDemo = Frame(master, bg=self.colors.bgReading, borderwidth=2, relief='flat')
         self.frameDemo.grid(row=1,column=0,padx=0,pady=10)
         self.frameDemo.bind('<ButtonPress-1>',self.SetColorExampleDetails)
 
@@ -1060,10 +1060,10 @@ class DialogSetColors(smgDialog):
         self.labelNoMovingDemo.grid(row=3,column=1,padx=5)
         self.labelNoMovingDemo.bind('<ButtonPress-1>',self.SetColorExampleDetails)
 
-        self.frameHintBgDemo = Label(self.frameDemo,text='line hint',
-                        font=self.fonts.labelLineHint,relief=SOLID,borderwidth=1,
+        self.frameHintBgDemo = Label(self.frameDemo, text='line hint',
+                        font=self.fonts.labelLineHint, relief='solid', borderwidth=1,
                         bg=self.colors.bgLabelHint)
-        self.frameHintBgDemo.grid(row=4,column=1,sticky=(N,S,E,W),padx=5)#padx=5
+        self.frameHintBgDemo.grid(row=4, column=1, sticky='nsew', padx=5)#padx=5
         self.frameHintBgDemo.bind('<ButtonPress-1>',self.SetColorExampleDetails)
 
         self.labelHintDemo = Label(self.frameHintBgDemo,text='line hint',
@@ -1077,20 +1077,20 @@ class DialogSetColors(smgDialog):
         self.colorExampleDetails = { 'name': self.colorButtonDetails[0][0],
                                                     'color': self.colorButtonDetails[0][1] }
 
-        self.frameColorSelect = Frame(master,bg=self.colorExampleDetails['color'],
-                        relief=SOLID,borderwidth=1)
-        self.frameColorSelect.grid(row=0,column=0,padx=10,pady=10,ipadx=10,ipady=10)
-        
-        self.buttonGetColor =  Button(self.frameColorSelect,text='Set Color of:',
-                        underline=0,highlightthickness=0,font=self.fonts.button,
-                        takefocus=FALSE,command=self.GetColor)
+        self.frameColorSelect = Frame(master, bg=self.colorExampleDetails['color'],
+                        relief='solid', borderwidth=1)
+        self.frameColorSelect.grid(row=0, column=0, padx=10, pady=10, ipadx=10, ipady=10)
+
+        self.buttonGetColor = Button(self.frameColorSelect, text='Set Color of:',
+                        underline=0, highlightthickness=0, font=self.fonts.button,
+                        takefocus=False, command=self.GetColor)
         self.buttonGetColor.grid(row=0,column=0,padx=2)
 
-        self.menubuttonOptions = Menubutton(self.frameColorSelect,width=32,
-                        text=self.colorButtonDetails[0][0],font=self.fonts.menu,indicatoron=TRUE,
+        self.menubuttonOptions = Menubutton(self.frameColorSelect, width=32,
+                        text=self.colorButtonDetails[0][0], font=self.fonts.menu, indicatoron=True,
                         underline=self.colorButtonDetails[0][0].find('e'),
-                        relief=RAISED,highlightthickness=0)
-        self.menubuttonOptions.grid(row=0,column=1,padx=2,sticky=(N,S))#sticky=(N,S) makes the menubutton the smae height as buttonGetCOlor
+                        relief='raised', highlightthickness=0)
+        self.menubuttonOptions.grid(row=0, column=1, padx=2, sticky='ns')#sticky='ns' makes the menubutton the same height as buttonGetColor
         self.menuOptions = Menu(self.menubuttonOptions,tearoff=0,font=self.fonts.menu)
         self.menubuttonOptions.configure(menu=self.menuOptions)
         for item in self.colorButtonDetails: #build the menu
@@ -1099,9 +1099,9 @@ class DialogSetColors(smgDialog):
 
         self.buttonDefaults = Button(master,
                         text='Reset All Colors To '+pyching.title+' Defaults',
-                        underline=0,highlightthickness=0,font=self.fonts.button,
-                        takefocus=FALSE,command=self.SetDefaultColors)
-        self.buttonDefaults.grid(row=2,column=0,padx=10,pady=10,sticky=(W,E))
+                        underline=0, highlightthickness=0, font=self.fonts.button,
+                        takefocus=False, command=self.SetDefaultColors)
+        self.buttonDefaults.grid(row=2, column=0, padx=10, pady=10, sticky='we')
 
         #return self.menubuttonOptions #control for initial focus
 
@@ -1259,19 +1259,19 @@ class DialogGetQuestion(smgDialog):
     gets the question for a reading
     """
     def __init__(self, parent: Any) -> None:
-        smgDialog.__init__(self,parent,title='Enter Question',
+        smgDialog.__init__(self, parent, title='Enter Question',
                     buttons=[{'name':'buttonOk','title':'Ok','binding':'Ok','underline':None,'hotKey':'<Return>'},
                                 {'name':'buttonCancel','title':'Cancel','binding':'Cancel','underline':None,'hotKey':'<Escape>'}],
-                    buttonsDef=-1,buttonsWidth=0,buttonsPad=5, 
-                    resizeable=0, transient=1, wait=1) # buttonsPos='BOTTOM',
+                    buttonsDef=-1, buttonsWidth=0, buttonsPad=5,
+                    resizeable=0, transient=1, wait=1) # buttonsPos='bottom',
 
-    def Body(self,master):
-        labelPrompt = Label(master,text='Enter a question to ask the I Ching (maximum 70 characters):',
-                        ).grid(column=0,row=0,sticky=W,padx=5,pady=5)
+    def Body(self, master):
+        labelPrompt = Label(master, text='Enter a question to ask the I Ching (maximum 70 characters):',
+                        ).grid(column=0, row=0, sticky='w', padx=5, pady=5)
         self.questionText = StringVar()
         self.questionText.set('Tell me about my current circumstances.')
-        self.entryQuestion = Entry(master,textvariable=self.questionText,width=70)
-        self.entryQuestion.grid(column=0,row=1,sticky=W,padx=5)
+        self.entryQuestion = Entry(master, textvariable=self.questionText, width=70)
+        self.entryQuestion.grid(column=0, row=1, sticky='w', padx=5)
         return self.entryQuestion
     
     def Apply(self):

@@ -275,7 +275,7 @@ class smgHtmlView(smgDialog):
             self.textDisplay.update_idletasks()
             self.config(cursor="watch")
             self.update_idletasks()
-            self.textDisplay.config(state=NORMAL)
+            self.textDisplay.config(state='normal')
             self.textDisplay.delete("1.0", "end")
             if self.sourceIsStr or (not plainText): #render html
                 htmlWriter = HtmlWriter(self.textDisplay, self)
@@ -285,8 +285,8 @@ class smgHtmlView(smgDialog):
                 htmlParser.feed(htmlData)
                 htmlParser.close()
             else: #show plain text
-                self.textDisplay.insert(1.0,htmlData)  
-            self.textDisplay.configure(state=DISABLED)
+                self.textDisplay.insert(1.0,htmlData)
+            self.textDisplay.configure(state='disabled')
             self.textDisplay.config(cursor=self.oldCursor)
             self.config(cursor=self.oldCursor)
         else: #no html data
@@ -296,19 +296,19 @@ class smgHtmlView(smgDialog):
 
         if self.index: #we have an index button
             if source == self.index: #disable index button, this _is_ the index
-                self.buttonIndex.configure(state=DISABLED)
+                self.buttonIndex.configure(state='disabled')
             else: #enable index button
-                self.buttonIndex.configure(state=NORMAL)
-        
-        if self.hexBrowser: #hex broser buttons        
+                self.buttonIndex.configure(state='normal')
+
+        if self.hexBrowser: #hex broser buttons
             if self.hexNum == 1: #at 1st page
-                self.buttonPrev.configure(state=DISABLED)
+                self.buttonPrev.configure(state='disabled')
             else: #enable index button
-                self.buttonPrev.configure(state=NORMAL)
+                self.buttonPrev.configure(state='normal')
             if self.hexNum == 64: #at last page
-                self.buttonNext.configure(state=DISABLED)
+                self.buttonNext.configure(state='disabled')
             else: #enable index button
-                self.buttonNext.configure(state=NORMAL)
+                self.buttonNext.configure(state='normal')
         
 
 class HtmlWriter(DumbWriter):
