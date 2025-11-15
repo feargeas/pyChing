@@ -46,7 +46,8 @@ import tkinter.colorchooser as tkColorChooser
 
 #pyChing source specific imports
 import pyching_engine, pyching_cimages, pyching_idimage_data
-import pyching_int_data, pyching_hlhtx_data 
+import pyching_int_data, pyching_hlhtx_data
+import pyching_themes 
 
 #smg library module imports
 from smgDialog import smgDialog
@@ -56,38 +57,37 @@ from smgAbout import smgAbout
 class WidgetColors:
     """
     colours for widgets in the reading display area
+
+    Now supports theme loading. Can load a theme preset and optionally
+    override individual colors.
     """
-    def __init__(self) -> None:
-        #maybe colour defaults for all platforms
-        #and platform defaults if started with a --mono switch (?)
-        #if pyching.osType in ('posix','nt'): #non-default values for X & win32 style tk widgets
-        #self.BgReading = '#7e7e7e'
-        #self.bgReading = '#cd5c5c'
-        self.bgReading = '#323c4a'
-        self.bgLabelHint = '#FFE4B5'
-        self.fgLabelHint = '#000000'
-        #self.fgLabelPlaces = '#D3D3D3'
-        #self.fgLabelPlaces = '#F08080'
-        self.fgLabelPlaces = '#FFA07A'
-        self.fgLabelHexTitles = '#FFFFFF'
-        self.fgLabelLines = '#FFFFFF'
-        self.fgMessageQuestion = '#FFFFFF'
-        self.lineBody = '#DAA520'
-        self.lineHighlight = '#EEE8AA'
-        self.lineShadow = '#B8860B'
-        #self.bgHtmlViewer = '#e8e8e8'
-        #self.fgHtmlViewer = '#000000'
-        #else: #values default to the platform standards
-        # self.bgReading = None
-        # self.bgLabelHint = None
-        # self.fgLabelHint = None
-        # self.fgLabelPlaces = None
-        # self.fgLabelHexTitles = None
-        # self.fgLabelLines = None
-        # self.fgMessageQuestion = None
-        # self.lineBody = 'Gray'
-        # self.lineHighlight = 'LightGray'
-        # self.lineShadow = 'DarkGray'
+    def __init__(self, theme_name: str = 'default') -> None:
+        """
+        Initialize colors from a theme.
+
+        Args:
+            theme_name: Name of the theme to load (e.g., 'default', 'solarized-dark')
+        """
+        # Store theme name for config persistence
+        self.theme_name = theme_name
+
+        # Load the theme
+        theme = pyching_themes.get_theme(theme_name)
+
+        # Copy all color attributes from theme
+        self.bgReading = theme.bgReading
+        self.bgLabelHint = theme.bgLabelHint
+        self.fgLabelHint = theme.fgLabelHint
+        self.fgLabelPlaces = theme.fgLabelPlaces
+        self.fgLabelHexTitles = theme.fgLabelHexTitles
+        self.fgLabelLines = theme.fgLabelLines
+        self.fgMessageQuestion = theme.fgMessageQuestion
+        self.colorLineBody = theme.colorLineBody
+        self.colorLineHighlight = theme.colorLineHighlight
+        self.colorLineShadow = theme.colorLineShadow
+
+        # Store the theme object for HexLine to access line_style settings
+        self.theme = theme
 
 class WidgetFonts:
     """
@@ -212,6 +212,7 @@ class WindowMain:
             ('k','Show Line Hints',10,None,self.showLineHints),('s',),
             ('r','Cast Each Line Separately',10,None,self.castAll,False),
             ('r','Cast Entire Hexagram Automatically',12,None,self.castAll,True),('s',),
+            ('c','Select Theme...',7,self.SelectTheme),
             ('c','Configure Colors...',10,self.SetColors),('s',),
             ('c','Save Settings',0,self.SaveSettings)) )
         AddMenuItems(self.menuMainHelp,(
@@ -296,7 +297,17 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 fontText=self.fonts.label,
                 fg=self.colors.fgLabelHexTitles,
                 bg=self.colors.bgReading )
-    
+
+    def SelectTheme(self):
+        """Show theme selection dialog and apply the selected theme"""
+        dialogSelectTheme = DialogSelectTheme(self.master,
+                                              current_theme=getattr(self.colors, 'theme', None))
+        if dialogSelectTheme.result:  # user selected a theme
+            # Apply the new theme
+            theme_name = dialogSelectTheme.result
+            self.colors = WidgetColors(theme_name)
+            self.RepaintColors(self.colors)
+
     def SetColors(self):
         dialogSetColors = DialogSetColors(self.master,currentColors=copy.copy(self.colors))
         if dialogSetColors.result: #user didn't cancel
@@ -312,7 +323,9 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         castAllValue = self.castAll.get()
         showPlacesValue = self.showPlaces.get()
         showLineHintsValue = self.showLineHints.get()
-        configData = (pyching.version,self.colors,castAllValue,showPlacesValue,showLineHintsValue)
+        # Save theme name for proper theme restoration
+        theme_name = getattr(self.colors, 'theme_name', 'default')
+        configData = (pyching.version,self.colors,castAllValue,showPlacesValue,showLineHintsValue,theme_name)
         try:
                 pyching_engine.Storage(pyching.configFile, data=configData)
         except IOError:
@@ -341,7 +354,26 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 pass
             else:
                 #version can be tested against pyching.version for config file compatability
-                version,self.colors,castAllValue,showPlacesValue,showLineHintsValue = configData
+                # Handle both old (5-item) and new (6-item) config formats
+                if len(configData) == 6:
+                    # New format with theme_name
+                    version,self.colors,castAllValue,showPlacesValue,showLineHintsValue,theme_name = configData
+                    # Reload colors from theme to ensure line_style is applied
+                    self.colors = WidgetColors(theme_name)
+                elif len(configData) == 5:
+                    # Old format without theme_name (backward compatibility)
+                    version,self.colors,castAllValue,showPlacesValue,showLineHintsValue = configData
+                    # Old configs don't have theme_name, default to 'default'
+                    if not hasattr(self.colors, 'theme_name'):
+                        self.colors.theme_name = 'default'
+                else:
+                    # Unknown format, use defaults
+                    sys.stderr.write(f'\n warning: unexpected config format, using defaults\n')
+                    self.colors = WidgetColors('default')
+                    castAllValue = True
+                    showPlacesValue = True
+                    showLineHintsValue = True
+
                 self.castAll.set(castAllValue)
                 self.showPlaces.set(showPlacesValue)
                 self.showLineHints.set(showLineHintsValue)
@@ -589,7 +621,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             for lineNum in range(6):
                 self.hexLines[hexNum].append(HexLine(self.frameHexes,
                                 bindingEnter=self.ShowLineDetails,bindingLeave=self.ClearLineDetails,
-                                currentColors=self.colors))
+                                currentColors=self.colors, theme=self.colors.theme))
                 if hexNum == 0: colNum = 1 
                 else: colNum = 3 #set the corect grid column
                 self.hexLines[hexNum][lineNum].grid(column=colNum,row=lineNum+2,padx=20,pady=1)
@@ -698,9 +730,9 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             if self.hexes.hex2.lineValues[0] != 0: #if there is a second hexagram
                 self.labelBecomes.configure(fg=self.colors.fgLabelLines)
             #only redraw all lines now if their fg colors have changed
-            if (oldColors.lineBody != self.colors.lineBody) or \
-                            (oldColors.lineHighlight != self.colors.lineHighlight) or \
-                            (oldColors.lineShadow != self.colors.lineShadow):
+            if (oldColors.colorLineBody != self.colors.colorLineBody) or \
+                            (oldColors.colorLineHighlight != self.colors.colorLineHighlight) or \
+                            (oldColors.colorLineShadow != self.colors.colorLineShadow):
                 for hexNum in range(2):
                     for lineNum in range(6):
                         self.hexLines[hexNum][lineNum].Draw(self.hexLines[hexNum][lineNum].value)
@@ -801,11 +833,16 @@ class HexLine(Canvas):
     creates a hexagram line object
     """
     def __init__(self, parent: Any, bindingEnter: Optional[Any] = None,
-                 bindingLeave: Optional[Any] = None, currentColors: Optional[WidgetColors] = None) -> None:
+                 bindingLeave: Optional[Any] = None, currentColors: Optional[WidgetColors] = None,
+                 theme: Optional[Any] = None) -> None:
         self.value=None
         self.hint=None
         if currentColors: self.colors = currentColors
         else: self.colors = WidgetColors()
+
+        # Store theme for line style rendering
+        self.theme = theme if theme else None
+
         Canvas.__init__(self, parent, height=25, width=145, bg=self.colors.bgReading,
                         takefocus=False, highlightthickness=0)
         #self.tag_bind('all','<Enter>',bindingEnter)#when the mouse enters the drawing
@@ -813,42 +850,143 @@ class HexLine(Canvas):
         self.bind('<Leave>',bindingLeave)#when the mouse leaves the canvas
 
     def Draw(self,linetype=None):
+        """Draw the hexagram line using the appropriate style"""
         #draw the required linetype and set the relevant value and hint
         hints = {6: 'line value = 6 (moving yin)',7: 'line value = 7 (yang)',
                         8: 'line value = 8 (yin)',9: 'line value = 9 (moving yang)'}
         self.configure(bg=self.colors.bgReading)
         self.update()
-        if linetype == 6:
-            self.value=linetype
-            self.hint=hints[linetype]
-            self.DrawBevelRectangle(origin=(1,6),height=13,width=60)
-            self.DrawBevelRectangle(origin=(84,6),height=13,width=60)
-            self.DrawBevelX(origin=(62,2),height=20,width=20)
-        elif linetype == 7:
-            self.value=linetype
-            self.hint=hints[linetype]
-            self.DrawBevelRectangle(origin=(2,6),height=13,width=141)
-        elif linetype == 8:
-            self.value=linetype
-            self.hint=hints[linetype]
-            self.DrawBevelRectangle(origin=(2,6),height=13,width=60)
-            self.DrawBevelRectangle(origin=(83,6),height=13,width=60)
-        elif linetype == 9:
-            self.value=linetype
-            self.hint=hints[linetype]
-            self.DrawBevelRectangle(origin=(2,6),height=13,width=60)
-            self.DrawBevelRectangle(origin=(83,6),height=13,width=60)
-            self.DrawBevelO(origin=(62,2),height=20,width=20)
-        else: #blank the canvas (clear any existing drawing)  
+
+        if linetype in [6, 7, 8, 9]:
+            self.value = linetype
+            self.hint = hints[linetype]
+
+            # Dispatch to appropriate drawing style based on theme
+            if self.theme and hasattr(self.theme, 'line_style'):
+                if self.theme.line_style == 'flat':
+                    self.DrawFlat(linetype)
+                elif self.theme.line_style == 'beveled':
+                    self.DrawBeveled(linetype)
+                else:
+                    # Default to beveled for unknown styles
+                    self.DrawBeveled(linetype)
+            else:
+                # No theme specified, use beveled (classic)
+                self.DrawBeveled(linetype)
+        else:  # blank the canvas (clear any existing drawing)
             self.value=None
             self.hint=None
             self.delete('all')
+
+    def DrawBeveled(self, linetype):
+        """Draw line with classic 3D beveled style"""
+        if linetype == 6:  # Moving yin (broken with X)
+            self.DrawBevelRectangle(origin=(1,6),height=13,width=60)
+            self.DrawBevelRectangle(origin=(84,6),height=13,width=60)
+            self.DrawBevelX(origin=(62,2),height=20,width=20)
+        elif linetype == 7:  # Yang (solid)
+            self.DrawBevelRectangle(origin=(2,6),height=13,width=141)
+        elif linetype == 8:  # Yin (broken)
+            self.DrawBevelRectangle(origin=(2,6),height=13,width=60)
+            self.DrawBevelRectangle(origin=(83,6),height=13,width=60)
+        elif linetype == 9:  # Moving yang (broken with O)
+            self.DrawBevelRectangle(origin=(2,6),height=13,width=60)
+            self.DrawBevelRectangle(origin=(83,6),height=13,width=60)
+            self.DrawBevelO(origin=(62,2),height=20,width=20)
+
+    def DrawFlat(self, linetype):
+        """Draw line with modern flat style"""
+        # Get line width from theme, default to 3
+        line_width = 3
+        if self.theme and hasattr(self.theme, 'line_width'):
+            line_width = self.theme.line_width
+
+        # Check if rounded corners requested
+        rounded = False
+        if self.theme and hasattr(self.theme, 'line_rounded_corners'):
+            rounded = self.theme.line_rounded_corners
+
+        color = self.colors.colorLineBody
+
+        if linetype == 7:  # Yang (solid line)
+            if rounded:
+                self.DrawFlatRectangleRounded(origin=(2,8), height=9, width=141, color=color)
+            else:
+                self.create_rectangle(2, 8, 143, 17,
+                    fill=color, outline=color, width=0, tags='BODY')
+
+        elif linetype == 8:  # Yin (broken line)
+            if rounded:
+                self.DrawFlatRectangleRounded(origin=(2,8), height=9, width=60, color=color)
+                self.DrawFlatRectangleRounded(origin=(83,8), height=9, width=60, color=color)
+            else:
+                self.create_rectangle(2, 8, 62, 17,
+                    fill=color, outline=color, width=0, tags='BODY')
+                self.create_rectangle(83, 8, 143, 17,
+                    fill=color, outline=color, width=0, tags='BODY')
+
+        elif linetype == 6:  # Moving yin (broken with X)
+            if rounded:
+                self.DrawFlatRectangleRounded(origin=(2,8), height=9, width=60, color=color)
+                self.DrawFlatRectangleRounded(origin=(83,8), height=9, width=60, color=color)
+            else:
+                self.create_rectangle(2, 8, 62, 17,
+                    fill=color, outline=color, width=0, tags='BODY')
+                self.create_rectangle(83, 8, 143, 17,
+                    fill=color, outline=color, width=0, tags='BODY')
+            # Draw X marker
+            self.DrawFlatX(origin=(67,7), size=11, color=color, width=line_width)
+
+        elif linetype == 9:  # Moving yang (broken with O)
+            if rounded:
+                self.DrawFlatRectangleRounded(origin=(2,8), height=9, width=60, color=color)
+                self.DrawFlatRectangleRounded(origin=(83,8), height=9, width=60, color=color)
+            else:
+                self.create_rectangle(2, 8, 62, 17,
+                    fill=color, outline=color, width=0, tags='BODY')
+                self.create_rectangle(83, 8, 143, 17,
+                    fill=color, outline=color, width=0, tags='BODY')
+            # Draw O marker
+            self.DrawFlatO(origin=(67,7), size=11, color=color, width=line_width)
+
+    def DrawFlatRectangleRounded(self, origin, height, width, color):
+        """Draw a flat rectangle with rounded corners"""
+        x, y = origin
+        radius = min(4, height // 2)  # Corner radius
+
+        # Create rounded rectangle using polygon
+        self.create_polygon(
+            x + radius, y,
+            x + width - radius, y,
+            x + width, y + radius,
+            x + width, y + height - radius,
+            x + width - radius, y + height,
+            x + radius, y + height,
+            x, y + height - radius,
+            x, y + radius,
+            fill=color, outline=color, smooth=True, tags='BODY')
+
+    def DrawFlatX(self, origin, size, color, width=2):
+        """Draw a simple X marker for moving yin"""
+        x, y = origin
+        # Draw X with two diagonal lines
+        self.create_line(x, y, x + size, y + size,
+            fill=color, width=width, tags='MARKER')
+        self.create_line(x + size, y, x, y + size,
+            fill=color, width=width, tags='MARKER')
+
+    def DrawFlatO(self, origin, size, color, width=2):
+        """Draw a simple O marker for moving yang"""
+        x, y = origin
+        # Draw circle outline
+        self.create_oval(x, y, x + size, y + size,
+            outline=color, width=width, tags='MARKER')
     
     def DrawBevelRectangle(self,origin=(0,0),height=13,width=0,bevel=2):
-        
-        color=self.colors.lineBody
-        highlightcolor=self.colors.lineHighlight,
-        shadowcolor=self.colors.lineShadow
+
+        color=self.colors.colorLineBody
+        highlightcolor=self.colors.colorLineHighlight,
+        shadowcolor=self.colors.colorLineShadow
                 
         #fill with fg colour
         self.create_rectangle( ((origin[0],origin[1]),
@@ -884,10 +1022,10 @@ class HexLine(Canvas):
                                                             width=1,fill=shadowcolor,tags='SHADOW')
 
     def DrawBevelX(self,origin=(0,0),height=0,width=0,thickness=4):
-        
-        color=self.colors.lineBody
-        highlightcolor=self.colors.lineHighlight,
-        shadowcolor=self.colors.lineShadow
+
+        color=self.colors.colorLineBody
+        highlightcolor=self.colors.colorLineHighlight,
+        shadowcolor=self.colors.colorLineShadow
                 
         #filled cross with shadowcolor outline
         centre = ( origin[0]+width/2 , origin[1]+height/2 )
@@ -945,9 +1083,9 @@ class HexLine(Canvas):
                                                     width=1,fill=highlightcolor,tags='HIGHLIGHT')
 
     def DrawBevelO(self,origin=(0,0),height=0,width=0,thickness=4):
-        color=self.colors.lineBody
-        highlightcolor=self.colors.lineHighlight,
-        shadowcolor=self.colors.lineShadow
+        color=self.colors.colorLineBody
+        highlightcolor=self.colors.colorLineHighlight,
+        shadowcolor=self.colors.colorLineShadow
                 
         #draw filled O with shadowcolor border
         self.create_oval( ( ( origin[0] , origin[1] ), 
@@ -999,6 +1137,64 @@ class HexLine(Canvas):
                                                         (origin[0]+15 , origin[1]+11) ),
                                                         width=1,fill=highlightcolor,tags='HIGHLIGHT')
 
+class DialogSelectTheme(smgDialog):
+    """
+    Display a theme selection dialog
+    """
+    def __init__(self, parent: Any, current_theme: Optional[Any] = None) -> None:
+        # Determine current theme name
+        if current_theme and hasattr(current_theme, 'name'):
+            # Search THEMES for matching theme class
+            for theme_name, theme_class in pyching_themes.THEMES.items():
+                if isinstance(current_theme, theme_class):
+                    self.current_theme_name = theme_name
+                    break
+            else:
+                self.current_theme_name = 'default'
+        else:
+            self.current_theme_name = 'default'
+
+        self.selected_theme = StringVar()
+        self.selected_theme.set(self.current_theme_name)
+
+        smgDialog.__init__(self, parent, title='Select Theme',
+                    buttons=[{'name':'buttonOk','title':'Ok','binding':'Ok','underline':None,'hotKey':'<Return>'},
+                                {'name':'buttonCancel','title':'Cancel','binding':'Cancel','underline':None,'hotKey':'<Escape>'}],
+                    buttonsDef=0, buttonsWidth=0, buttonsPad=5,
+                    resizeable=0, transient=1, wait=1)
+
+    def Body(self, master):
+        """Create the theme selection UI"""
+        master.configure(borderwidth=2, relief='sunken', highlightthickness=4)
+
+        # Title
+        label_title = Label(master, text='Select a theme for pyChing:',
+                           font=('Helvetica', 11, 'bold'))
+        label_title.grid(row=0, column=0, columnspan=2, sticky='w', padx=10, pady=(10, 5))
+
+        # Create radio buttons for each theme
+        row = 1
+        for theme_name, theme_class in pyching_themes.THEMES.items():
+            theme = theme_class()
+
+            # Radio button
+            rb = Radiobutton(master, text=theme.name,
+                            variable=self.selected_theme, value=theme_name)
+            rb.grid(row=row, column=0, sticky='w', padx=20, pady=2)
+
+            # Description
+            label_desc = Label(master, text=theme.description,
+                              font=('Helvetica', 9), foreground='#666666')
+            label_desc.grid(row=row, column=1, sticky='w', padx=5, pady=2)
+
+            row += 1
+
+    def Ok(self, event=None):
+        """Handle OK button - return selected theme name"""
+        self.result = self.selected_theme.get()
+        self.Cancel()
+
+
 class DialogSetColors(smgDialog):
     """
     display a colour configuration dialog
@@ -1028,7 +1224,7 @@ class DialogSetColors(smgDialog):
         
         self.lineDemos = []
         for i in range(4):
-            self.lineDemos.append(HexLine(self.frameDemo,currentColors=self.colors))
+            self.lineDemos.append(HexLine(self.frameDemo,currentColors=self.colors, theme=self.colors.theme))
             #self.lineDemos[i].colors = self.colors
             self.lineDemos[i].Draw(linetype=i +6)  
             self.lineDemos[i].grid(row=i+1,column=0,padx=10)  
@@ -1134,9 +1330,9 @@ class DialogSetColors(smgDialog):
                 ("'becomes' & 'no moving lines'",self.colors.fgLabelLines),
                 ('Line Hint Background',self.colors.bgLabelHint),
                 ('Line Hint Text',self.colors.fgLabelHint),
-                ('Hexagram Line Body',self.colors.lineBody),
-                ('Hexagram Line Highlight',self.colors.lineHighlight),
-                ('Hexagram Line Shadow',self.colors.lineShadow) )
+                ('Hexagram Line Body',self.colors.colorLineBody),
+                ('Hexagram Line Highlight',self.colors.colorLineHighlight),
+                ('Hexagram Line Shadow',self.colors.colorLineShadow) )
 
     def SetColorExampleDetails(self,event):
         if event.widget == self.frameDemo:
@@ -1219,12 +1415,12 @@ class DialogSetColors(smgDialog):
             self.colors.bgLabelHint = self.colorExampleDetails['color']
         elif self.colorExampleDetails['name'] == self.colorButtonDetails[6][0]: 
             self.colors.fgLabelHint = self.colorExampleDetails['color']
-        elif self.colorExampleDetails['name'] == self.colorButtonDetails[7][0]: 
-            self.colors.lineBody = self.colorExampleDetails['color']
-        elif self.colorExampleDetails['name'] == self.colorButtonDetails[8][0]: 
-            self.colors.lineHighlight = self.colorExampleDetails['color']
-        elif self.colorExampleDetails['name'] == self.colorButtonDetails[9][0]: 
-            self.colors.lineShadow = self.colorExampleDetails['color']
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[7][0]:
+            self.colors.colorLineBody = self.colorExampleDetails['color']
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[8][0]:
+            self.colors.colorLineHighlight = self.colorExampleDetails['color']
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[9][0]:
+            self.colors.colorLineShadow = self.colorExampleDetails['color']
     
     def RepaintColors(self):
         #print 'ConfigureWidgetCustomColors frameDemo bg was =',self.frameDemo.cget('bg') 
