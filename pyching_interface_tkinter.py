@@ -333,13 +333,13 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                     configData= pyching_engine.Storage(pyching.configFile, data=None)
             except IOError: #just silently let this past??
                 #print '\n error: unable to read configuration file', pyching.configFile
-                sys.stderr.write('\n error (IOError): unable to read configuration file'+pyching.configFile+'\n')
+                sys.stderr.write(f'\n error (IOError): unable to read configuration file {pyching.configFile}\n')
                 #tkMessageBox.showerror(title='File Error',
                 #       message='Unable to read configuration file:\n'+pyching.configFile)
                 pass
             except Exception: #just silently let this past??
                 #print '\n error: invalid configuration file', pyching.configFile
-                sys.stderr.write('\n error (pychingUnpickleError): invalid configuration file'+pyching.configFile+'\n')
+                sys.stderr.write(f'\n error (pychingUnpickleError): invalid configuration file {pyching.configFile}\n')
                 #tkMessageBox.showerror(title='File Error',
                 #       message='Invalid configuration file:\n'+pyching.configFile)
                 pass
