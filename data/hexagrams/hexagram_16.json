@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_16",
+  "number": 16,
+  "king_wen_sequence": 16,
+  "fu_xi_sequence": 16,
+  "binary": "001000",
+  "trigrams": {
+    "upper": "zhen",
+    "lower": "kun"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Yu",
+    "english_name": "Majesty in Connection",
+    "title": "16. Yu / Majesty in Connection",
+    "judgment": "Yu indicates that, in the state which it implies, feudal princes may be set up, and the hosts put in motion, with advantage.",
+    "image": "The trigrams for the earth, and thunder issuing from it with its crashing noise, form Yu. The ancient kings, in accordance with this, composed their music and did honour to virtue, presenting it especially and most grandly to the supreme being, when they associated with it at the service of their highest ancestor and their parents.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "six",
+        "text": "shows its subject proclaiming their pleasure and satisfaction. There will be evil."
+      },
+      "2": {
+        "position": "second",
+        "type": "six",
+        "text": "shows one who is firm as a rock. They see a thing without waiting till it has come to pass; with their firm correctness there will be good fortune."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows one looking up for favours, while they indulge the feeling of pleasure and satisfaction. They must understand! If they be late in repenting, there will indeed be occasion for repentance."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "nine",
+        "text": "shows they from whom harmony and satisfaction come. Great is the success which they obtain. Let them not allow suspicions to enter their mind, and thus friends will gather around them."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "six",
+        "text": "shows one with a chronic complaint, but who lives on without dying."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows its subject with darkened mind devoted to the pleasure and satisfaction of the time; but if they change their course even when it may be considered as completed, there will be no error."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}

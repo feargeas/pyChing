@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_47",
+  "number": 47,
+  "king_wen_sequence": 47,
+  "fu_xi_sequence": 47,
+  "binary": "011010",
+  "trigrams": {
+    "upper": "dui",
+    "lower": "kan"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "K'oun",
+    "english_name": "Weariness",
+    "title": "47. K'oun / Weariness",
+    "judgment": "In the condition denoted by K'oun there may yet be progress and success. For the firm and correct, the really great person, there will be good fortune. They will fall into no error. If they make speeches, their words cannot be made good.",
+    "image": "The trigram representing a marsh, and below it for a defile, which has drained the other dry so that there is no water in it, form K'oun. The superior person, in accordance with this, will sacrifice their life in order to carry out their purpose.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "six",
+        "text": "shows its subject with their buttocks straitened under the stump of a tree. They enter a dark valley, and for three years have no prospect of deliverance."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows its subject straitened amidst their wine and viands. There come to them anon the red knee-covers of the ruler. It will be well for them to maintain their sincerity as in sacrificing. Active operations on their part will lead to evil, but they will be free from blame."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows its subject straitened before a frowning rock. They lay hold of thorns. They enter their palace, and do not see their spouse. There will be evil."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "nine",
+        "text": "shows its subject proceeding very slowly to help the subject of the first line, who is straitened by the carriage adorned with metal in front of them. There will be occasion for regret, but the end will be good."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows its subject with their nose and feet cut off. They are straitened by their ministers in their scarlet aprons. They are leisurely in their movements, however, and are satisfied. It will be well for them to be as sincere as in sacrificing to spiritual beings."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows its subject straitened, as if bound with creepers; or in a high and dangerous position, and saying to themselves,  'If  I move, I shall repent it.' If they do repent of former errors, there will be good fortune in their going forward."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}

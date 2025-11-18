@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_09",
+  "number": 9,
+  "king_wen_sequence": 9,
+  "fu_xi_sequence": 9,
+  "binary": "110111",
+  "trigrams": {
+    "upper": "xun",
+    "lower": "qian"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Siao Tch'ou",
+    "english_name": "Accumulating Gradually",
+    "title": "9. Siao Tch'ou / Accumulating Gradually",
+    "judgment": "Siao Tch'ou indicates that under its conditions there will be progress and success. We see dense clouds, but no rain coming from our borders in the west.",
+    "image": "The trigram representing the sky, and that representing wind moving above it, form Siao Tch'ou. The superior person, in accordance with this, adorns the outward manifestation of their virtue.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows its subject returning and pursuing their own course. What mistake could they fall into? There will be good fortune."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows its subject, by the attraction of the former line, returning to the proper course. There will be good fortune."
+      },
+      "3": {
+        "position": "third",
+        "type": "nine",
+        "text": "suggests the idea of a carriage, the strap beneath which has been removed, or of a husband and wife looking on each other with averted eyes."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows its subject possessed of sincerity. The danger of bloodshed is thereby averted, and grounds for apprehension dismissed. There will be no mistake."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows its subject possessed of sincerity, and drawing others to unite with them. Rich in resources, they employ their neighbours in the same cause with themselves."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "nine",
+        "text": "shows how the rain has fallen, and the onward progress is stayed; so must we value the full accumulation of the virtue represented by the upper trigram. But a wife exercising excessive restraint, however firm and correct she may be, is in a position of peril, and like the moon approaching to the full. If the superior person prosecutes their measures in such circumstances, there will be evil."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}

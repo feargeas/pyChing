@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_05",
+  "number": 5,
+  "king_wen_sequence": 5,
+  "fu_xi_sequence": 5,
+  "binary": "010111",
+  "trigrams": {
+    "upper": "kan",
+    "lower": "qian"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Hsu",
+    "english_name": "The Obstacles",
+    "title": "5. Hsu / The Obstacles",
+    "judgment": "Hsu intimates that, with the sincerity which is declared in it, there will be brilliant success. With firmness there will be good fortune ; and it will be advantageous to cross the great stream.",
+    "image": "The trigram for clouds ascending over that for the sky, form Hsu. The superior person, in accordance with this, eats and drinks, feasts and enjoys themselves as if there were nothing else to employ them.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows its subject waiting in the distant border. It will be well for them constantly to maintain the purpose thus shown, in which case there will be no error."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows its subject waiting on the sand of the mountain stream. They will suffer the small injury of being spoken against, but in the end there will be good fortune."
+      },
+      "3": {
+        "position": "third",
+        "type": "nine",
+        "text": "shows its subject in the mud close by the stream. They thereby invite the approach of injury."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows its subject waiting in the place of blood. But they will get out of the cavern."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows its subject waiting amidst the appliances of a feast. Through their firmness and correctness there will be good fortune."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows its subject entered into the cavern. But there are three guests coming, to help them, without being urged. If they receive them respectfully, there will be good fortune in the end."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}

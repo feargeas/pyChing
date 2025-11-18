@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_30",
+  "number": 30,
+  "king_wen_sequence": 30,
+  "fu_xi_sequence": 30,
+  "binary": "101101",
+  "trigrams": {
+    "upper": "li",
+    "lower": "li"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Li",
+    "english_name": "Strength and Beauty",
+    "title": "30. Li / Strength and Beauty",
+    "judgment": "Li indicates that, in regard to what it denotes, it will be advantageous to be firm and correct, and that thus there will be a free course and success.",
+    "image": "The trigram for brightness, repeated, forms Li. The great person, in accordance with this, cultivates more and more their brilliant virtue, and diffuses its brightness over the four quarters of the land.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows one ready to move with confused steps. But they tread at the same time reverently, and there will be no mistake."
+      },
+      "2": {
+        "position": "second",
+        "type": "six",
+        "text": "shows its subject in their place in yellow. There will be great good fortune."
+      },
+      "3": {
+        "position": "third",
+        "type": "nine",
+        "text": "shows its subject in a position like that of the declining sun. Instead of playing on their instrument of earthenware, and singing, they utter the groans of an old person of eighty. There will be evil."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "nine",
+        "text": "shows the manner of its subject's arrival. How abrupt it is, as with fire, as with death, thus to be rejected by all."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "six",
+        "text": "shows one with tears flowing in torrents, and groaning in sorrow. There will be good fortune."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "nine",
+        "text": "shows the king employing the subject in his punitive expeditions. Achieving admirable merit, they break only the chief of the rebels. Where their prisoners were not their associates, they do not punish. There will be no error."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}

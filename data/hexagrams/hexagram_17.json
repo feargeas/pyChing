@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_17",
+  "number": 17,
+  "king_wen_sequence": 17,
+  "fu_xi_sequence": 17,
+  "binary": "011001",
+  "trigrams": {
+    "upper": "dui",
+    "lower": "zhen"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Souei",
+    "english_name": "Submission to the Duty",
+    "title": "17. Souei / Submission to the Duty",
+    "judgment": "Souei indicates that under its conditions there will be great progress and success. But it will be advantageous to be firm and correct. There will then be no error.",
+    "image": "The trigram for the waters of a marsh and that for thunder hidden in the midst of it, form Souei. The superior person in accordance with this, when it is getting toward dark, enters their house and rests.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows us one changing the object of their pursuit, but if they are firm and correct, there will be good fortune. Going beyond their own gate to find associates, they will achieve merit."
+      },
+      "2": {
+        "position": "second",
+        "type": "six",
+        "text": "shows us one who cleaves to the little child, and lets go the person of age and experience."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows us one who cleaves to the person of age and experience, and lets go the little child. Such following will get what it seeks; but it will be advantageous to adhere to what is firm and correct."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "nine",
+        "text": "shows us one followed, and obtaining adherents. Though they be firm and correct, there will be evil. If they be sincere however in their course, and make that evident, into what error can they fall?"
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows us the ruler sincere in fostering all that is excellent. There will be good fortune."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows us sincerity firmly held and clung to, yea, and bound fast. We see the king with this presenting his offerings on the western mountain."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}

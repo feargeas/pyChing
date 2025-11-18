@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_04",
+  "number": 4,
+  "king_wen_sequence": 4,
+  "fu_xi_sequence": 4,
+  "binary": "100010",
+  "trigrams": {
+    "upper": "gen",
+    "lower": "kan"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Mong",
+    "english_name": "The Immature",
+    "title": "4. Mong / The Immature",
+    "judgment": "Mong indicates that there will be progress and success. I do not go and seek the youthful and inexperienced, but they come and seek me. When they show the sincerity that marks the first recourse to divination, I instruct them. If they apply a second and third time, that is troublesome; and I do not instruct the troublesome. There will be advantage in being firm and correct.",
+    "image": "The trigram representing a mountain, and beneath it that for a spring issuing forth, form Mong. The superior person, in accordance with this, strives to be resolute in their conduct and nourishes their virtue.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "six",
+        "text": "relates to to the dispelling of ignorance. It will be advantageous to use punishment for this purpose, and to remove the shackles from the mind. But going on in the way of punishment will give occasion for regret."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows its subject exercising forbearance with the ignorant, in which there will be good fortune, and acknowleging of the goodness of those weaker, which will also be fortunate. They may be described also as a person able to sustain the burden of their family."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "seems to say that one should not partner a person whose emblem may be that when they see a person of wealth, they will not keep their person from them, and in no wise will advantage come from them."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows that if one is bound to an ignorant person, there will be occasion for regret."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "six",
+        "text": "shows a simple person without experience. There will be good fortune."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "nine",
+        "text": "we see one smiting the ignorant youth. But no advantage will come from doing them an injury. Advantage would come from warding off injury from them."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}

@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_61",
+  "number": 61,
+  "king_wen_sequence": 61,
+  "fu_xi_sequence": 61,
+  "binary": "110011",
+  "trigrams": {
+    "upper": "xun",
+    "lower": "dui"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Tchong Fou",
+    "english_name": "The Interior Truth",
+    "title": "61. Tchong Fou / The Interior Truth",
+    "judgment": "Tchong Fou moves even pigs and fish, and leads to good fortune. There will be advantage in crossing the great stream. There will be advantage in being firm and correct.",
+    "image": "The trigram representing the waters of a marsh, and that for wind above it, form Tchong Fou. The superior person, in accordance with this, deliberates about causes of litigations and delays the infliction of death.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows its subject resting in their self. There will be good fortune. If they sought to rest in any other, they would not find rest."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows its subject like the crane crying out in her hidden retirement, and her young ones responding to her. It is as if it were said, 'I have a cup of good spirits', and the response were, 'I will partake of it with you.'"
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows its subject having met with their mate. Now they beat their drum, and now they leave off. Now they weep, and now they sing."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows its subject like the moon nearly full, and like a horse in a chariot whose fellow disappears. There will be no error."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows its subject perfectly sincere, and linking others to them in closest union. There will be no error."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "nine",
+        "text": "shows its subject on a rooster trying to mount to heaven. Even with firm correctness there will be evil."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}

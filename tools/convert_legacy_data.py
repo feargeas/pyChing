@@ -9,6 +9,7 @@ and converts them to structured JSON files.
 import sys
 import json
 import re
+import argparse
 from pathlib import Path
 
 # Add parent directory to path to import legacy modules
@@ -333,39 +334,81 @@ def convert_hexagram(hex_num, output_dir):
 
 def main():
     """Main conversion function."""
+    # Parse arguments
+    parser = argparse.ArgumentParser(
+        description="Convert legacy pyChing hexagram data to JSON format"
+    )
+    parser.add_argument(
+        '--all',
+        action='store_true',
+        help='Convert all 64 hexagrams (default: convert 1, 2, 64 as proof of concept)'
+    )
+    parser.add_argument(
+        '--hexagrams',
+        type=int,
+        nargs='+',
+        metavar='N',
+        help='Specific hexagrams to convert (e.g., --hexagrams 1 2 3)'
+    )
+    args = parser.parse_args()
+
     # Setup paths
     project_root = Path(__file__).parent.parent
     output_dir = project_root / 'data' / 'hexagrams'
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # For proof of concept, convert only hexagrams 1, 2, and 64
-    hexagrams_to_convert = [1, 2, 64]
+    # Determine which hexagrams to convert
+    if args.hexagrams:
+        hexagrams_to_convert = args.hexagrams
+        mode = "custom"
+    elif args.all:
+        hexagrams_to_convert = list(range(1, 65))  # All 64 hexagrams
+        mode = "all"
+    else:
+        hexagrams_to_convert = [1, 2, 64]  # Proof of concept
+        mode = "poc"
 
     print("Converting legacy hexagram data to JSON...")
+    print(f"Mode: {mode}")
+    print(f"Hexagrams to convert: {len(hexagrams_to_convert)}")
     print(f"Output directory: {output_dir}")
     print()
 
     converted = []
+    failed = []
+
     for hex_num in hexagrams_to_convert:
         try:
             json_data = convert_hexagram(hex_num, output_dir)
             converted.append(hex_num)
         except Exception as e:
-            print(f"  ERROR: {e}")
-            import traceback
-            traceback.print_exc()
+            print(f"  ERROR converting hexagram {hex_num}: {e}")
+            failed.append(hex_num)
+            if mode != "all":  # Show traceback for non-batch conversions
+                import traceback
+                traceback.print_exc()
 
     print()
-    print(f"Successfully converted {len(converted)} hexagrams: {converted}")
+    print(f"Successfully converted {len(converted)} hexagrams")
 
-    if len(converted) == len(hexagrams_to_convert):
+    if failed:
+        print(f"Failed to convert {len(failed)} hexagrams: {failed}")
+
+    if mode == "all" and len(converted) == 64:
+        print("\n" + "=" * 60)
+        print("✓ ALL 64 HEXAGRAMS CONVERTED SUCCESSFULLY!")
+        print("=" * 60)
+        return 0
+    elif mode == "poc" and len(converted) == len(hexagrams_to_convert):
         print("\n✓ Proof of concept complete!")
         print("  Review the generated JSON files, then run with --all to convert all 64 hexagrams")
+        return 0
+    elif len(converted) == len(hexagrams_to_convert):
+        print("\n✓ All requested hexagrams converted successfully!")
+        return 0
     else:
         print("\n✗ Some conversions failed")
         return 1
-
-    return 0
 
 
 if __name__ == "__main__":

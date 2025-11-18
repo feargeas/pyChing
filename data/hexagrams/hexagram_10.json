@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_10",
+  "number": 10,
+  "king_wen_sequence": 10,
+  "fu_xi_sequence": 10,
+  "binary": "111011",
+  "trigrams": {
+    "upper": "qian",
+    "lower": "dui"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Li",
+    "english_name": "Careful Conduct",
+    "title": "10. Li / Careful Conduct",
+    "judgment": "Li suggests the idea of one treading on the tail of a tiger, which does not bite them. There will be progress and success.",
+    "image": "The trigram representing the sky above, and below it that representing the waters of a marsh, form Li. The superior person, in accordance with this, discriminates between high and low, and gives settlement to the aims of all people.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows its subject treading their accustomed path. If they go forward, there will be no error."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows its subject treading the path that is level and easy ; a quiet and solitary person, for whom, if they be firm and correct, there will be good fortune."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows a one-eyed person who thinks they can see well; a lame person who thinks they can walk well; one who treads on the tail of a tiger and is bitten. All this indicates ill fortune. We have a mere bravo acting the part of a great ruler."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "nine",
+        "text": "shows its subject treading on the tail of a tiger. They become full of apprehensive caution, and in the end there will be good fortune."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows the resolute tread of its subject. Though they be firm and correct, there will be peril."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "nine",
+        "text": "tells us to look at the whole course that is trodden, and examine the presage which that gives. If it be complete and without failure, there will be great good fortune."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}

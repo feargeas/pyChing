@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_42",
+  "number": 42,
+  "king_wen_sequence": 42,
+  "fu_xi_sequence": 42,
+  "binary": "110001",
+  "trigrams": {
+    "upper": "xun",
+    "lower": "zhen"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Yi",
+    "english_name": "Increase",
+    "title": "42. Yi / Increase",
+    "judgment": "Yi indicates that in the state which it denotes there will be advantage in every movement which shall be undertaken, that it will be advantageous even to cross the great stream.",
+    "image": "The trigram representing wind and that for thunder form Yi. The superior person, in accordance with this, when they see what is good, moves towards it; and when they see their errors, they turn from them.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows that it will be advantageous for its subject in their position to make a great movement. If it be greatly fortunate, no blame will be imputed to them."
+      },
+      "2": {
+        "position": "second",
+        "type": "six",
+        "text": "shows parties adding to the stores of its subject ten pairs of tortoise shells whose oracles cannot be opposed. Let them persevere in being firm and correct, and there will be good fortune. Let the king, having their virtues thus distinguished, employ them in presenting their offerings to the supreme being, and there will be good fortune."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows increase given to its subject by means of what is evil, so that they shall be led to good, and be without blame. Let them be sincere and pursue the path of balance, so shall they secure the recognition of the ruler, like an officer who announces themselves to their prince by the symbol of their rank."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows its subject pursuing the due course. Their advice to their prince is followed. They can with advantage be relied on in such a movement as that of removing the capital."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows its subject with sincere heart seeking to benefit all below. There need be no question about it; the result will be great good fortune. All below will with sincere heart acknowledge their goodness."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "nine",
+        "text": "we see one to whose increase none will contribute, while persons will seek to assail them. They observe no regular rule in the ordering of their heart. There will be evil."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}

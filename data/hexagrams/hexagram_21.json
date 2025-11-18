@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_21",
+  "number": 21,
+  "king_wen_sequence": 21,
+  "fu_xi_sequence": 21,
+  "binary": "101001",
+  "trigrams": {
+    "upper": "li",
+    "lower": "zhen"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Che Ho",
+    "english_name": "Bite Through",
+    "title": "21. Che Ho / Bite Through",
+    "judgment": "Che Ho indicates successful progress in the condition of things which it supposes. It will be advantageous to use legal constraints.",
+    "image": "The trigrams representing thunder and lightning form Che Ho. The ancient kings, in accordance with this, framed their penalties with intelligence, and promulgated their laws.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows one with their feet in the stocks and deprived of their toes. There will be no error."
+      },
+      "2": {
+        "position": "second",
+        "type": "six",
+        "text": "shows one biting through the soft flesh, and going on to bite off the nose. There will be no error."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows one gnawing dried flesh, and meeting with what is disagreeable. There will be occasion for some small regret, but no great error."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "nine",
+        "text": "shows one gnawing the flesh dried on the bone, and getting the pledges of money and arrows. It will be advantageous to them to realise the difficulty of their task and be firm, in which case there will be good fortune."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "six",
+        "text": "shows one gnawing at the firm and correct, realising the peril of their position. There will be no error."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "nine",
+        "text": "shows one wearing the yoke, and deprived of their ears. There will be evil."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}

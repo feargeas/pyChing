@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_06",
+  "number": 6,
+  "king_wen_sequence": 6,
+  "fu_xi_sequence": 6,
+  "binary": "111010",
+  "trigrams": {
+    "upper": "qian",
+    "lower": "kan"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Song",
+    "english_name": "The Conflict",
+    "title": "6. Song / The Conflict",
+    "judgment": "Song intimates how, though there is sincerity in one's contention, they will meet with opposition and obstruction; but if they cherish an apprehensive caution, there will be good fortune, while, if they must prosecute the contention to the bitter end, there will be evil. It will be advantageous to see the great person; it will not be advantageous to cross the great stream.",
+    "image": "The trigram representing heaven and that representing water, moving away from each other, form Song. The superior person, in accordance with this, in the transaction of affairs takes good counsel about their first steps.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "six",
+        "text": "shows its subject not perpetuating the matter which the contention is about. He will suffer the small injury of being spoken against, but the end will be fortunate."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows its subject keeping peace with three hundred families, and therefore falling into no mistake."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows its subject staying in the old place assigned for their support, and being firmly correct. Perilous as the position is, there will be good fortune in the end. Should they perchance engage in the king's business, they will not claim the merit of achievement."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "nine",
+        "text": "shows its subject unequal to the contention. They return to the study of Heaven's ordinances, change their wish to contend and rest in being firm and correct. There will be good fortune."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows its subject contending; and with great good fortune."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "nine",
+        "text": "shows how its subject may have the leathern belt conferred on them by the sovereign, and thrice it shall be taken from them in a morning."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}

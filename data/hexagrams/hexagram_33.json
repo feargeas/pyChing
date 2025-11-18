@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_33",
+  "number": 33,
+  "king_wen_sequence": 33,
+  "fu_xi_sequence": 33,
+  "binary": "111100",
+  "trigrams": {
+    "upper": "qian",
+    "lower": "gen"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Toun",
+    "english_name": "Withdrawal",
+    "title": "33. Toun / Withdrawal",
+    "judgment": "Toun indicates successful progress in its circumstances. To a small extent it will still be advantageous to be firm and correct.",
+    "image": "The trigram representing the sky, and below it that for a mountain, form Toun. The superior person, in accordance with this, keeps small people at distance, not showing that they dislike them, except by their own dignified gravity.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "six",
+        "text": "shows a withdrawing tail. The position is perilous. No movement in any direction should they made."
+      },
+      "2": {
+        "position": "second",
+        "type": "six",
+        "text": "shows its subject holding their purpose fast as if by a thong made from the hide of a yellow ox, which cannot they broken."
+      },
+      "3": {
+        "position": "third",
+        "type": "nine",
+        "text": "shows one withdrawing but bound, to their distress and peril. If they were to deal with their hinderances as in nourishing a servant or concubine, it would be fortunate for them."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "nine",
+        "text": "shows its subject withdrawing, notwithstanding their likings. In a superior person this will lead to good fortune; a small person cannot attain to this."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows its subject withdrawing in an admirable way. With firm correctness there will be good fortune."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "nine",
+        "text": "shows its subject withdrawing in a noble way. It will be advantageous in every respect."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}

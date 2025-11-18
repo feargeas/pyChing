@@ -1,0 +1,59 @@
+{
+  "hexagram_id": "hexagram_57",
+  "number": 57,
+  "king_wen_sequence": 57,
+  "fu_xi_sequence": 57,
+  "binary": "110110",
+  "trigrams": {
+    "upper": "xun",
+    "lower": "xun"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Hsuan",
+    "english_name": "Willing Submission, The Wind",
+    "title": "57. Hsuan / Willing Submission, The Wind",
+    "judgment": "Hsuan intimates that under the conditions which it denotes there will be some little attainment and progress. There will be advantage in movement onward in whatever direction. It will be advantageous also to see the great person.",
+    "image": "The two trigrams representing wind, following each other, form Hsuan. The superior person, in accordance with this, reiterates their orders, and secures the practice of their affairs.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "six",
+        "text": "shows its subject now advancing, now receding. It would be advantageous for them to have the firm correctness of a brave soldier."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows the representative of Hsuan beneath a couch, and employing diviners and exorcists in a way bordering on confusion. There will be good fortune and no error."
+      },
+      "3": {
+        "position": "third",
+        "type": "nine",
+        "text": "shows its subject penetrating only by violent and repeated efforts, There will be occasion for regret."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows all occasion for repentance in its subject passed away. They take game for its threefold use in their hunting."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows that with firm correctness there will be good fortune for its subject. All occasion for repentance will disappear, and all their movements will be advantageous. There may have been no good beginning, but there will be a good end. Three days before making any changes, let them give notice of them; and three days after, let them reconsider them. There will thus be good fortune."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "nine",
+        "text": "shows the representative of Hsuan beneath a couch, and having lost the axe with which they executed their decisions. However firm and correct they may try to they, there will be evil."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {}
+}
