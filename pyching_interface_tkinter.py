@@ -421,14 +421,40 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 self.hexes.question = questionDialog.result
                 self.hexes.hex1.number = str(self.reading.primary.number)
                 self.hexes.hex1.name = self.reading.primary.english_name
-                self.hexes.hex1.lineValues = self.reading.line_values
-                self.hexes.hex1.infoSource = f"pyching_int_data.hexagram_{self.reading.primary.number:02d}()"
+
+                # Reconstruct line values from binary and changing_lines
+                hex1_lines = []
+                for i, bit in enumerate(self.reading.primary.binary):
+                    pos = i + 1  # Line position (1-6)
+                    if bit == '1':  # Yang line
+                        if pos in self.reading.changing_lines:
+                            hex1_lines.append(9)  # Old yang (moving)
+                        else:
+                            hex1_lines.append(7)  # Young yang (stable)
+                    else:  # Yin line
+                        if pos in self.reading.changing_lines:
+                            hex1_lines.append(6)  # Old yin (moving)
+                        else:
+                            hex1_lines.append(8)  # Young yin (stable)
+
+                self.hexes.hex1.lineValues = hex1_lines
+                self.hexes.hex1.infoSource = f"pyching_int_data.in{self.reading.primary.number}data()"
 
                 if self.reading.relating:
+                    # Transform line values for hex2 (6→7, 9→8, stable unchanged)
+                    hex2_lines = []
+                    for lv in hex1_lines:
+                        if lv == 6:
+                            hex2_lines.append(7)
+                        elif lv == 9:
+                            hex2_lines.append(8)
+                        else:
+                            hex2_lines.append(lv)
+
                     self.hexes.hex2.number = str(self.reading.relating.number)
                     self.hexes.hex2.name = self.reading.relating.english_name
-                    self.hexes.hex2.lineValues = [Hexagram.transform_line(lv) for lv in self.reading.line_values]
-                    self.hexes.hex2.infoSource = f"pyching_int_data.hexagram_{self.reading.relating.number:02d}()"
+                    self.hexes.hex2.lineValues = hex2_lines
+                    self.hexes.hex2.infoSource = f"pyching_int_data.in{self.reading.relating.number}data()"
                 else:
                     self.hexes.hex2.lineValues = [0,0,0,0,0,0]
 
@@ -702,13 +728,13 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.hexes.hex1.number = str(hex_number)
         self.hexes.hex1.name = hex_data.english_name
         self.hexes.hex1.lineValues = line_values
-        self.hexes.hex1.infoSource = f"pyching_int_data.hexagram_{hex_number:02d}()"
+        self.hexes.hex1.infoSource = f"pyching_int_data.in{hex_number}data()"
 
         if moving_lines:
             self.hexes.hex2.number = str(self.reading.relating.number)
             self.hexes.hex2.name = self.reading.relating.english_name
             self.hexes.hex2.lineValues = transformed_lines  # Use already calculated transformed lines
-            self.hexes.hex2.infoSource = f"pyching_int_data.hexagram_{self.reading.relating.number:02d}()"
+            self.hexes.hex2.infoSource = f"pyching_int_data.in{self.reading.relating.number}data()"
         else:
             self.hexes.hex2.lineValues = [0,0,0,0,0,0]
 
