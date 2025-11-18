@@ -45,7 +45,11 @@ import tkinter.colorchooser as tkColorChooser
 
 #pyChing source specific imports
 import pyching_engine, pyching_cimages, pyching_idimage_data
-import pyching_int_data, pyching_hlhtx_data 
+import pyching_int_data, pyching_hlhtx_data
+
+# Modern pyChing imports (Phase 4 engine)
+from pyching import HexagramEngine, Element, Reading, Hexagram
+from pyching.data import HexagramResolver 
 
 #smg library module imports
 from smgDialog import smgDialog
@@ -206,6 +210,7 @@ class WindowMain:
         AddMenuItems(self.menuMainFile,(('c','Load Reading...',0,self.LoadReading),
                                                     ('c','Save Reading...',0,self.SaveReading),('s',),
                                                     ('c','Save Reading As Text...',16,self.SaveReadingAsText),('s',),
+                                                    ('c','Compare Sources...',0,self.CompareSourcesDialog),('s',),
                                                     ('c','Exit',1,self.Quit)) )
         AddMenuItems(self.menuMainSettings,(('k','Show Places',5,self.__ToggleLabelsPlaces,self.showPlaces),
             ('k','Show Line Hints',10,None,self.showLineHints),('s',),
@@ -382,19 +387,68 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         questionDialog = DialogGetQuestion(self.master)
         self.master.update()#makes sure the main app window gets redrawn properly (seems only to be a problem on win32)
         if questionDialog.result: #the user didn't cancel
-            self.ClearReading()
-            for coin in self.labelsCoins:#initialise coins display
-                coin.configure(image=self.images.coinFrames[0])
-            self.hexes = pyching_engine.Hexagrams('coin')
-            self.hexes.question = questionDialog.result
-            self.ShowQuestion()
-            if self.castAll.get():#cast all lines automatically
-                self.CastAllLines()
-            else:#cast 1 line at a time
-                for menuItem in range(3,5):#disable cast-type changing while casting
-                    self.menuMainSettings.entryconfigure(menuItem,state=DISABLED)
-                self.buttonCast.configure(text='Cast Line 1 of 6',command=self.CastNextLine)
-                self.labelStatus.configure(text='Waiting to cast line 1 of 6 ...')
+            # Use modern HexagramEngine
+            engine = HexagramEngine()
+
+            # Get selected method and source
+            method = Element(self.methodVar.get())
+            source = self.sourceVar.get()
+            seed = self.seedVar.get() if method == Element.EARTH else None
+
+            # Check method availability
+            available, error = engine.check_method_available(method)
+            if not available:
+                tkMessageBox.showwarning(
+                    "Method Unavailable",
+                    f"The {method.value} method is unavailable:\n\n{error}\n\n"
+                    "Suggestion: Use Fire method for high-quality randomness.\n\n"
+                    "Please select another method."
+                )
+                self.labelLineHint.show = 1
+                return
+
+            try:
+                # Cast reading using modern engine
+                self.reading = engine.cast_reading(
+                    method=method,
+                    question=questionDialog.result,
+                    source=source,
+                    seed=seed
+                )
+
+                # Also create old-style hexes for backward compatibility with display code
+                self.hexes = pyching_engine.Hexagrams('coin')
+                self.hexes.question = questionDialog.result
+                self.hexes.hex1.number = str(self.reading.primary.number)
+                self.hexes.hex1.name = self.reading.primary.english_name
+                self.hexes.hex1.lineValues = self.reading.line_values
+                self.hexes.hex1.infoSource = f"pyching_int_data.hexagram_{self.reading.primary.number:02d}()"
+
+                if self.reading.relating:
+                    self.hexes.hex2.number = str(self.reading.relating.number)
+                    self.hexes.hex2.name = self.reading.relating.english_name
+                    self.hexes.hex2.lineValues = [Hexagram.transform_line(lv) for lv in self.reading.line_values]
+                    self.hexes.hex2.infoSource = f"pyching_int_data.hexagram_{self.reading.relating.number:02d}()"
+                else:
+                    self.hexes.hex2.lineValues = [0,0,0,0,0,0]
+
+                # Display the reading
+                self.ClearReading()
+                for coin in self.labelsCoins:#initialise coins display
+                    coin.configure(image=self.images.coinFrames[0])
+                self.ShowQuestion()
+
+                if self.castAll.get():#cast all lines automatically
+                    self.CastAllLines()
+                else:#cast 1 line at a time
+                    for menuItem in range(3,5):#disable cast-type changing while casting
+                        self.menuMainSettings.entryconfigure(menuItem,state=DISABLED)
+                    self.buttonCast.configure(text='Cast Line 1 of 6',command=self.CastNextLine)
+                    self.labelStatus.configure(text='Waiting to cast line 1 of 6 ...')
+
+            except Exception as e:
+                tkMessageBox.showerror("Casting Error", f"Error casting reading:\n\n{e}")
+                self.labelLineHint.show = 1
         else: #the user cancelled
             self.labelLineHint.show = 1 #re-enable line hints
         
@@ -490,18 +544,58 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
     def MakeCastDisplay(self, parent):
         self.frameCast = Frame(parent,bg=self.colors.bgReading)
         self.frameCast.pack(anchor=NW,side=TOP)#,padx=20,pady=20
-        
+
+        # Modern controls frame
+        self.frameControls = Frame(self.frameCast,bg=self.colors.bgReading)
+        self.frameControls.grid(column=0,row=0,columnspan=4,sticky=NW,padx=20,pady=10)
+
+        # Method selection
+        Label(self.frameControls,text='Method:',bg=self.colors.bgReading,
+              fg=self.colors.fgLabelLines,font=self.fonts.label).grid(row=0,column=0,sticky=W,padx=5)
+        self.methodVar = StringVar(value='wood')
+        self.methodMenu = OptionMenu(self.frameControls,self.methodVar,
+                                      'wood','metal','fire','earth','air',
+                                      command=self.OnMethodChange)
+        self.methodMenu.config(width=8,font=self.fonts.button)
+        self.methodMenu.grid(row=0,column=1,sticky=W,padx=5)
+
+        # Source selection
+        Label(self.frameControls,text='Source:',bg=self.colors.bgReading,
+              fg=self.colors.fgLabelLines,font=self.fonts.label).grid(row=0,column=2,sticky=W,padx=5)
+        self.sourceVar = StringVar(value='canonical')
+        self.sourceMenu = OptionMenu(self.frameControls,self.sourceVar,
+                                      'canonical','wilhelm_baynes','legge_simplified')
+        self.sourceMenu.config(width=12,font=self.fonts.button)
+        self.sourceMenu.grid(row=0,column=3,sticky=W,padx=5)
+
+        # Seed input for Earth method (initially hidden)
+        self.frameSeed = Frame(self.frameControls,bg=self.colors.bgReading)
+        Label(self.frameSeed,text='Seed:',bg=self.colors.bgReading,
+              fg=self.colors.fgLabelLines,font=self.fonts.label).pack(side=LEFT,padx=5)
+        self.seedVar = StringVar()
+        self.seedEntry = Entry(self.frameSeed,textvariable=self.seedVar,width=20,font=self.fonts.label)
+        self.seedEntry.pack(side=LEFT,padx=5)
+        # Initially hidden - will show when Earth method selected
+
+        # Manual input button
+        self.buttonManual = Button(self.frameControls,text='Manual Input',
+                                   width=12,bg=None,fg=None,font=self.fonts.button,
+                                   highlightthickness=0,takefocus=FALSE,
+                                   command=self.ManualInput)
+        self.buttonManual.grid(row=0,column=4,sticky=W,padx=10)
+
+        # Cast button (moved to row 1)
         self.buttonCast = Button(self.frameCast,text='Cast New Hexagram',underline=0,
                         width=20,bg=None,fg=None,font=self.fonts.button,highlightthickness=0,
                         takefocus=FALSE,command=self.CastHexes)
         #self.buttonCast.focus_set()
-        self.buttonCast.grid(column=0,row=0,sticky=NW,padx=20,pady=20)
+        self.buttonCast.grid(column=0,row=1,sticky=NW,padx=20,pady=10)
 
         self.labelsCoins = []
         for i in range(3):
             self.labelsCoins.append(Label(self.frameCast,image=self.images.coinFrames[16],
                             bg=self.colors.bgReading) )
-            self.labelsCoins[i].grid(column=i+1,row=0,padx=10,pady=10)
+            self.labelsCoins[i].grid(column=i+1,row=1,padx=10,pady=10)
 
         #the following widgets are not initially shown or enabled
         self.frameInfoButtons = Frame(self.frameCast,bg=self.colors.bgReading)
@@ -536,6 +630,107 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.frameInfoButtons.grid_forget()
         self.buttonViewHex1Info.configure(state=DISABLED)
         self.buttonViewHex2Info.configure(state=DISABLED)
+
+    def OnMethodChange(self, *args):
+        """Show/hide seed input when Earth method is selected."""
+        method = self.methodVar.get()
+        if method == 'earth':
+            self.frameSeed.grid(row=1,column=0,columnspan=5,sticky=W,pady=5)
+        else:
+            self.frameSeed.grid_forget()
+
+    def ManualInput(self):
+        """Allow manual input of hexagram number and moving lines."""
+        dialogManual = DialogManualInput(self.master)
+        if dialogManual.result:  # User didn't cancel
+            hex_number, moving_lines = dialogManual.result
+            self.CastManualHexagram(hex_number, moving_lines)
+
+    def CastManualHexagram(self, hex_number: int, moving_lines: list[int]):
+        """Create reading from manually entered hexagram."""
+        self.ClearReading()
+
+        # Build line values from hexagram number and moving lines
+        # Get the binary for this hexagram
+        hex_data = Hexagram.from_number(hex_number, source=self.sourceVar.get())
+
+        # Convert binary to line values (initially all stable)
+        line_values = []
+        for i, bit in enumerate(hex_data.binary):
+            if bit == '1':
+                # Yang line - check if it's moving
+                if (i + 1) in moving_lines:
+                    line_values.append(9)  # Old yang (moving)
+                else:
+                    line_values.append(7)  # Young yang (stable)
+            else:
+                # Yin line - check if it's moving
+                if (i + 1) in moving_lines:
+                    line_values.append(6)  # Old yin (moving)
+                else:
+                    line_values.append(8)  # Young yin (stable)
+
+        # Create reading using HexagramEngine
+        engine = HexagramEngine()
+        self.reading = Reading(
+            primary=hex_data,
+            relating=Hexagram.from_lines(line_values, source=self.sourceVar.get()) if moving_lines else None,
+            line_values=line_values,
+            oracle_values=[],
+            question='[Manually entered hexagram]',
+            timestamp=None,
+            method='manual',
+            source_id=self.sourceVar.get()
+        )
+
+        # Store in old format for compatibility with display code
+        self.hexes = pyching_engine.Hexagrams('coin')
+        self.hexes.question = '[Manually entered hexagram]'
+        self.hexes.hex1.number = str(hex_number)
+        self.hexes.hex1.name = hex_data.english_name
+        self.hexes.hex1.lineValues = line_values
+        self.hexes.hex1.infoSource = f"pyching_int_data.hexagram_{hex_number:02d}()"
+
+        if moving_lines:
+            self.hexes.hex2.number = str(self.reading.relating.number)
+            self.hexes.hex2.name = self.reading.relating.english_name
+            self.hexes.hex2.lineValues = [Hexagram.transform_line(lv) for lv in line_values]
+            self.hexes.hex2.infoSource = f"pyching_int_data.hexagram_{self.reading.relating.number:02d}()"
+        else:
+            self.hexes.hex2.lineValues = [0,0,0,0,0,0]
+
+        # Display the hexagram
+        self.ShowQuestion()
+        self.DisplayManualReading()
+
+    def DisplayManualReading(self):
+        """Display a manually entered reading."""
+        # Display hexagram 1
+        for i, line_value in enumerate(self.hexes.hex1.lineValues):
+            if self.showPlaces.get():
+                self.labelsHexPlaces[i].configure(fg=self.colors.fgLabelPlaces)
+            self.hexLines[0][i].Draw(line_value)
+
+        # Display titles
+        self.labelH1Title.configure(text=self.hexes.hex1.number+'.  '+self.hexes.hex1.name)
+
+        # Display hexagram 2 if there are moving lines
+        if self.hexes.hex2.lineValues[0] != 0:
+            self.labelBecomes.configure(fg=self.colors.fgLabelLines)
+            self.labelH2Title.configure(text=self.hexes.hex2.number+'.  '+self.hexes.hex2.name)
+
+            for i, line_value in enumerate(self.hexes.hex2.lineValues):
+                self.hexLines[1][i].Draw(line_value)
+        else:
+            # Show "no moving lines" message
+            for i in [3,4,5]:
+                if i in self.labelsNoMovingLines:
+                    self.labelsNoMovingLines[i].tkraise()
+
+        self.labelLineHint.show = 1
+        self.ShowInfoButtons()
+        self.menuMainFile.entryconfigure(1,state=NORMAL)  # Enable save
+        self.menuMainFile.entryconfigure(3,state=NORMAL)  # Enable save as text
 
     def ViewHex1Info(self):
         self.ShowHtml(title='Hexagram Information - '+self.hexes.hex1.number+'. '+self.hexes.hex1.name,
@@ -711,62 +906,97 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 
     def SaveReading(self):
         fileName = tkFileDialog.asksaveasfilename(parent=self.master,
-                        title='Save Reading',defaultextension=pyching.saveFileExt,
-                        filetypes=[(pyching.title+' save files','*'+pyching.saveFileExt)],
+                        title='Save Reading',defaultextension='.json',
+                        filetypes=[('JSON files','*.json'),('All files','*.*')],
                         initialdir=pyching.savePath)
         #print fileName #debug
         if not fileName: return #user cancelled so get out
-    
-        #if not self.hexes: #we need an instance to work with
-        # self.hexes = pyching_engine.Hexagrams()
-        try: 
-            #pass
-            self.hexes.Save(fileName)
+
+        try:
+            # Save using modern Reading JSON format
+            if hasattr(self, 'reading') and self.reading:
+                self.reading.save(fileName)
+            else:
+                # Fallback to old pickle format if reading not available
+                self.hexes.Save(fileName)
         except IOError:
-            #print '\n error: unable to write save file', fileName
             tkMessageBox.showerror(title='File Error',
                             message='Unable to write save file:\n'+fileName)
+        except Exception as e:
+            tkMessageBox.showerror(title='Save Error',
+                            message=f'Error saving reading:\n\n{str(e)}')
         else:
-            #print '\n saved file:', fileName
             self.labelStatus.configure(text='saved reading: '+fileName)
             
     def LoadReading(self):
         self.labelLineHint.show = 0 #disable line hints
         fileName = tkFileDialog.askopenfilename(parent=self.master,
-                        title='Load Saved Reading',defaultextension=pyching.saveFileExt,
-                        filetypes=[(pyching.title+' save files','*'+pyching.saveFileExt)],
+                        title='Load Saved Reading',
+                        filetypes=[('JSON files','*.json'),
+                                   (pyching.title+' save files','*'+pyching.saveFileExt),
+                                   ('All files','*.*')],
                         initialdir=pyching.savePath)
         #print fileName #debug
-        if not fileName: 
+        if not fileName:
             self.labelLineHint.show = 1 #re-enable line hints
             return #user cancelled so get out
 
-        tempHexes = pyching_engine.Hexagrams()
-        try:
-            saveFileID = tempHexes.Load(fileName)
-        except IOError:
-            #print '\n error: unable to read save file', fileName
-            tkMessageBox.showerror(title='File Error',
-                            message='Unable to load save file:\n'+fileName)
-        except Exception: #the file couldn't be unpickled, most likely it isn't a pickled file
-            #print '\n error: unable to unpickle file', fileName
-            tkMessageBox.showerror(title='Not A Save File',
-                            message='The file you attempted to load:\n\n'+fileName+\
-                                            '\n\nis not a '+pyching.title+' save file.')
-        else:
-            if not saveFileID[0] == pyching.saveFileID[0]: #this isn't a valid pyching savefile
-                #print '\n invalid save file:', fileName
-                tkMessageBox.showerror(title='Not A Save File',
-                                message='The file you attempted to load:\n\n'+fileName+\
-                                                '\n\nis not a '+pyching.title+' save file.')
-            #elif not saveFileID[1] == pyching.saveFileID[1]: #savefile fails version check
-            # pass #handle any savefile version issues here
-            else:     
-                self.hexes = tempHexes
+        # Try to load as modern JSON format first
+        if fileName.endswith('.json'):
+            try:
+                self.reading = Reading.load(fileName)
+
+                # Also populate old hexes for display compatibility
+                self.hexes = pyching_engine.Hexagrams('coin')
+                self.hexes.question = self.reading.question
+                self.hexes.hex1.number = str(self.reading.primary.number)
+                self.hexes.hex1.name = self.reading.primary.english_name
+                self.hexes.hex1.lineValues = self.reading.line_values
+                self.hexes.hex1.infoSource = f"pyching_int_data.hexagram_{self.reading.primary.number:02d}()"
+
+                if self.reading.relating:
+                    self.hexes.hex2.number = str(self.reading.relating.number)
+                    self.hexes.hex2.name = self.reading.relating.english_name
+                    self.hexes.hex2.lineValues = [Hexagram.transform_line(lv) for lv in self.reading.line_values]
+                    self.hexes.hex2.infoSource = f"pyching_int_data.hexagram_{self.reading.relating.number:02d}()"
+                else:
+                    self.hexes.hex2.lineValues = [0,0,0,0,0,0]
+
+                # Update UI to reflect loaded settings
+                self.methodVar.set(self.reading.method)
+                self.sourceVar.set(self.reading.source_id)
+
+                # Display the reading
                 self.ClearReading()
                 self.CastAllLines(loadingSaveFile=1)
                 self.labelStatus.configure(text='loaded reading: '+fileName)
-        
+
+            except Exception as e:
+                tkMessageBox.showerror(title='Load Error',
+                                      message=f'Error loading JSON file:\n\n{str(e)}')
+        else:
+            # Try old pickle format
+            tempHexes = pyching_engine.Hexagrams()
+            try:
+                saveFileID = tempHexes.Load(fileName)
+            except IOError:
+                tkMessageBox.showerror(title='File Error',
+                                message='Unable to load save file:\n'+fileName)
+            except Exception:
+                tkMessageBox.showerror(title='Not A Save File',
+                                message='The file you attempted to load:\n\n'+fileName+\
+                                                '\n\nis not a '+pyching.title+' save file.')
+            else:
+                if not saveFileID[0] == pyching.saveFileID[0]:
+                    tkMessageBox.showerror(title='Not A Save File',
+                                    message='The file you attempted to load:\n\n'+fileName+\
+                                                    '\n\nis not a '+pyching.title+' save file.')
+                else:
+                    self.hexes = tempHexes
+                    self.ClearReading()
+                    self.CastAllLines(loadingSaveFile=1)
+                    self.labelStatus.configure(text='loaded reading: '+fileName)
+
         self.labelLineHint.show = 1 #re-enable line hints
 
     def SaveReadingAsText(self):
@@ -775,12 +1005,12 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                         filetypes=[('text files','*.txt')],
                         initialdir=pyching.savePath)
         if not fileName: return #user cancelled so get out
-        
+
         textData = self.hexes.ReadingAsText()
         #print textData #debug
         try:
             textFile = open(fileName, 'w')
-        except IOError: 
+        except IOError:
             #print '\n error: unable to create text file', fileName
             tkMessageBox.showerror(title='File Error',
                             message='Unable to create text file:\n'+fileName)
@@ -794,6 +1024,17 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                                     message='Unable to write text file:\n'+fileName)
             finally:
                 textFile.close()
+
+    def CompareSourcesDialog(self):
+        """Show source comparison dialog."""
+        if not hasattr(self, 'hexes') or not self.hexes:
+            tkMessageBox.showinfo(title='No Reading',
+                                 message='Please cast a hexagram first before comparing sources.')
+            return
+
+        # Create a simple comparison window
+        dialogCompare = DialogCompareSources(self.master, self.hexes.hex1.number)
+        # The dialog will display itself
 
 class HexLine(Canvas):
     """
@@ -1288,7 +1529,170 @@ class DialogGetQuestion(smgDialog):
             return 0
         else:
             return 1
-        
+
+class DialogManualInput(smgDialog):
+    """
+    Allows manual input of hexagram number and moving lines.
+    """
+    def __init__(self, parent: Any) -> None:
+        smgDialog.__init__(self,parent,title='Manual Hexagram Input',
+                    buttons=[{'name':'buttonOk','title':'Ok','binding':'Ok','underline':None,'hotKey':'<Return>'},
+                                {'name':'buttonCancel','title':'Cancel','binding':'Cancel','underline':None,'hotKey':'<Escape>'}],
+                    buttonsDef=-1,buttonsWidth=0,buttonsPad=5,
+                    resizeable=0, transient=1, wait=1)
+
+    def Body(self,master):
+        # Hexagram number input
+        Label(master,text='Enter hexagram number (1-64):').grid(column=0,row=0,sticky=W,padx=5,pady=5)
+        self.hexNumberVar = StringVar()
+        self.hexNumberVar.set('1')
+        self.entryHexNumber = Entry(master,textvariable=self.hexNumberVar,width=10)
+        self.entryHexNumber.grid(column=1,row=0,sticky=W,padx=5,pady=5)
+
+        # Moving lines input
+        Label(master,text='Enter moving lines (optional):').grid(column=0,row=1,sticky=W,padx=5,pady=5)
+        Label(master,text='(comma-separated, e.g., 1,3,6)',
+              font=('TkDefaultFont',9)).grid(column=0,row=2,columnspan=2,sticky=W,padx=5)
+        self.movingLinesVar = StringVar()
+        self.entryMovingLines = Entry(master,textvariable=self.movingLinesVar,width=30)
+        self.entryMovingLines.grid(column=1,row=1,sticky=W,padx=5,pady=5)
+
+        # Help text
+        helpText = ("Enter the hexagram number from a physical I Ching reading\n"
+                   "(coins, yarrow stalks, etc.) and optionally specify which\n"
+                   "lines are moving (changing lines).\n\n"
+                   "Line positions: 1=bottom, 2=second, 3=third,\n"
+                   "                4=fourth, 5=fifth, 6=top")
+        Label(master,text=helpText,justify=LEFT,
+              font=('TkDefaultFont',9)).grid(column=0,row=3,columnspan=2,sticky=W,padx=5,pady=10)
+
+        return self.entryHexNumber
+
+    def Apply(self):
+        hex_number = int(self.hexNumberVar.get())
+        moving_lines_str = self.movingLinesVar.get().strip()
+
+        if moving_lines_str:
+            try:
+                moving_lines = [int(x.strip()) for x in moving_lines_str.split(',')]
+            except ValueError:
+                moving_lines = []
+        else:
+            moving_lines = []
+
+        self.result = (hex_number, moving_lines)
+
+    def Validate(self):
+        # Validate hexagram number
+        try:
+            hex_num = int(self.hexNumberVar.get())
+            if hex_num < 1 or hex_num > 64:
+                tkMessageBox.showerror(title='Invalid Hexagram Number',
+                                      message='Hexagram number must be between 1 and 64.')
+                return 0
+        except ValueError:
+            tkMessageBox.showerror(title='Invalid Input',
+                                  message='Hexagram number must be a number.')
+            return 0
+
+        # Validate moving lines
+        moving_lines_str = self.movingLinesVar.get().strip()
+        if moving_lines_str:
+            try:
+                moving_lines = [int(x.strip()) for x in moving_lines_str.split(',')]
+                for line in moving_lines:
+                    if line < 1 or line > 6:
+                        tkMessageBox.showerror(title='Invalid Line Number',
+                                              message='Line numbers must be between 1 and 6.')
+                        return 0
+            except ValueError:
+                tkMessageBox.showerror(title='Invalid Input',
+                                      message='Moving lines must be comma-separated numbers (e.g., 1,3,6).')
+                return 0
+
+        return 1
+
+class DialogCompareSources(Toplevel):
+    """
+    Simple dialog to compare hexagram interpretations from different sources.
+    """
+    def __init__(self, parent: Any, hex_number: str) -> None:
+        Toplevel.__init__(self, parent)
+        self.title(f'Source Comparison - Hexagram {hex_number}')
+        self.transient(parent)
+
+        # Get hexagram from different sources
+        hex_num = int(hex_number)
+        sources = ['canonical', 'wilhelm_baynes', 'legge_simplified']
+        available_sources = []
+
+        # Check which sources are available
+        for source_id in sources:
+            try:
+                hex_data = Hexagram.from_number(hex_num, source=source_id)
+                # Check if it's not just a placeholder
+                if not hex_data.metadata.get('manual_extraction_required', False):
+                    available_sources.append((source_id, hex_data))
+            except:
+                pass
+
+        if not available_sources:
+            Label(self, text='No alternative sources available yet.',
+                  padx=20, pady=20).pack()
+            Button(self, text='Close', command=self.destroy).pack(pady=10)
+            return
+
+        # Create scrollable frame
+        canvas = Canvas(self)
+        scrollbar = Scrollbar(self, orient="vertical", command=canvas.yview)
+        scrollable_frame = Frame(canvas)
+
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        # Display each source
+        for source_id, hex_data in available_sources:
+            frame = Frame(scrollable_frame, relief=RIDGE, borderwidth=2, padx=10, pady=10)
+            frame.pack(fill=BOTH, expand=True, padx=5, pady=5)
+
+            # Source title
+            source_name = hex_data.metadata.get('translator', source_id)
+            year = hex_data.metadata.get('year', '')
+            title = f"{source_id.upper()}\n{source_name} ({year})"
+            Label(frame, text=title, font=('TkDefaultFont', 10, 'bold')).pack(anchor=W)
+
+            # Hexagram name
+            Label(frame, text=f"\nHexagram {hex_data.number}: {hex_data.english_name}",
+                  font=('TkDefaultFont', 9, 'bold')).pack(anchor=W)
+
+            # Judgment
+            Label(frame, text="\nJUDGMENT:", font=('TkDefaultFont', 9, 'bold')).pack(anchor=W)
+            judgment_text = Text(frame, height=5, width=80, wrap=WORD)
+            judgment_text.insert('1.0', hex_data.judgment)
+            judgment_text.config(state=DISABLED)
+            judgment_text.pack(fill=BOTH, expand=True, pady=5)
+
+            # Image
+            Label(frame, text="IMAGE:", font=('TkDefaultFont', 9, 'bold')).pack(anchor=W)
+            image_text = Text(frame, height=3, width=80, wrap=WORD)
+            image_text.insert('1.0', hex_data.image)
+            image_text.config(state=DISABLED)
+            image_text.pack(fill=BOTH, expand=True, pady=5)
+
+        canvas.pack(side="left", fill="both", expand=True, padx=5, pady=5)
+        scrollbar.pack(side="right", fill="y")
+
+        # Close button at bottom
+        Button(self, text='Close', command=self.destroy, width=10).pack(pady=10)
+
+        # Set window size
+        self.geometry('900x600')
+
 #create an instance of the app details for use throughout this module
 pyching = pyching_engine.PychingAppDetails()
 
