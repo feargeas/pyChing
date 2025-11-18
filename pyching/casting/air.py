@@ -8,25 +8,39 @@ Characteristics: True physical randomness, requires internet
 Uses physical atmospheric noise measurements to generate
 true random numbers. This is the only method that provides
 genuine physical randomness rather than algorithmic pseudo-randomness.
+
+CONFIGURATION:
+To use this method, you need a free API key from RANDOM.ORG:
+1. Visit https://api.random.org/api-keys/beta
+2. Register for a free API key
+3. Save your API key to: ~/.pyching/random_org_api_key
+   (Just the key on a single line, nothing else)
+
+Without an API key, this method will not work. Use Fire method instead
+for high-quality cryptographic randomness.
 """
 
+import os
+from pathlib import Path
 from typing import Optional
 from .base import CastingMethod, Element
 
 
 class AirMethod(CastingMethod):
     """
-    True random number generation via RANDOM.ORG API.
+    True random number generation via RANDOM.ORG JSON-RPC API.
 
     Uses RANDOM.ORG's true random number generator, which is based
     on atmospheric noise measurements. Provides genuine physical
     randomness rather than algorithmic pseudo-randomness.
 
-    Requires internet connection. Falls back gracefully if unavailable.
+    Requires internet connection and API key. See module docstring
+    for setup instructions.
     """
 
-    API_URL = "https://www.random.org/integers/"
-    TIMEOUT = 5  # seconds
+    # JSON-RPC API endpoint (more reliable than basic API)
+    API_URL = "https://api.random.org/json-rpc/4/invoke"
+    TIMEOUT = 10  # seconds
 
     @property
     def element(self) -> Element:
@@ -49,6 +63,31 @@ class AirMethod(CastingMethod):
     def requires_network(self) -> bool:
         return True
 
+    def _get_api_key(self) -> Optional[str]:
+        """
+        Get RANDOM.ORG API key from config file.
+
+        Returns:
+            API key string, or None if not configured
+        """
+        # Try ~/.pyching/random_org_api_key
+        key_file = Path.home() / '.pyching' / 'random_org_api_key'
+
+        if key_file.exists():
+            try:
+                api_key = key_file.read_text().strip()
+                if api_key:
+                    return api_key
+            except Exception:
+                pass
+
+        # Also check environment variable
+        env_key = os.environ.get('RANDOM_ORG_API_KEY', '').strip()
+        if env_key:
+            return env_key
+
+        return None
+
     def is_available(self) -> tuple[bool, Optional[str]]:
         """
         Check if RANDOM.ORG API is accessible.
@@ -64,17 +103,30 @@ class AirMethod(CastingMethod):
                 "requests library not installed. Install with: pip install requests"
             )
 
+        # Check for API key
+        api_key = self._get_api_key()
+        if not api_key:
+            return (
+                False,
+                "RANDOM.ORG API key not configured.\n\n"
+                "To use the Air method:\n"
+                "1. Get free API key: https://api.random.org/api-keys/beta\n"
+                "2. Save to: ~/.pyching/random_org_api_key\n"
+                "   (or set RANDOM_ORG_API_KEY environment variable)\n\n"
+                "Alternative: Use Fire method for cryptographic randomness."
+            )
+
         try:
-            # Simple connectivity check
+            # Quick connectivity check
             import requests
-            response = requests.head(self.API_URL, timeout=2)
+            response = requests.head("https://api.random.org", timeout=2)
             return (True, None)
         except requests.RequestException as e:
             return (False, f"Cannot reach RANDOM.ORG: {str(e)}")
 
     def cast_line(self) -> int:
         """
-        Cast a line using RANDOM.ORG API.
+        Cast a line using RANDOM.ORG JSON-RPC API.
 
         Makes an HTTP request to RANDOM.ORG to get three truly random
         numbers (each 2 or 3), then converts to line value.
@@ -84,7 +136,7 @@ class AirMethod(CastingMethod):
 
         Raises:
             ImportError: If requests library is not installed
-            ConnectionError: If API is unavailable
+            ConnectionError: If API is unavailable or API key invalid
             ValueError: If API response is invalid
         """
         try:
@@ -95,28 +147,56 @@ class AirMethod(CastingMethod):
                 "Install with: pip install requests"
             )
 
+        # Get API key
+        api_key = self._get_api_key()
+        if not api_key:
+            raise ConnectionError(
+                "RANDOM.ORG API key not configured. "
+                "See module docstring for setup instructions."
+            )
+
         try:
-            # Request 3 random integers (2 or 3)
-            params = {
-                'num': 3,          # 3 coins
-                'min': 2,          # minimum value (yin)
-                'max': 3,          # maximum value (yang)
-                'col': 1,          # single column
-                'base': 10,        # decimal
-                'format': 'plain', # plain text
-                'rnd': 'new'       # new randomization
+            import json
+
+            # Construct JSON-RPC 4.0 request
+            request_payload = {
+                "jsonrpc": "2.0",
+                "method": "generateIntegers",
+                "params": {
+                    "apiKey": api_key,
+                    "n": 3,        # 3 coins
+                    "min": 2,      # minimum value (yin)
+                    "max": 3,      # maximum value (yang)
+                    "replacement": True
+                },
+                "id": 1
             }
 
-            response = requests.get(
+            response = requests.post(
                 self.API_URL,
-                params=params,
+                json=request_payload,
+                headers={"Content-Type": "application/json"},
                 timeout=self.TIMEOUT
             )
             response.raise_for_status()
 
-            # Parse response (three integers, one per line)
-            lines = response.text.strip().split('\n')
-            coins = [int(line.strip()) for line in lines]
+            # Parse JSON-RPC response
+            result = response.json()
+
+            # Check for JSON-RPC error
+            if "error" in result:
+                error_msg = result["error"].get("message", "Unknown error")
+                error_code = result["error"].get("code", "")
+                raise ConnectionError(
+                    f"RANDOM.ORG API error ({error_code}): {error_msg}. "
+                    f"Check your API key and quota at https://api.random.org/dashboard"
+                )
+
+            # Extract random data
+            if "result" not in result or "random" not in result["result"]:
+                raise ValueError("Invalid JSON-RPC response structure")
+
+            coins = result["result"]["random"]["data"]
 
             if len(coins) != 3:
                 raise ValueError(f"Expected 3 values, got {len(coins)}")
@@ -129,10 +209,10 @@ class AirMethod(CastingMethod):
 
         except requests.RequestException as e:
             raise ConnectionError(
-                f"Failed to get random numbers from RANDOM.ORG: {str(e)}. "
-                f"Consider using Fire method (cryptographic) as alternative."
+                f"Failed to connect to RANDOM.ORG: {str(e)}. "
+                f"Check internet connection or use Fire method (cryptographic) as alternative."
             ) from e
-        except (ValueError, IndexError) as e:
+        except (ValueError, KeyError, json.JSONDecodeError) as e:
             raise ValueError(
                 f"Invalid response from RANDOM.ORG: {str(e)}"
             ) from e
