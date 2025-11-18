@@ -650,9 +650,9 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         """Create reading from manually entered hexagram."""
         self.ClearReading()
 
-        # Build line values from hexagram number and moving lines
-        # Get the binary for this hexagram
-        hex_data = Hexagram.from_number(hex_number, source=self.sourceVar.get())
+        # Get the hexagram data
+        source = self.sourceVar.get()
+        hex_data = Hexagram.from_number(hex_number, source=source)
 
         # Convert binary to line values (initially all stable)
         line_values = []
@@ -670,17 +670,22 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 else:
                     line_values.append(8)  # Young yin (stable)
 
-        # Create reading using HexagramEngine
-        engine = HexagramEngine()
+        # Calculate relating hexagram if there are moving lines
+        relating_hex = None
+        if moving_lines:
+            # Transform moving lines to get relating hexagram
+            transformed_lines = [Hexagram.transform_line(lv) for lv in line_values]
+            relating_hex = Hexagram.from_lines(transformed_lines, source=source)
+
+        # Create reading
         self.reading = Reading(
             primary=hex_data,
-            relating=Hexagram.from_lines(line_values, source=self.sourceVar.get()) if moving_lines else None,
-            line_values=line_values,
-            oracle_values=[],
+            relating=relating_hex,
             question='[Manually entered hexagram]',
-            timestamp=None,
             method='manual',
-            source_id=self.sourceVar.get()
+            source_id=source,
+            changing_lines=moving_lines,
+            oracle_values=[]
         )
 
         # Store in old format for compatibility with display code
