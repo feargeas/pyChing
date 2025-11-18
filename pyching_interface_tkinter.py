@@ -674,7 +674,15 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         relating_hex = None
         if moving_lines:
             # Transform moving lines to get relating hexagram
-            transformed_lines = [Hexagram.transform_line(lv) for lv in line_values]
+            # 6 (old yin) → 7 (yang), 9 (old yang) → 8 (yin), stable lines unchanged
+            transformed_lines = []
+            for line_val in line_values:
+                if line_val == 6:  # old yin becomes yang
+                    transformed_lines.append(7)
+                elif line_val == 9:  # old yang becomes yin
+                    transformed_lines.append(8)
+                else:  # stable lines unchanged
+                    transformed_lines.append(line_val)
             relating_hex = Hexagram.from_lines(transformed_lines, source=source)
 
         # Create reading
@@ -699,7 +707,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         if moving_lines:
             self.hexes.hex2.number = str(self.reading.relating.number)
             self.hexes.hex2.name = self.reading.relating.english_name
-            self.hexes.hex2.lineValues = [Hexagram.transform_line(lv) for lv in line_values]
+            self.hexes.hex2.lineValues = transformed_lines  # Use already calculated transformed lines
             self.hexes.hex2.infoSource = f"pyching_int_data.hexagram_{self.reading.relating.number:02d}()"
         else:
             self.hexes.hex2.lineValues = [0,0,0,0,0,0]
