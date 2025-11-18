@@ -22,9 +22,12 @@
       "canonical": false,
       "description": "Richard Wilhelm's German translation rendered into English by Cary F. Baynes. This translation is considered one of the most influential Western versions of the I Ching, featuring an introduction by Carl Jung.",
       "source_url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html",
-      "completeness": 0,
+      "completeness": 10,
       "verified": false,
-      "notes": "To be extracted and integrated. Requires web scraping and formatting."
+      "extraction_status": "placeholder_structure_complete",
+      "extraction_tool": "tools/extract_wilhelm.py",
+      "extraction_date": "2025-11-18",
+      "notes": "Placeholder structure added to all 64 hexagrams. Manual text extraction required from source URL. Use tools/extract_wilhelm.py --fetch to attempt automated extraction."
     },
     "legge_simplified": {
       "id": "legge_simplified",
