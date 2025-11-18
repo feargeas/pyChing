@@ -56,8 +56,10 @@ def _get_api_key(self) -> Optional[str]:
 RANDOM.ORG API key not configured.
 
 To use the Air method:
-1. Get free API key: https://api.random.org/api-keys/beta
-2. Save to: ~/.pyching/random_org_api_key
+1. Visit: https://api.random.org/dashboard
+2. Create account and choose 'Developer' type
+3. Generate API key in API Keys section
+4. Save to: ~/.pyching/random_org_api_key
    (or set RANDOM_ORG_API_KEY environment variable)
 
 Alternative: Use Fire method for cryptographic randomness.
@@ -137,9 +139,11 @@ except requests.RequestException as e:
 """
 CONFIGURATION:
 To use this method, you need a free API key from RANDOM.ORG:
-1. Visit https://api.random.org/api-keys/beta
-2. Register for a free API key
-3. Save your API key to: ~/.pyching/random_org_api_key
+1. Visit https://api.random.org/dashboard
+2. Create an account or log in
+3. Choose "Developer" account type to get API access
+4. Navigate to API Keys section and generate a key
+5. Save your API key to: ~/.pyching/random_org_api_key
    (Just the key on a single line, nothing else)
 
 Without an API key, this method will not work. Use Fire method instead
@@ -245,10 +249,11 @@ python pyching_cli.py -m air --compare canonical,wilhelm_baynes -q "?"
 ### Setup (One-time)
 
 1. **Register for API key:**
-   - Visit https://api.random.org/api-keys/beta
+   - Visit https://api.random.org/dashboard
    - Create account with email
    - Verify email
-   - Copy API key
+   - Choose "Developer" account type
+   - Generate and copy API key
 
 2. **Configure pyChing:**
    ```bash

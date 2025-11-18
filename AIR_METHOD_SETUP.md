@@ -31,12 +31,12 @@ RANDOM.ORG is a service that generates truly random numbers from atmospheric noi
 
 ### Step 1: Register for API Key
 
-1. Visit the RANDOM.ORG API key beta page:
+1. Visit the RANDOM.ORG dashboard:
    ```
-   https://api.random.org/api-keys/beta
+   https://api.random.org/dashboard
    ```
 
-2. Fill out the registration form:
+2. Create an account or log in if you already have one:
    - Email address (for account verification)
    - Choose a password
    - Accept terms of service
@@ -46,7 +46,10 @@ RANDOM.ORG is a service that generates truly random numbers from atmospheric noi
 
 4. Log in to your RANDOM.ORG account
 
-5. Navigate to API Keys section and copy your API key
+5. **Important:** Choose "Developer" account type to get API access
+   - This is required to generate and use API keys
+
+6. Navigate to API Keys section and generate/copy your API key
    - It will look something like: `12345678-abcd-ef12-3456-7890abcdef12`
 
 ### Step 2: Save API Key to pyChing

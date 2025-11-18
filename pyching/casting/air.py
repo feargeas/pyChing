@@ -11,9 +11,11 @@ genuine physical randomness rather than algorithmic pseudo-randomness.
 
 CONFIGURATION:
 To use this method, you need a free API key from RANDOM.ORG:
-1. Visit https://api.random.org/api-keys/beta
-2. Register for a free API key
-3. Save your API key to: ~/.pyching/random_org_api_key
+1. Visit https://api.random.org/dashboard
+2. Create an account or log in
+3. Choose "Developer" account type to get API access
+4. Navigate to API Keys section and generate a key
+5. Save your API key to: ~/.pyching/random_org_api_key
    (Just the key on a single line, nothing else)
 
 Without an API key, this method will not work. Use Fire method instead
@@ -110,8 +112,10 @@ class AirMethod(CastingMethod):
                 False,
                 "RANDOM.ORG API key not configured.\n\n"
                 "To use the Air method:\n"
-                "1. Get free API key: https://api.random.org/api-keys/beta\n"
-                "2. Save to: ~/.pyching/random_org_api_key\n"
+                "1. Visit: https://api.random.org/dashboard\n"
+                "2. Create account and choose 'Developer' type\n"
+                "3. Generate API key in API Keys section\n"
+                "4. Save to: ~/.pyching/random_org_api_key\n"
                 "   (or set RANDOM_ORG_API_KEY environment variable)\n\n"
                 "Alternative: Use Fire method for cryptographic randomness."
             )
