@@ -62,10 +62,10 @@ class smgDialog(Toplevel):
                                                             parent.winfo_rooty()+10))
         #transient window or not
         if transient: self.transient(parent)
-        if resizeable: 
-            self.resizable(height=TRUE,width=TRUE)
-        else: 
-            self.resizable(height=FALSE,width=FALSE)
+        if resizeable:
+            self.resizable(height=True, width=True)
+        else:
+            self.resizable(height=False, width=False)
         if title:
             self.title(title)
         self.parent = parent
@@ -80,12 +80,13 @@ class smgDialog(Toplevel):
         
         self.initial_focus = self.Body(self.frameMain)
         
-        
-        
-        
-        #self.frameMain.pack(expand=TRUE,fill=BOTH)
 
-        self.frameMain.grid(row=0,column=0,sticky=(N,S,E,W))
+
+
+
+        #self.frameMain.pack(expand=True,fill='both')
+
+        self.frameMain.grid(row=0, column=0, sticky='nsew')
         
         
         self.grid_location(0,0)
@@ -133,7 +134,7 @@ class smgDialog(Toplevel):
             if wdth > bGreatestWidth: bGreatestWidth = wdth
             
             # increment row/col
-            #if bPos in ('BOTTOM','TOP'): #horizontal buttons
+            #if bPos in ('bottom','top'): #horizontal buttons
             #    bCol = bCol + 1
             #else: #vertical buttons
             #    bRow = bRow +1
@@ -150,7 +151,7 @@ class smgDialog(Toplevel):
         #eval('self.frameButtonBox.pack(side=' + bPos + ')' )
         
         
-        self.frameButtonBox.grid(row=1,column=0,sticky=(N,S,E,W))
+        self.frameButtonBox.grid(row=1, column=0, sticky='nsew')
     
     
     
