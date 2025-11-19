@@ -335,10 +335,10 @@ def load_reading() -> None:
 
     print(f"\nReadings are stored in: {pyching.savePath}")
 
-    # List available save files
+    # List available save files (both new .json and legacy .psv)
     try:
         files = [f.name for f in pyching.savePath.iterdir()
-                if f.is_file() and f.name.endswith(pyching.saveFileExt)]
+                if f.is_file() and (f.name.endswith(pyching.saveFileExt) or f.name.endswith('.psv'))]
 
         if not files:
             print("No saved readings found.")
