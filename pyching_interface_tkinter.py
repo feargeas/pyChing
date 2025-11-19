@@ -393,7 +393,12 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             # Get selected method and source
             method = Element(self.methodVar.get())
             source = self.sourceVar.get()
-            seed = self.seedVar.get() if method == Element.EARTH else None
+
+            # For Earth method: use seed field if provided, otherwise use question
+            if method == Element.EARTH:
+                seed = self.seedVar.get() if self.seedVar.get() else questionDialog.result
+            else:
+                seed = None
 
             # Check method availability
             available, error = engine.check_method_available(method)
@@ -596,11 +601,13 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
 
         # Seed input for Earth method (initially hidden)
         self.frameSeed = Frame(self.frameControls,bg=self.colors.bgReading)
-        Label(self.frameSeed,text='Seed:',bg=self.colors.bgReading,
+        Label(self.frameSeed,text='Seed (optional):',bg=self.colors.bgReading,
               fg=self.colors.fgLabelLines,font=self.fonts.label).pack(side=LEFT,padx=5)
         self.seedVar = StringVar()
         self.seedEntry = Entry(self.frameSeed,textvariable=self.seedVar,width=20,font=self.fonts.label)
         self.seedEntry.pack(side=LEFT,padx=5)
+        Label(self.frameSeed,text='(defaults to question)',bg=self.colors.bgReading,
+              fg=self.colors.fgLabelLines,font=('TkDefaultFont',9)).pack(side=LEFT,padx=5)
         # Initially hidden - will show when Earth method selected
 
         # Manual input button
