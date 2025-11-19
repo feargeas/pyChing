@@ -52,6 +52,11 @@ class EarthMethod(CastingMethod):
         super().__init__()
         self._seed = seed
         self._rng = random.Random()
+
+        # Ensure earth.txt exists on initialization
+        # This creates it with default content if missing
+        self._get_earth_text()
+
         if seed:
             self._rng.seed(seed)
 
