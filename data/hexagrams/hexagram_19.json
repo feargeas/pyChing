@@ -1,0 +1,108 @@
+{
+  "hexagram_id": "hexagram_19",
+  "number": 19,
+  "king_wen_sequence": 19,
+  "fu_xi_sequence": 19,
+  "binary": "000011",
+  "trigrams": {
+    "upper": "kun",
+    "lower": "dui"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Lin",
+    "english_name": "Approach",
+    "title": "19. Lin / Approach",
+    "judgment": "Lin indicates that under the conditions supposed in it there will be great progress and success, while it will be advantageous to be firmly correct. In the eighth month there will be evil.",
+    "image": "The trigram for the waters of a marsh and that for the earth above it form Lin. The superior person, in accordance with this, has their purpose of instruction that is inexhaustible, and which nourishes and supports the people without limit.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows its subject advancing in company with the subject of the second line. Through their firm correctness there will be good fortune."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows its subject advancing in company with the subject of the first line. There will be good fortune; advancing will be in every way advantageous."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows one well pleased indeed to advance, but whose action will be in no way advantageous. If they become anxious about it however, there will be no error."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows one advancing in the highest mode. There will be no error."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "six",
+        "text": "shows the advance of wisdom, such as befits the great ruler. There will be good fortune."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows the advance of honesty and generosity. There will be good fortune, and no error."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {
+    "wilhelm_baynes": {
+      "source_id": "wilhelm_baynes",
+      "name": "[Hexagram 19 - Manual extraction needed]",
+      "english_name": "[To be extracted]",
+      "judgment": "[Wilhelm/Baynes judgment text to be extracted from source]",
+      "image": "[Wilhelm/Baynes image text to be extracted from source]",
+      "lines": {
+        "1": {
+          "position": "bottom",
+          "type": "nine",
+          "text": "[Line 1 to be extracted]"
+        },
+        "2": {
+          "position": "second",
+          "type": "nine",
+          "text": "[Line 2 to be extracted]"
+        },
+        "3": {
+          "position": "third",
+          "type": "nine",
+          "text": "[Line 3 to be extracted]"
+        },
+        "4": {
+          "position": "fourth",
+          "type": "nine",
+          "text": "[Line 4 to be extracted]"
+        },
+        "5": {
+          "position": "fifth",
+          "type": "nine",
+          "text": "[Line 5 to be extracted]"
+        },
+        "6": {
+          "position": "top",
+          "type": "nine",
+          "text": "[Line 6 to be extracted]"
+        }
+      },
+      "metadata": {
+        "translator": "Richard Wilhelm / Cary F. Baynes",
+        "year": 1950,
+        "language": "en",
+        "extraction_date": "2025-11-18",
+        "verified": false,
+        "manual_extraction_required": true,
+        "url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html"
+      }
+    }
+  }
+}

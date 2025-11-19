@@ -1,0 +1,85 @@
+{
+  "sources": {
+    "legge_1882": {
+      "id": "legge_1882",
+      "name": "James Legge Translation (1882)",
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "canonical": true,
+      "description": "Original translation preserved from pyChing v1.2.2. James Legge's translation is one of the first complete English translations of the I Ching and remains widely respected for its scholarly accuracy.",
+      "license": "Public Domain",
+      "completeness": 100,
+      "verified": true,
+      "notes": "This is the canonical source for pyChing. All other sources are compared against and merged with this translation."
+    },
+    "wilhelm_baynes": {
+      "id": "wilhelm_baynes",
+      "name": "Wilhelm/Baynes Translation",
+      "translator": "Richard Wilhelm / Cary F. Baynes",
+      "year": 1950,
+      "language": "en",
+      "canonical": false,
+      "description": "Richard Wilhelm's German translation rendered into English by Cary F. Baynes. This translation is considered one of the most influential Western versions of the I Ching, featuring an introduction by Carl Jung.",
+      "source_url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html",
+      "completeness": 10,
+      "verified": false,
+      "extraction_status": "placeholder_structure_complete",
+      "extraction_tool": "tools/extract_wilhelm.py",
+      "extraction_date": "2025-11-18",
+      "notes": "Placeholder structure added to all 64 hexagrams. Manual text extraction required from source URL. Use tools/extract_wilhelm.py --fetch to attempt automated extraction."
+    },
+    "legge_simplified": {
+      "id": "legge_simplified",
+      "name": "Simplified Legge (TwoDreams)",
+      "translator": "Simplified by TwoDreams.us",
+      "original_translator": "James Legge",
+      "year": 2020,
+      "language": "en",
+      "canonical": false,
+      "description": "A modernized, simplified version of James Legge's translation, making the archaic language more accessible to contemporary readers.",
+      "source_url": "https://twodreams.us/blog/a-simplified-version-of-james-legges-translation-of-the-i-ching",
+      "completeness": 0,
+      "verified": false,
+      "notes": "To be extracted. Maintains Legge's structure but updates language."
+    },
+    "hermetica": {
+      "id": "hermetica",
+      "name": "Hermetica I Ching",
+      "source_url": "https://www.hermetica.info/Yijing1+2.pdf",
+      "format": "PDF",
+      "language": "en",
+      "canonical": false,
+      "completeness": 0,
+      "verified": false,
+      "notes": "PDF source requiring extraction and conversion. Verification of translation quality needed."
+    },
+    "dekorne": {
+      "id": "dekorne",
+      "name": "Gnostic Book of Changes",
+      "author": "James DeKorne",
+      "source_url": "https://jamesdekorne.com/GBCh/GBCh.htm",
+      "language": "en",
+      "canonical": false,
+      "description": "A Gnostic interpretation of the I Ching, offering an esoteric perspective on the traditional text.",
+      "completeness": 0,
+      "verified": false,
+      "notes": "HTML source. Represents alternative philosophical interpretation."
+    }
+  },
+
+  "source_priority": [
+    "legge_1882",
+    "wilhelm_baynes",
+    "legge_simplified",
+    "hermetica",
+    "dekorne"
+  ],
+
+  "metadata": {
+    "version": "1.0",
+    "created": "2025-11-18",
+    "description": "Source metadata registry for pyChing multi-source I Ching interpretation system",
+    "notes": "The 'canonical' field indicates which source serves as the reference. All other sources are overlays that can be merged with the canonical source for comparison."
+  }
+}

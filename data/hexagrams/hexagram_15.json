@@ -1,0 +1,108 @@
+{
+  "hexagram_id": "hexagram_15",
+  "number": 15,
+  "king_wen_sequence": 15,
+  "fu_xi_sequence": 15,
+  "binary": "000100",
+  "trigrams": {
+    "upper": "kun",
+    "lower": "gen"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Tchien",
+    "english_name": "Modesty",
+    "title": "15. Tchien / Modesty",
+    "judgment": "Tchien indicates progress and success. The superior person, being humble as it implies, will have a good issue from their understandings.",
+    "image": "The trigram for the earth and that of a mountain in the midst of it form Tchien. The superior person, in accordance with this, diminishes what is excessive in their being, and improves where there is any defect, bringing about an equality, according to the nature of the case, in their treatment of themselves and others.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "six",
+        "text": "shows us the superior person who adds humility to humility. Even the great stream may be crossed with this, and there will be good fortune."
+      },
+      "2": {
+        "position": "second",
+        "type": "six",
+        "text": "shows us humility that has made itself recognised. With firm correctness there will be good fortune."
+      },
+      "3": {
+        "position": "third",
+        "type": "nine",
+        "text": "bows to the superior person of acknowledged merit. They will maintain their success to the end, and have good fortune."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows one, whose action would be in every way advantageous, bringing forth even more their humility."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "six",
+        "text": "shows one who, without bring rich, is able to employ their neighbours. He may advantageously use the force of arms. All their movements will be advantageous."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows us humility that has made itself recognised. The subject of it will with advantage put their hosts in motion; but they will only punish their own towns and state."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {
+    "wilhelm_baynes": {
+      "source_id": "wilhelm_baynes",
+      "name": "[Hexagram 15 - Manual extraction needed]",
+      "english_name": "[To be extracted]",
+      "judgment": "[Wilhelm/Baynes judgment text to be extracted from source]",
+      "image": "[Wilhelm/Baynes image text to be extracted from source]",
+      "lines": {
+        "1": {
+          "position": "bottom",
+          "type": "nine",
+          "text": "[Line 1 to be extracted]"
+        },
+        "2": {
+          "position": "second",
+          "type": "nine",
+          "text": "[Line 2 to be extracted]"
+        },
+        "3": {
+          "position": "third",
+          "type": "nine",
+          "text": "[Line 3 to be extracted]"
+        },
+        "4": {
+          "position": "fourth",
+          "type": "nine",
+          "text": "[Line 4 to be extracted]"
+        },
+        "5": {
+          "position": "fifth",
+          "type": "nine",
+          "text": "[Line 5 to be extracted]"
+        },
+        "6": {
+          "position": "top",
+          "type": "nine",
+          "text": "[Line 6 to be extracted]"
+        }
+      },
+      "metadata": {
+        "translator": "Richard Wilhelm / Cary F. Baynes",
+        "year": 1950,
+        "language": "en",
+        "extraction_date": "2025-11-18",
+        "verified": false,
+        "manual_extraction_required": true,
+        "url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html"
+      }
+    }
+  }
+}

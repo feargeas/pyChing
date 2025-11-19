@@ -34,8 +34,8 @@ import sys
 import os
 import random
 import pickle
+import json
 import time
-from dataclasses import dataclass, field
 from functools import reduce
 from pathlib import Path
 from typing import Optional, Any
@@ -45,7 +45,6 @@ from typing import Optional, Any
 ################
 
 #private classes - should not be directly accessed from outside this module
-@dataclass
 class Hexagram:
     """
     single Hexagram data structure template, private class
@@ -53,10 +52,11 @@ class Hexagram:
     should only be accessed as an attribute of an instance of the Hexagrams class (below)
     this class is defined at module level to enable pickling of Hexagrams instances
     """
-    number: str = ''
-    name: str = ''
-    lineValues: list[int] = field(default_factory=lambda: [0, 0, 0, 0, 0, 0])
-    infoSource: Optional[str] = None
+    def __init__(self) -> None:
+        self.number: str = ''
+        self.name: str = ''
+        self.lineValues: list[int] = [0,0,0,0,0,0]
+        self.infoSource: Optional[str] = None
 
 #public classes
 class PychingAppDetails:
@@ -71,8 +71,8 @@ class PychingAppDetails:
         self.execPath: Path = self.GetProgramDir()
         self.configPath: Path = self.GetUserCfgDir('.pyching')
         self.savePath: Path = self.configPath
-        self.configFile: Path = self.configPath / 'pychingrc'
-        self.saveFileExt: str = '.psv'
+        self.configFile: Path = self.configPath / 'config.json'
+        self.saveFileExt: str = '.json'
         self.internalImageExt: str = '.#@~'
         self.internalHtmlExt: str = '.~@#'
         self.saveFileID: tuple[str, str] = ('pyching_save_file', self.version)
@@ -242,7 +242,7 @@ class Hexagrams:
                 else: hex1Key[i] = item #no change
                 i = i + 1 #increment counter    
             [self.hex1.number, self.hex1.name] = self.__GetHexDetails(hex1Key) #lookup Hex1 details
-            self.hex1.infoSource = f'pyching_data.in{self.hex1.number}data()'
+            self.hex1.infoSource = 'pyching_int_data.in'+self.hex1.number+'data()'
             if self.hex1.lineValues != hex1Key: #if there are some moving lines in Hex1
                 i = 0 #used as a counter in the loop below
                 for item in self.hex1.lineValues: #populate Hex2.lineValues
@@ -251,7 +251,7 @@ class Hexagrams:
                     else: self.hex2.lineValues[i] = item #no change
                     i = i + 1 #increment counter      
                 [self.hex2.number, self.hex2.name] = self.__GetHexDetails(self.hex2.lineValues) #lookup Hex2 details
-                self.hex2.infoSource = f'pyching_data.in{self.hex2.number}data()'
+                self.hex2.infoSource = 'pyching_int_data.in'+self.hex2.number+'data()'
 
     def SetQuestion(self, questionText: str) -> None:
         """
@@ -261,32 +261,124 @@ class Hexagrams:
     
     def __HexStorage(self, file: Path | str, action: str) -> Optional[tuple[str, str]]:
         """
-        store or load a Hexagrams instance to/from disk file using the utility routine
-        Storage(), private method
+        Store or load a Hexagrams instance to/from disk file using JSON format.
+        Falls back to pickle for loading old .psv files and migrates them automatically.
 
-        this private method should be called from the public load and save
-        routines below. action should be 'save' or 'load' .
+        Args:
+            file: Path to the reading file
+            action: 'save' or 'load'
+
+        Returns:
+            For 'load': saveFileID tuple for verification
+            For 'save': None
         """
+        file = Path(file)  # Ensure we have a Path object
+
         try:
             # Failsafe if user deleted ~/.pyching while program running
             if not pyching.savePath.exists():
                 pyching.savePath.mkdir(parents=True, exist_ok=True)
         except (RuntimeError, OSError):
-            pass  # If we can't determine home, Storage() will handle the error
-        try:
-            if action == 'save':
-                hexData = (pyching.saveFileID, self.question, self.oracle, self.hex1, 
-                                self.hex2, self.currentLine, self.currentOracleValues)
-                Storage(file, data=hexData)
-            elif action == 'load': 
-                hexData = Storage(file)
-        except IOError: #pass the error back up the line
-            raise #re-raise the exception
-        else: #no exception, so proceed
-            if action == 'load':
-                saveFileID, self.question, self.oracle, self.hex1, self.hex2, \
-                                self.currentLine, self.currentOracleValues = hexData
-                return saveFileID #to enable savefile verification and version checking
+            pass  # If we can't determine home, following operations will handle the error
+
+        if action == 'save':
+            # Always save as JSON
+            reading_data = {
+                'file_id': {
+                    'type': pyching.saveFileID[0],
+                    'version': pyching.saveFileID[1]
+                },
+                'reading': {
+                    'question': self.question,
+                    'oracle': self.oracle,
+                    'hex1': {
+                        'number': self.hex1.number,
+                        'name': self.hex1.name,
+                        'lineValues': self.hex1.lineValues,
+                        'infoSource': self.hex1.infoSource
+                    },
+                    'hex2': {
+                        'number': self.hex2.number,
+                        'name': self.hex2.name,
+                        'lineValues': self.hex2.lineValues,
+                        'infoSource': self.hex2.infoSource
+                    },
+                    'currentLine': self.currentLine,
+                    'currentOracleValues': self.currentOracleValues
+                }
+            }
+
+            try:
+                with open(file, 'w') as f:
+                    json.dump(reading_data, f, indent=2)
+            except (IOError, OSError) as e:
+                raise IOError(f"Unable to save reading to {file}") from e
+
+        elif action == 'load':
+            # Try JSON first, fall back to pickle for old files
+            loaded_from_pickle = False
+
+            try:
+                # Attempt to load as JSON
+                with open(file, 'r') as f:
+                    reading_data = json.load(f)
+
+                # Extract data from JSON structure
+                file_id = (reading_data['file_id']['type'], reading_data['file_id']['version'])
+                self.question = reading_data['reading']['question']
+                self.oracle = reading_data['reading']['oracle']
+
+                # Restore hex1
+                hex1_data = reading_data['reading']['hex1']
+                self.hex1.number = hex1_data['number']
+                self.hex1.name = hex1_data['name']
+                self.hex1.lineValues = hex1_data['lineValues']
+                self.hex1.infoSource = hex1_data['infoSource']
+
+                # Restore hex2
+                hex2_data = reading_data['reading']['hex2']
+                self.hex2.number = hex2_data['number']
+                self.hex2.name = hex2_data['name']
+                self.hex2.lineValues = hex2_data['lineValues']
+                self.hex2.infoSource = hex2_data['infoSource']
+
+                self.currentLine = reading_data['reading']['currentLine']
+                self.currentOracleValues = reading_data['reading']['currentOracleValues']
+
+                return file_id
+
+            except (json.JSONDecodeError, KeyError, UnicodeDecodeError):
+                # Not valid JSON or wrong structure, try pickle (old format)
+                try:
+                    with open(file, 'rb') as f:
+                        hexData = pickle.load(f)
+
+                    # Extract data from pickle tuple
+                    saveFileID, self.question, self.oracle, self.hex1, self.hex2, \
+                        self.currentLine, self.currentOracleValues = hexData
+
+                    loaded_from_pickle = True
+
+                    # Auto-migrate: rename old pickle file and save as JSON with .json extension
+                    backup_file = Path(str(file) + '.backup')
+                    json_file = file.with_suffix('.json')  # Change .psv to .json
+                    try:
+                        file.rename(backup_file)
+                        # Now save as JSON with .json extension
+                        self.__HexStorage(json_file, 'save')
+                    except (IOError, OSError):
+                        # If migration fails, continue anyway - we have the data
+                        pass
+
+                    return saveFileID
+
+                except Exception as e:
+                    # Both JSON and pickle failed
+                    raise IOError(f"Unable to load reading from {file} (tried JSON and pickle)") from e
+
+            except (IOError, OSError) as e:
+                # File doesn't exist or can't be read
+                raise IOError(f"Unable to read file {file}") from e
 
     def Save(self, file: Path | str) -> None:
         """
@@ -371,13 +463,18 @@ def Storage(file: Path | str, data: Any = None) -> Any:
     except Exception:
     block, to handle potential disk IO and pickle/unpickle errors
     """
-    openType = 'wb' if data else 'rb'
+    if data: openType = 'wb'
+    else: openType = 'rb'
     try:
-        with open(file, openType) as pickleFile:
+        pickleFile = open(file, openType)
+    except IOError:
+        raise #re-raise the exception to pass it back up the line
+    else: #no exception, so proceed
+        try:
             try:
-                if data:  # pickle required data
+                if data: #pickle required data
                     pickle.dump(data, pickleFile)
-                else:  # unpickle data
+                else: #unpickle data
                     pickleData = pickle.load(pickleFile)
                     return pickleData
             except Exception as e:
@@ -385,5 +482,4 @@ def Storage(file: Path | str, data: Any = None) -> Any:
                     raise Exception('pychingPickleError') from e
                 else:
                     raise Exception('pychingUnpickleError') from e
-    except IOError:
-        raise  # re-raise the exception to pass it back up the line
+        finally: pickleFile.close()

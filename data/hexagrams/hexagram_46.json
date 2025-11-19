@@ -1,0 +1,108 @@
+{
+  "hexagram_id": "hexagram_46",
+  "number": 46,
+  "king_wen_sequence": 46,
+  "fu_xi_sequence": 46,
+  "binary": "000110",
+  "trigrams": {
+    "upper": "kun",
+    "lower": "xun"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Cheng",
+    "english_name": "Promotion",
+    "title": "46. Cheng / Promotion",
+    "judgment": "Cheng indicates that under its conditions there will be great progress and success. Seeking by the qualities implied meet with the great person, its subject need have no anxiety. Advance to the south will be fortunate.",
+    "image": "The trigram representing wood, and that for the earth with the wood growing in the midst of it, form Cheng. The superior person, in accordance with this, pays careful attention to their virtue, and accumulates the small developments of it until it is high and great.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "six",
+        "text": "shows its subject advancing upwards with the welcome of those above them. There will be great good fortune."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows its subject with that sincerity which will make even the small offerings of the vernal sacrifice acceptable. There will be no error."
+      },
+      "3": {
+        "position": "third",
+        "type": "nine",
+        "text": "shows its subject ascending upwards as into an empty city."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows its subject employed by the king to present their offerings on the mountain. There will be good fortune; there will be no mistake."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "six",
+        "text": "shows its subject firmly correct, and therefore enjoying good fortune. They ascend the stairs with all due ceremony."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows its subject advancing upwards blindly. Advantage will be found in a ceaseless maintenance of firm correctness."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {
+    "wilhelm_baynes": {
+      "source_id": "wilhelm_baynes",
+      "name": "[Hexagram 46 - Manual extraction needed]",
+      "english_name": "[To be extracted]",
+      "judgment": "[Wilhelm/Baynes judgment text to be extracted from source]",
+      "image": "[Wilhelm/Baynes image text to be extracted from source]",
+      "lines": {
+        "1": {
+          "position": "bottom",
+          "type": "nine",
+          "text": "[Line 1 to be extracted]"
+        },
+        "2": {
+          "position": "second",
+          "type": "nine",
+          "text": "[Line 2 to be extracted]"
+        },
+        "3": {
+          "position": "third",
+          "type": "nine",
+          "text": "[Line 3 to be extracted]"
+        },
+        "4": {
+          "position": "fourth",
+          "type": "nine",
+          "text": "[Line 4 to be extracted]"
+        },
+        "5": {
+          "position": "fifth",
+          "type": "nine",
+          "text": "[Line 5 to be extracted]"
+        },
+        "6": {
+          "position": "top",
+          "type": "nine",
+          "text": "[Line 6 to be extracted]"
+        }
+      },
+      "metadata": {
+        "translator": "Richard Wilhelm / Cary F. Baynes",
+        "year": 1950,
+        "language": "en",
+        "extraction_date": "2025-11-18",
+        "verified": false,
+        "manual_extraction_required": true,
+        "url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html"
+      }
+    }
+  }
+}

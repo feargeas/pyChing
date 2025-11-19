@@ -1,0 +1,108 @@
+{
+  "hexagram_id": "hexagram_07",
+  "number": 7,
+  "king_wen_sequence": 7,
+  "fu_xi_sequence": 7,
+  "binary": "000010",
+  "trigrams": {
+    "upper": "kun",
+    "lower": "kan"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Cheu",
+    "english_name": "The Army",
+    "title": "7. Cheu / The Army",
+    "judgment": "Cheu indicates how, in the case which it purposes, with firmness and correctness, and a leader of age and experience, there will be good fortune and no error.",
+    "image": "The trigram representing the earth and in the midst of it that representing water, form Cheu. The superior person, in accordance with this, nourishes and educates the people, and collects from among them the multitude of the armies.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "six",
+        "text": "shows the army going forth according to the rules for such a movement. If these be not good, there will be evil."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows the leader in the midst of the army. There will be good fortune and no error. The king has thrice conveyed to them the orders of their favour."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows how the army may, possibly, have inefficient leaders. There will be evil."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows the army in retreat. There is no error."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "six",
+        "text": "shows birds in the fields, which it will be advantageous to seize and destroy. In that case there will be no error. If a learner leads the army, and inexperienced people idly occupy offices assigned to them, however firm and correct they may be, there will be evil."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows the great ruler delivering their charges, appointing some to be rulers of states, and others to undertake the leadership of clans ; but inferior people should not be employed in such positions."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {
+    "wilhelm_baynes": {
+      "source_id": "wilhelm_baynes",
+      "name": "[Hexagram 7 - Manual extraction needed]",
+      "english_name": "[To be extracted]",
+      "judgment": "[Wilhelm/Baynes judgment text to be extracted from source]",
+      "image": "[Wilhelm/Baynes image text to be extracted from source]",
+      "lines": {
+        "1": {
+          "position": "bottom",
+          "type": "nine",
+          "text": "[Line 1 to be extracted]"
+        },
+        "2": {
+          "position": "second",
+          "type": "nine",
+          "text": "[Line 2 to be extracted]"
+        },
+        "3": {
+          "position": "third",
+          "type": "nine",
+          "text": "[Line 3 to be extracted]"
+        },
+        "4": {
+          "position": "fourth",
+          "type": "nine",
+          "text": "[Line 4 to be extracted]"
+        },
+        "5": {
+          "position": "fifth",
+          "type": "nine",
+          "text": "[Line 5 to be extracted]"
+        },
+        "6": {
+          "position": "top",
+          "type": "nine",
+          "text": "[Line 6 to be extracted]"
+        }
+      },
+      "metadata": {
+        "translator": "Richard Wilhelm / Cary F. Baynes",
+        "year": 1950,
+        "language": "en",
+        "extraction_date": "2025-11-18",
+        "verified": false,
+        "manual_extraction_required": true,
+        "url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html"
+      }
+    }
+  }
+}

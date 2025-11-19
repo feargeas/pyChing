@@ -36,6 +36,7 @@ from typing import Any, Optional
 
 #tkinter imports
 from tkinter import *
+from tkinter import TclError
 import tkinter.messagebox as tkMessageBox
 import tkinter.simpledialog as tkSimpleDialog
 
@@ -172,17 +173,17 @@ class smgHtmlView(smgDialog):
 
     def MakeBrowseSource(self,hexNum):
         self.hexNum=hexNum
-        return f'pyching_data.in{hexNum}data()'
+        return 'pyching_int_data.in%sdata()'%(hexNum)
     
     def openDataFile(self, fileName):
-        """Read and return file contents, or None if error occurs."""
+        displayFile = None
         try:
-            with open(fileName, 'r') as displayFile:
-                return displayFile.read()
+            displayFile = open(fileName, 'r')
         except IOError:
             tkMessageBox.showerror(title='File Load Error',
-                    message=f'Unable to load data file {repr(fileName)}.')
-            return None
+                    message='Unable to load data file '+repr(fileName)+' .')
+        #else:
+        return displayFile #will be = None if there was an error
     
     def Body(self,master):
         self.configure(borderwidth=4)
@@ -266,14 +267,16 @@ class smgHtmlView(smgDialog):
             else: #the source is a plain string holding html data
                htmlData=source
         else:
-            htmlData = self.openDataFile(source)  # read file content
-        if self.sourceIsStr or htmlData:
+            displayFile = None
+            displayFile = self.openDataFile(source) #open disk file
+            htmlData = displayFile.read()
+        if self.sourceIsStr or displayFile:
             self.oldCursor = self.cget("cursor")
             self.textDisplay.config(cursor="watch")
             self.textDisplay.update_idletasks()
             self.config(cursor="watch")
             self.update_idletasks()
-            self.textDisplay.config(state=NORMAL)
+            self.textDisplay.config(state='normal')
             self.textDisplay.delete("1.0", "end")
             if self.sourceIsStr or (not plainText): #render html
                 htmlWriter = HtmlWriter(self.textDisplay, self)
@@ -283,8 +286,8 @@ class smgHtmlView(smgDialog):
                 htmlParser.feed(htmlData)
                 htmlParser.close()
             else: #show plain text
-                self.textDisplay.insert(1.0,htmlData)  
-            self.textDisplay.configure(state=DISABLED)
+                self.textDisplay.insert(1.0,htmlData)
+            self.textDisplay.configure(state='disabled')
             self.textDisplay.config(cursor=self.oldCursor)
             self.config(cursor=self.oldCursor)
         else: #no html data
@@ -294,19 +297,19 @@ class smgHtmlView(smgDialog):
 
         if self.index: #we have an index button
             if source == self.index: #disable index button, this _is_ the index
-                self.buttonIndex.configure(state=DISABLED)
+                self.buttonIndex.configure(state='disabled')
             else: #enable index button
-                self.buttonIndex.configure(state=NORMAL)
-        
-        if self.hexBrowser: #hex broser buttons        
+                self.buttonIndex.configure(state='normal')
+
+        if self.hexBrowser: #hex broser buttons
             if self.hexNum == 1: #at 1st page
-                self.buttonPrev.configure(state=DISABLED)
+                self.buttonPrev.configure(state='disabled')
             else: #enable index button
-                self.buttonPrev.configure(state=NORMAL)
+                self.buttonPrev.configure(state='normal')
             if self.hexNum == 64: #at last page
-                self.buttonNext.configure(state=DISABLED)
+                self.buttonNext.configure(state='disabled')
             else: #enable index button
-                self.buttonNext.configure(state=NORMAL)
+                self.buttonNext.configure(state='normal')
         
 
 class HtmlWriter(DumbWriter):

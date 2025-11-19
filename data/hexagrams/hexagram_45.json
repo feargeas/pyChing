@@ -1,0 +1,108 @@
+{
+  "hexagram_id": "hexagram_45",
+  "number": 45,
+  "king_wen_sequence": 45,
+  "fu_xi_sequence": 45,
+  "binary": "011000",
+  "trigrams": {
+    "upper": "dui",
+    "lower": "kun"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Ts'ouei",
+    "english_name": "The Gathering",
+    "title": "45. Ts'ouei / The Gathering",
+    "judgment": "In the state denoted by Ts'ouei, the king will repair to their ancestral temple. It will be advantageous also to meet with the great person; and then there will be progress and success, though the advantage must come through firm correctness. The use of great victims will conduce to good fortune: and in whatever direction movement is made, it will be advantageous.",
+    "image": "The trigram representing the earth, and that for the waters of a marsh raised above it, form Ts'ouei. The superior person, in accordance with this, has their weapons of war put in good repair, to be prepared against unforeseen contingencies.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "six",
+        "text": "shows its subject with a sincere desire for union, but unable to carry it out, so that disorder is brought into the sphere of their union. If they cry out for help to their proper correlate, all at once their tears will give way to smiles. They need not mind the temporary difficulty; as they go forward, there will be no error."
+      },
+      "2": {
+        "position": "second",
+        "type": "six",
+        "text": "shows its subject led forward by their correlate. There will be good fortune, and freedom from error. There is complete sincerity, and in that case even the small offerings of the vernal sacrifice are acceptable."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows its subject striving after union and seeming to sigh, yet nowhere finding any advantage. If they go forward, they will not err, though there may be some small cause for regret."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "nine",
+        "text": "shows its subject in such a state that, if they be greatly fortunate, they will receive no blame."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows the union of all under its subject in the place of dignity. There will be no error. If any do not have confidence in them, let them see to it that their virtue be great, long-continued, and firmly correct, and all occasion for repentance will disappear."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows its subject sighing and weeping; but there will be no error."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {
+    "wilhelm_baynes": {
+      "source_id": "wilhelm_baynes",
+      "name": "[Hexagram 45 - Manual extraction needed]",
+      "english_name": "[To be extracted]",
+      "judgment": "[Wilhelm/Baynes judgment text to be extracted from source]",
+      "image": "[Wilhelm/Baynes image text to be extracted from source]",
+      "lines": {
+        "1": {
+          "position": "bottom",
+          "type": "nine",
+          "text": "[Line 1 to be extracted]"
+        },
+        "2": {
+          "position": "second",
+          "type": "nine",
+          "text": "[Line 2 to be extracted]"
+        },
+        "3": {
+          "position": "third",
+          "type": "nine",
+          "text": "[Line 3 to be extracted]"
+        },
+        "4": {
+          "position": "fourth",
+          "type": "nine",
+          "text": "[Line 4 to be extracted]"
+        },
+        "5": {
+          "position": "fifth",
+          "type": "nine",
+          "text": "[Line 5 to be extracted]"
+        },
+        "6": {
+          "position": "top",
+          "type": "nine",
+          "text": "[Line 6 to be extracted]"
+        }
+      },
+      "metadata": {
+        "translator": "Richard Wilhelm / Cary F. Baynes",
+        "year": 1950,
+        "language": "en",
+        "extraction_date": "2025-11-18",
+        "verified": false,
+        "manual_extraction_required": true,
+        "url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html"
+      }
+    }
+  }
+}

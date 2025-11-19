@@ -39,7 +39,7 @@ from typing import Optional
 import pyching_engine
 
 # Import hexagram data modules
-import pyching_data
+import pyching_int_data
 
 
 class HTMLToText(HTMLParser):
@@ -179,7 +179,7 @@ def display_interpretation(hexes: pyching_engine.Hexagrams) -> None:
 
     try:
         # Get the HTML data for hexagram 1
-        hex1_func = getattr(pyching_data, f'in{hexes.hex1.number}data')
+        hex1_func = getattr(pyching_int_data, f'in{hexes.hex1.number}data')
         hex1_html = hex1_func()
         hex1_text = html_to_text(hex1_html)
 
@@ -195,7 +195,7 @@ def display_interpretation(hexes: pyching_engine.Hexagrams) -> None:
         print("-" * 70)
 
         try:
-            hex2_func = getattr(pyching_data, f'in{hexes.hex2.number}data')
+            hex2_func = getattr(pyching_int_data, f'in{hexes.hex2.number}data')
             hex2_html = hex2_func()
             hex2_text = html_to_text(hex2_html)
 
@@ -335,10 +335,10 @@ def load_reading() -> None:
 
     print(f"\nReadings are stored in: {pyching.savePath}")
 
-    # List available save files
+    # List available save files (both new .json and legacy .psv)
     try:
         files = [f.name for f in pyching.savePath.iterdir()
-                if f.is_file() and f.name.endswith(pyching.saveFileExt)]
+                if f.is_file() and (f.name.endswith(pyching.saveFileExt) or f.name.endswith('.psv'))]
 
         if not files:
             print("No saved readings found.")

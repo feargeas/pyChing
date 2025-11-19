@@ -1,0 +1,108 @@
+{
+  "hexagram_id": "hexagram_58",
+  "number": 58,
+  "king_wen_sequence": 58,
+  "fu_xi_sequence": 58,
+  "binary": "011011",
+  "trigrams": {
+    "upper": "dui",
+    "lower": "dui"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Touei",
+    "english_name": "Happyness, The Lake",
+    "title": "58. Touei / Happyness, The Lake",
+    "judgment": "Touei intimates that under its conditions there will be progress and attainment, but it will be advantageous to be firm and correct.",
+    "image": "Two symbols representing the waters of a marsh, one over the other, form Touei. The superior person, in accordance with this, encourages the conversation of friends and the stimulus of their common practice.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows the pleasure of inward harmony. There will be good fortune."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows the pleasure arising from inward sincerity. There will be good fortune. Occasion for repentance will disappear."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows its subject bringing round themselves whatever can give pleasure. There will be evil."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "nine",
+        "text": "shows its subject deliberating about what to seek their pleasure in, and not at rest. They border on what would be injurious, but there will be cause for joy."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows its subject trusting in one who would injure them. The situation is perilous."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows the pleasure of its subject in leading and attracting others."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {
+    "wilhelm_baynes": {
+      "source_id": "wilhelm_baynes",
+      "name": "[Hexagram 58 - Manual extraction needed]",
+      "english_name": "[To be extracted]",
+      "judgment": "[Wilhelm/Baynes judgment text to be extracted from source]",
+      "image": "[Wilhelm/Baynes image text to be extracted from source]",
+      "lines": {
+        "1": {
+          "position": "bottom",
+          "type": "nine",
+          "text": "[Line 1 to be extracted]"
+        },
+        "2": {
+          "position": "second",
+          "type": "nine",
+          "text": "[Line 2 to be extracted]"
+        },
+        "3": {
+          "position": "third",
+          "type": "nine",
+          "text": "[Line 3 to be extracted]"
+        },
+        "4": {
+          "position": "fourth",
+          "type": "nine",
+          "text": "[Line 4 to be extracted]"
+        },
+        "5": {
+          "position": "fifth",
+          "type": "nine",
+          "text": "[Line 5 to be extracted]"
+        },
+        "6": {
+          "position": "top",
+          "type": "nine",
+          "text": "[Line 6 to be extracted]"
+        }
+      },
+      "metadata": {
+        "translator": "Richard Wilhelm / Cary F. Baynes",
+        "year": 1950,
+        "language": "en",
+        "extraction_date": "2025-11-18",
+        "verified": false,
+        "manual_extraction_required": true,
+        "url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html"
+      }
+    }
+  }
+}

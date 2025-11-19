@@ -1,0 +1,108 @@
+{
+  "hexagram_id": "hexagram_60",
+  "number": 60,
+  "king_wen_sequence": 60,
+  "fu_xi_sequence": 60,
+  "binary": "010011",
+  "trigrams": {
+    "upper": "kan",
+    "lower": "dui"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Tchieh",
+    "english_name": "Limitation",
+    "title": "60. Tchieh / Limitation",
+    "judgment": "Tchieh intimates that under its conditions there will be progress and attainment. But if the regulations which it prescribes be severe and difficult, they cannot be permanent.",
+    "image": "The trigram representing a lake, and above it that for water, form Tchieh. The superior person, in accordance with this, constructs their methods of numbering and measurement, and discusses points of virtue and conduct.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows its subject not quitting the courtyard outside their door. There will be no error."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows its subject not quitting the courtyard inside their gate. There will be evil."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows its subject with no appearance of observing the proper regulations, in which case we shall see them lamenting. But there will be no one to blame but themselves."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows its subject quietly and naturally attentive to all regulations. There will be progress and success."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows its subject sweetly and acceptably enacting their regulations. There will be good fortune. Their onward progress will afford grounds for admiration."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows its subject enacting regulations severe and difficult. Even with Firmness and correctness there will be evil. But though there will be cause for repentance, it will by and by disappear."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {
+    "wilhelm_baynes": {
+      "source_id": "wilhelm_baynes",
+      "name": "[Hexagram 60 - Manual extraction needed]",
+      "english_name": "[To be extracted]",
+      "judgment": "[Wilhelm/Baynes judgment text to be extracted from source]",
+      "image": "[Wilhelm/Baynes image text to be extracted from source]",
+      "lines": {
+        "1": {
+          "position": "bottom",
+          "type": "nine",
+          "text": "[Line 1 to be extracted]"
+        },
+        "2": {
+          "position": "second",
+          "type": "nine",
+          "text": "[Line 2 to be extracted]"
+        },
+        "3": {
+          "position": "third",
+          "type": "nine",
+          "text": "[Line 3 to be extracted]"
+        },
+        "4": {
+          "position": "fourth",
+          "type": "nine",
+          "text": "[Line 4 to be extracted]"
+        },
+        "5": {
+          "position": "fifth",
+          "type": "nine",
+          "text": "[Line 5 to be extracted]"
+        },
+        "6": {
+          "position": "top",
+          "type": "nine",
+          "text": "[Line 6 to be extracted]"
+        }
+      },
+      "metadata": {
+        "translator": "Richard Wilhelm / Cary F. Baynes",
+        "year": 1950,
+        "language": "en",
+        "extraction_date": "2025-11-18",
+        "verified": false,
+        "manual_extraction_required": true,
+        "url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html"
+      }
+    }
+  }
+}

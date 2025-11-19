@@ -1,0 +1,108 @@
+{
+  "hexagram_id": "hexagram_36",
+  "number": 36,
+  "king_wen_sequence": 36,
+  "fu_xi_sequence": 36,
+  "binary": "000101",
+  "trigrams": {
+    "upper": "kun",
+    "lower": "li"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Ming Yi",
+    "english_name": "The Darkening of the Light",
+    "title": "36. Ming Yi / The Darkening of the Light",
+    "judgment": "Ming Yi indicates that in the circumstances which it denotes, it will be advantageous to realise the difficulty of the position, and maintain firm correctness.",
+    "image": "The trigram representing the earth, and that for the bright sun entering within it, form Ming Yi. The superior person, in accordance with this, conducts their management of people thusly; they show their intelligence by keeping it obscured.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows its subject, in the condition indicated by Ming Yi, flying, but with drooping wings. When the superior person is considering their going away, they may be for three days without eating. Wherever they go, the people there may speak derisively of them."
+      },
+      "2": {
+        "position": "second",
+        "type": "six",
+        "text": "shows its subject, in the condition indicated by Ming Yi, wounded in the left thigh. They save themselves by the strength of a swift horse; and are fortunate."
+      },
+      "3": {
+        "position": "third",
+        "type": "nine",
+        "text": "shows its subject, in the condition indicated by Ming Yi, hunting in the south, and taking the great chief of the darkness. They should not be eager to make all correct at once."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows its subject just entered into the left side of the belly of the dark land. But they are able to carry out the attitude appropriate in the condition indicated by Ming Yi, quitting the gate and courtyard of the lord of darkness."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "six",
+        "text": "shows how a great person fulfilled the condition indicated by Ming Yi. It will be advantageous to be firm and correct."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows the case where there is no light, but only obscurity. Its subject had at first ascended to the top of the sky; their future shall be to go into the earth."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {
+    "wilhelm_baynes": {
+      "source_id": "wilhelm_baynes",
+      "name": "[Hexagram 36 - Manual extraction needed]",
+      "english_name": "[To be extracted]",
+      "judgment": "[Wilhelm/Baynes judgment text to be extracted from source]",
+      "image": "[Wilhelm/Baynes image text to be extracted from source]",
+      "lines": {
+        "1": {
+          "position": "bottom",
+          "type": "nine",
+          "text": "[Line 1 to be extracted]"
+        },
+        "2": {
+          "position": "second",
+          "type": "nine",
+          "text": "[Line 2 to be extracted]"
+        },
+        "3": {
+          "position": "third",
+          "type": "nine",
+          "text": "[Line 3 to be extracted]"
+        },
+        "4": {
+          "position": "fourth",
+          "type": "nine",
+          "text": "[Line 4 to be extracted]"
+        },
+        "5": {
+          "position": "fifth",
+          "type": "nine",
+          "text": "[Line 5 to be extracted]"
+        },
+        "6": {
+          "position": "top",
+          "type": "nine",
+          "text": "[Line 6 to be extracted]"
+        }
+      },
+      "metadata": {
+        "translator": "Richard Wilhelm / Cary F. Baynes",
+        "year": 1950,
+        "language": "en",
+        "extraction_date": "2025-11-18",
+        "verified": false,
+        "manual_extraction_required": true,
+        "url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html"
+      }
+    }
+  }
+}

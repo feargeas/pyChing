@@ -1,0 +1,108 @@
+{
+  "hexagram_id": "hexagram_39",
+  "number": 39,
+  "king_wen_sequence": 39,
+  "fu_xi_sequence": 39,
+  "binary": "010100",
+  "trigrams": {
+    "upper": "kan",
+    "lower": "gen"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Tch'ien",
+    "english_name": "Trouble",
+    "title": "39. Tch'ien / Trouble",
+    "judgment": "In the state indicated by Tch'ien advantage will be found in the south-west, and the contrary in the north-east. It will be advantageous also to meet with the great person. In these circumstances, with firmness and correctness, if some operation be called for, there will be good fortune.",
+    "image": "The trigram representing a mountain, and above it that for water, form Tch'ien. The superior person, in accordance with this, turns round and examines themself, and cultivates their virtue.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "six",
+        "text": "shows that advance on the part of its subject will lead to greater difficulties, while remaining stationary will afford ground for praise."
+      },
+      "2": {
+        "position": "second",
+        "type": "six",
+        "text": "shows the minister of the king struggling with difficulty on difficulty, and not with a view to their own advantage."
+      },
+      "3": {
+        "position": "third",
+        "type": "nine",
+        "text": "shows its subject advancing, but only to greater difficulties. They remain stationary, and return to their former associates."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows its subject advancing, but only to greater difficulties. They remain stationary, and unite with the subject of the line above."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows its subject struggling with the greatest difficulties, while friends are coming to help them."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows its subject going forward, only to increase the difficulties, while their remaining stationary will be productive of great merit. There will be good fortune, and it will be advantageous to meet with the great person."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {
+    "wilhelm_baynes": {
+      "source_id": "wilhelm_baynes",
+      "name": "[Hexagram 39 - Manual extraction needed]",
+      "english_name": "[To be extracted]",
+      "judgment": "[Wilhelm/Baynes judgment text to be extracted from source]",
+      "image": "[Wilhelm/Baynes image text to be extracted from source]",
+      "lines": {
+        "1": {
+          "position": "bottom",
+          "type": "nine",
+          "text": "[Line 1 to be extracted]"
+        },
+        "2": {
+          "position": "second",
+          "type": "nine",
+          "text": "[Line 2 to be extracted]"
+        },
+        "3": {
+          "position": "third",
+          "type": "nine",
+          "text": "[Line 3 to be extracted]"
+        },
+        "4": {
+          "position": "fourth",
+          "type": "nine",
+          "text": "[Line 4 to be extracted]"
+        },
+        "5": {
+          "position": "fifth",
+          "type": "nine",
+          "text": "[Line 5 to be extracted]"
+        },
+        "6": {
+          "position": "top",
+          "type": "nine",
+          "text": "[Line 6 to be extracted]"
+        }
+      },
+      "metadata": {
+        "translator": "Richard Wilhelm / Cary F. Baynes",
+        "year": 1950,
+        "language": "en",
+        "extraction_date": "2025-11-18",
+        "verified": false,
+        "manual_extraction_required": true,
+        "url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html"
+      }
+    }
+  }
+}

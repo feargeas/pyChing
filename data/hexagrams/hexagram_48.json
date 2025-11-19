@@ -1,0 +1,108 @@
+{
+  "hexagram_id": "hexagram_48",
+  "number": 48,
+  "king_wen_sequence": 48,
+  "fu_xi_sequence": 48,
+  "binary": "010110",
+  "trigrams": {
+    "upper": "kan",
+    "lower": "xun"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Tsing",
+    "english_name": "A Well",
+    "title": "48. Tsing / A Well",
+    "judgment": "Looking at Tsing, we think of how the site of a town may be changed, while the fashion of its wells undergoes no changes. The water of a well never disappears and never receives any great increase, and those who come and those who go can draw and enjoy the benefit. If the drawing has nearly been accomplished, but, before the rope has quite reached the water, the bucket is broken, this is evil.",
+    "image": "The trigram representing wood, and above it that for water, form Tsing. The superior person, in accordance with this, comforts the people, and stimulates them to mutual helpfulness.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "six",
+        "text": "shows a well so muddy that people will not drink of it; or an old well to which neither birds nor other creatures resort."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "shows a well from which by a hole the water escapes and flows away to the shrimps and such small creatures among the grass, or one the water of which leaks away as from a broken basket."
+      },
+      "3": {
+        "position": "third",
+        "type": "nine",
+        "text": "shows a well, which has been cleared out, but is not used. Our hearts are sorry for this, for the water might be drawn out and used. If the king were only intelligent, both they and we might receive the benefit of it."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows a well, the lining of which is well laid. There will be no error."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "nine",
+        "text": "shows a clear, limpid well, the waters from whose cold spring are freely drunk."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows the water from the well brought to the top, which is not allowed to be covered. This suggests the idea of sincerity. There will be great good fortune."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {
+    "wilhelm_baynes": {
+      "source_id": "wilhelm_baynes",
+      "name": "[Hexagram 48 - Manual extraction needed]",
+      "english_name": "[To be extracted]",
+      "judgment": "[Wilhelm/Baynes judgment text to be extracted from source]",
+      "image": "[Wilhelm/Baynes image text to be extracted from source]",
+      "lines": {
+        "1": {
+          "position": "bottom",
+          "type": "nine",
+          "text": "[Line 1 to be extracted]"
+        },
+        "2": {
+          "position": "second",
+          "type": "nine",
+          "text": "[Line 2 to be extracted]"
+        },
+        "3": {
+          "position": "third",
+          "type": "nine",
+          "text": "[Line 3 to be extracted]"
+        },
+        "4": {
+          "position": "fourth",
+          "type": "nine",
+          "text": "[Line 4 to be extracted]"
+        },
+        "5": {
+          "position": "fifth",
+          "type": "nine",
+          "text": "[Line 5 to be extracted]"
+        },
+        "6": {
+          "position": "top",
+          "type": "nine",
+          "text": "[Line 6 to be extracted]"
+        }
+      },
+      "metadata": {
+        "translator": "Richard Wilhelm / Cary F. Baynes",
+        "year": 1950,
+        "language": "en",
+        "extraction_date": "2025-11-18",
+        "verified": false,
+        "manual_extraction_required": true,
+        "url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html"
+      }
+    }
+  }
+}

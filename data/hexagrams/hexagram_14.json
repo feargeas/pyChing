@@ -1,0 +1,108 @@
+{
+  "hexagram_id": "hexagram_14",
+  "number": 14,
+  "king_wen_sequence": 14,
+  "fu_xi_sequence": 14,
+  "binary": "101111",
+  "trigrams": {
+    "upper": "li",
+    "lower": "qian"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Ta You",
+    "english_name": "Big Strength",
+    "title": "14. Ta You / Big Strength",
+    "judgment": "Ta You indicates that, under the circumstances which it implies, there will be great progress and success.",
+    "image": "The trigram for heaven and that of fire above it form Ta You. The superior person, in accordance with this, represses what is evil and gives distinction to what is good, in sympathy with the excellent Heaven-conferred nature.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "there is no approach to what is injurious, and there is no error. Let there be a realisation of the difficulty and danger of the position, and there will be no error to the end."
+      },
+      "2": {
+        "position": "second",
+        "type": "nine",
+        "text": "we have a large wagon with its load. In whatever direction advance is made, there will be no error."
+      },
+      "3": {
+        "position": "third",
+        "type": "nine",
+        "text": "shows us a feudal prince presenting their offerings to the Son of Heaven. A small person would be unequal to such a duty."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "nine",
+        "text": "shows its subject keeping their great resources under restraint. There will be no error."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "six",
+        "text": "shows the sincerity of its subject reciprocated by that of all the others represented in the hexagram. Let them display a proper majesty, and there will be good fortune."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "nine",
+        "text": "shows its subject with help accorded to them from Heaven. There will be good fortune, advantage in every respect."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {
+    "wilhelm_baynes": {
+      "source_id": "wilhelm_baynes",
+      "name": "[Hexagram 14 - Manual extraction needed]",
+      "english_name": "[To be extracted]",
+      "judgment": "[Wilhelm/Baynes judgment text to be extracted from source]",
+      "image": "[Wilhelm/Baynes image text to be extracted from source]",
+      "lines": {
+        "1": {
+          "position": "bottom",
+          "type": "nine",
+          "text": "[Line 1 to be extracted]"
+        },
+        "2": {
+          "position": "second",
+          "type": "nine",
+          "text": "[Line 2 to be extracted]"
+        },
+        "3": {
+          "position": "third",
+          "type": "nine",
+          "text": "[Line 3 to be extracted]"
+        },
+        "4": {
+          "position": "fourth",
+          "type": "nine",
+          "text": "[Line 4 to be extracted]"
+        },
+        "5": {
+          "position": "fifth",
+          "type": "nine",
+          "text": "[Line 5 to be extracted]"
+        },
+        "6": {
+          "position": "top",
+          "type": "nine",
+          "text": "[Line 6 to be extracted]"
+        }
+      },
+      "metadata": {
+        "translator": "Richard Wilhelm / Cary F. Baynes",
+        "year": 1950,
+        "language": "en",
+        "extraction_date": "2025-11-18",
+        "verified": false,
+        "manual_extraction_required": true,
+        "url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html"
+      }
+    }
+  }
+}

@@ -1,0 +1,512 @@
+{
+  "number_to_id": {
+    "1": "hexagram_01",
+    "2": "hexagram_02",
+    "3": "hexagram_03",
+    "4": "hexagram_04",
+    "5": "hexagram_05",
+    "6": "hexagram_06",
+    "7": "hexagram_07",
+    "8": "hexagram_08",
+    "9": "hexagram_09",
+    "10": "hexagram_10",
+    "11": "hexagram_11",
+    "12": "hexagram_12",
+    "13": "hexagram_13",
+    "14": "hexagram_14",
+    "15": "hexagram_15",
+    "16": "hexagram_16",
+    "17": "hexagram_17",
+    "18": "hexagram_18",
+    "19": "hexagram_19",
+    "20": "hexagram_20",
+    "21": "hexagram_21",
+    "22": "hexagram_22",
+    "23": "hexagram_23",
+    "24": "hexagram_24",
+    "25": "hexagram_25",
+    "26": "hexagram_26",
+    "27": "hexagram_27",
+    "28": "hexagram_28",
+    "29": "hexagram_29",
+    "30": "hexagram_30",
+    "31": "hexagram_31",
+    "32": "hexagram_32",
+    "33": "hexagram_33",
+    "34": "hexagram_34",
+    "35": "hexagram_35",
+    "36": "hexagram_36",
+    "37": "hexagram_37",
+    "38": "hexagram_38",
+    "39": "hexagram_39",
+    "40": "hexagram_40",
+    "41": "hexagram_41",
+    "42": "hexagram_42",
+    "43": "hexagram_43",
+    "44": "hexagram_44",
+    "45": "hexagram_45",
+    "46": "hexagram_46",
+    "47": "hexagram_47",
+    "48": "hexagram_48",
+    "49": "hexagram_49",
+    "50": "hexagram_50",
+    "51": "hexagram_51",
+    "52": "hexagram_52",
+    "53": "hexagram_53",
+    "54": "hexagram_54",
+    "55": "hexagram_55",
+    "56": "hexagram_56",
+    "57": "hexagram_57",
+    "58": "hexagram_58",
+    "59": "hexagram_59",
+    "60": "hexagram_60",
+    "61": "hexagram_61",
+    "62": "hexagram_62",
+    "63": "hexagram_63",
+    "64": "hexagram_64"
+  },
+
+  "binary_to_id": {
+    "111111": "hexagram_01",
+    "000000": "hexagram_02",
+    "010001": "hexagram_03",
+    "100010": "hexagram_04",
+    "010111": "hexagram_05",
+    "111010": "hexagram_06",
+    "000010": "hexagram_07",
+    "010000": "hexagram_08",
+    "110111": "hexagram_09",
+    "111011": "hexagram_10",
+    "000111": "hexagram_11",
+    "111000": "hexagram_12",
+    "111101": "hexagram_13",
+    "101111": "hexagram_14",
+    "000100": "hexagram_15",
+    "001000": "hexagram_16",
+    "011001": "hexagram_17",
+    "100110": "hexagram_18",
+    "000011": "hexagram_19",
+    "110000": "hexagram_20",
+    "101001": "hexagram_21",
+    "100101": "hexagram_22",
+    "100000": "hexagram_23",
+    "000001": "hexagram_24",
+    "111001": "hexagram_25",
+    "100111": "hexagram_26",
+    "100001": "hexagram_27",
+    "011110": "hexagram_28",
+    "010010": "hexagram_29",
+    "101101": "hexagram_30",
+    "011100": "hexagram_31",
+    "001110": "hexagram_32",
+    "111100": "hexagram_33",
+    "001111": "hexagram_34",
+    "101000": "hexagram_35",
+    "000101": "hexagram_36",
+    "110101": "hexagram_37",
+    "101011": "hexagram_38",
+    "010100": "hexagram_39",
+    "001010": "hexagram_40",
+    "100011": "hexagram_41",
+    "110001": "hexagram_42",
+    "011111": "hexagram_43",
+    "111110": "hexagram_44",
+    "011000": "hexagram_45",
+    "000110": "hexagram_46",
+    "011010": "hexagram_47",
+    "010110": "hexagram_48",
+    "011101": "hexagram_49",
+    "101110": "hexagram_50",
+    "001001": "hexagram_51",
+    "100100": "hexagram_52",
+    "110100": "hexagram_53",
+    "001011": "hexagram_54",
+    "001101": "hexagram_55",
+    "101100": "hexagram_56",
+    "110110": "hexagram_57",
+    "011011": "hexagram_58",
+    "110010": "hexagram_59",
+    "010011": "hexagram_60",
+    "110011": "hexagram_61",
+    "001100": "hexagram_62",
+    "010101": "hexagram_63",
+    "101010": "hexagram_64"
+  },
+
+  "trigram_pairs_to_id": {
+    "qian_qian": "hexagram_01",
+    "kun_kun": "hexagram_02",
+    "kan_zhen": "hexagram_03",
+    "gen_kan": "hexagram_04",
+    "kan_qian": "hexagram_05",
+    "qian_kan": "hexagram_06",
+    "kun_kan": "hexagram_07",
+    "kan_kun": "hexagram_08",
+    "xun_qian": "hexagram_09",
+    "qian_dui": "hexagram_10",
+    "kun_qian": "hexagram_11",
+    "qian_kun": "hexagram_12",
+    "qian_li": "hexagram_13",
+    "li_qian": "hexagram_14",
+    "kun_gen": "hexagram_15",
+    "zhen_kun": "hexagram_16",
+    "dui_zhen": "hexagram_17",
+    "gen_xun": "hexagram_18",
+    "kun_dui": "hexagram_19",
+    "xun_kun": "hexagram_20",
+    "li_zhen": "hexagram_21",
+    "gen_li": "hexagram_22",
+    "gen_kun": "hexagram_23",
+    "kun_zhen": "hexagram_24",
+    "qian_zhen": "hexagram_25",
+    "gen_qian": "hexagram_26",
+    "gen_zhen": "hexagram_27",
+    "dui_xun": "hexagram_28",
+    "kan_kan": "hexagram_29",
+    "li_li": "hexagram_30",
+    "dui_gen": "hexagram_31",
+    "zhen_xun": "hexagram_32",
+    "qian_gen": "hexagram_33",
+    "zhen_qian": "hexagram_34",
+    "li_kun": "hexagram_35",
+    "kun_li": "hexagram_36",
+    "xun_li": "hexagram_37",
+    "li_dui": "hexagram_38",
+    "kan_gen": "hexagram_39",
+    "zhen_kan": "hexagram_40",
+    "gen_dui": "hexagram_41",
+    "xun_zhen": "hexagram_42",
+    "dui_qian": "hexagram_43",
+    "qian_xun": "hexagram_44",
+    "dui_kun": "hexagram_45",
+    "kun_xun": "hexagram_46",
+    "dui_kan": "hexagram_47",
+    "kan_xun": "hexagram_48",
+    "dui_li": "hexagram_49",
+    "li_xun": "hexagram_50",
+    "zhen_zhen": "hexagram_51",
+    "gen_gen": "hexagram_52",
+    "xun_gen": "hexagram_53",
+    "zhen_dui": "hexagram_54",
+    "zhen_li": "hexagram_55",
+    "li_gen": "hexagram_56",
+    "xun_xun": "hexagram_57",
+    "dui_dui": "hexagram_58",
+    "xun_kan": "hexagram_59",
+    "kan_dui": "hexagram_60",
+    "xun_dui": "hexagram_61",
+    "zhen_gen": "hexagram_62",
+    "kan_li": "hexagram_63",
+    "li_kan": "hexagram_64"
+  },
+
+  "name_variants": {
+    "Tch'ien": {
+      "hexagram_id": "hexagram_01",
+      "source": "legge_1882"
+    },
+    "Koun": {
+      "hexagram_id": "hexagram_02",
+      "source": "legge_1882"
+    },
+    "T'oun": {
+      "hexagram_id": "hexagram_03",
+      "source": "legge_1882"
+    },
+    "Mong": {
+      "hexagram_id": "hexagram_04",
+      "source": "legge_1882"
+    },
+    "Hsu": {
+      "hexagram_id": "hexagram_05",
+      "source": "legge_1882"
+    },
+    "Song": {
+      "hexagram_id": "hexagram_06",
+      "source": "legge_1882"
+    },
+    "Cheu": {
+      "hexagram_id": "hexagram_07",
+      "source": "legge_1882"
+    },
+    "Pi": {
+      "hexagram_id": "hexagram_08",
+      "source": "legge_1882"
+    },
+    "Siao Tch'ou": {
+      "hexagram_id": "hexagram_09",
+      "source": "legge_1882"
+    },
+    "Li": {
+      "hexagram_id": "hexagram_10",
+      "source": "legge_1882"
+    },
+    "T'ai": {
+      "hexagram_id": "hexagram_11",
+      "source": "legge_1882"
+    },
+    "P'i": {
+      "hexagram_id": "hexagram_12",
+      "source": "legge_1882"
+    },
+    "Tong Jen": {
+      "hexagram_id": "hexagram_13",
+      "source": "legge_1882"
+    },
+    "Ta You": {
+      "hexagram_id": "hexagram_14",
+      "source": "legge_1882"
+    },
+    "Tchien": {
+      "hexagram_id": "hexagram_15",
+      "source": "legge_1882"
+    },
+    "Yu": {
+      "hexagram_id": "hexagram_16",
+      "source": "legge_1882"
+    },
+    "Souei": {
+      "hexagram_id": "hexagram_17",
+      "source": "legge_1882"
+    },
+    "Kou": {
+      "hexagram_id": "hexagram_18",
+      "source": "legge_1882"
+    },
+    "Lin": {
+      "hexagram_id": "hexagram_19",
+      "source": "legge_1882"
+    },
+    "Kouan": {
+      "hexagram_id": "hexagram_20",
+      "source": "legge_1882"
+    },
+    "Che Ho": {
+      "hexagram_id": "hexagram_21",
+      "source": "legge_1882"
+    },
+    "Po": {
+      "hexagram_id": "hexagram_23",
+      "source": "legge_1882"
+    },
+    "Fou": {
+      "hexagram_id": "hexagram_24",
+      "source": "legge_1882"
+    },
+    "Wou Wang": {
+      "hexagram_id": "hexagram_25",
+      "source": "legge_1882"
+    },
+    "Ta Tch'ou": {
+      "hexagram_id": "hexagram_26",
+      "source": "legge_1882"
+    },
+    "I": {
+      "hexagram_id": "hexagram_27",
+      "source": "legge_1882"
+    },
+    "Ta Kouo": {
+      "hexagram_id": "hexagram_28",
+      "source": "legge_1882"
+    },
+    "K'an": {
+      "hexagram_id": "hexagram_29",
+      "source": "legge_1882"
+    },
+    "Hsien": {
+      "hexagram_id": "hexagram_31",
+      "source": "legge_1882"
+    },
+    "Hong": {
+      "hexagram_id": "hexagram_32",
+      "source": "legge_1882"
+    },
+    "Toun": {
+      "hexagram_id": "hexagram_33",
+      "source": "legge_1882"
+    },
+    "Ta Tch'ouang": {
+      "hexagram_id": "hexagram_34",
+      "source": "legge_1882"
+    },
+    "Tchin": {
+      "hexagram_id": "hexagram_35",
+      "source": "legge_1882"
+    },
+    "Ming Yi": {
+      "hexagram_id": "hexagram_36",
+      "source": "legge_1882"
+    },
+    "Tchia Jen": {
+      "hexagram_id": "hexagram_37",
+      "source": "legge_1882"
+    },
+    "K'ouei": {
+      "hexagram_id": "hexagram_38",
+      "source": "legge_1882"
+    },
+    "Tch'ien": {
+      "hexagram_id": "hexagram_39",
+      "source": "legge_1882"
+    },
+    "Tchieh": {
+      "hexagram_id": "hexagram_40",
+      "source": "legge_1882"
+    },
+    "Soun": {
+      "hexagram_id": "hexagram_41",
+      "source": "legge_1882"
+    },
+    "Yi": {
+      "hexagram_id": "hexagram_42",
+      "source": "legge_1882"
+    },
+    "Kouai": {
+      "hexagram_id": "hexagram_43",
+      "source": "legge_1882"
+    },
+    "Keou": {
+      "hexagram_id": "hexagram_44",
+      "source": "legge_1882"
+    },
+    "Ts'ouei": {
+      "hexagram_id": "hexagram_45",
+      "source": "legge_1882"
+    },
+    "Cheng": {
+      "hexagram_id": "hexagram_46",
+      "source": "legge_1882"
+    },
+    "K'oun": {
+      "hexagram_id": "hexagram_47",
+      "source": "legge_1882"
+    },
+    "Tsing": {
+      "hexagram_id": "hexagram_48",
+      "source": "legge_1882"
+    },
+    "Keu": {
+      "hexagram_id": "hexagram_49",
+      "source": "legge_1882"
+    },
+    "Ting": {
+      "hexagram_id": "hexagram_50",
+      "source": "legge_1882"
+    },
+    "Tchen": {
+      "hexagram_id": "hexagram_51",
+      "source": "legge_1882"
+    },
+    "Ken": {
+      "hexagram_id": "hexagram_52",
+      "source": "legge_1882"
+    },
+    "Kouei Mei": {
+      "hexagram_id": "hexagram_54",
+      "source": "legge_1882"
+    },
+    "Fong": {
+      "hexagram_id": "hexagram_55",
+      "source": "legge_1882"
+    },
+    "Lu": {
+      "hexagram_id": "hexagram_56",
+      "source": "legge_1882"
+    },
+    "Hsuan": {
+      "hexagram_id": "hexagram_57",
+      "source": "legge_1882"
+    },
+    "Touei": {
+      "hexagram_id": "hexagram_58",
+      "source": "legge_1882"
+    },
+    "Houan": {
+      "hexagram_id": "hexagram_59",
+      "source": "legge_1882"
+    },
+    "Tchong Fou": {
+      "hexagram_id": "hexagram_61",
+      "source": "legge_1882"
+    },
+    "Siao Kouo": {
+      "hexagram_id": "hexagram_62",
+      "source": "legge_1882"
+    },
+    "Tchi Tchi": {
+      "hexagram_id": "hexagram_63",
+      "source": "legge_1882"
+    },
+    "Wei Tchi": {
+      "hexagram_id": "hexagram_64",
+      "source": "legge_1882"
+    }
+  },
+
+  "trigrams": {
+    "qian": {
+      "name": "Heaven",
+      "attribute": "Creative",
+      "binary": "111",
+      "element": "Metal",
+      "direction": "Northwest",
+      "family": "Father"
+    },
+    "kun": {
+      "name": "Earth",
+      "attribute": "Receptive",
+      "binary": "000",
+      "element": "Earth",
+      "direction": "Southwest",
+      "family": "Mother"
+    },
+    "zhen": {
+      "name": "Thunder",
+      "attribute": "Arousing",
+      "binary": "001",
+      "element": "Wood",
+      "direction": "East",
+      "family": "Eldest Son"
+    },
+    "kan": {
+      "name": "Water",
+      "attribute": "Abysmal",
+      "binary": "010",
+      "element": "Water",
+      "direction": "North",
+      "family": "Middle Son"
+    },
+    "gen": {
+      "name": "Mountain",
+      "attribute": "Keeping Still",
+      "binary": "100",
+      "element": "Earth",
+      "direction": "Northeast",
+      "family": "Youngest Son"
+    },
+    "xun": {
+      "name": "Wind",
+      "attribute": "Gentle",
+      "binary": "110",
+      "element": "Wood",
+      "direction": "Southeast",
+      "family": "Eldest Daughter"
+    },
+    "li": {
+      "name": "Fire",
+      "attribute": "Clinging",
+      "binary": "101",
+      "element": "Fire",
+      "direction": "South",
+      "family": "Middle Daughter"
+    },
+    "dui": {
+      "name": "Lake",
+      "attribute": "Joyous",
+      "binary": "011",
+      "element": "Metal",
+      "direction": "West",
+      "family": "Youngest Daughter"
+    }
+  }
+}

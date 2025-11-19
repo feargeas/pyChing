@@ -1,0 +1,108 @@
+{
+  "hexagram_id": "hexagram_22",
+  "number": 22,
+  "king_wen_sequence": 22,
+  "fu_xi_sequence": 22,
+  "binary": "100101",
+  "trigrams": {
+    "upper": "gen",
+    "lower": "li"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Pi",
+    "english_name": "Elegance",
+    "title": "22. Pi / Elegance",
+    "judgment": "Pi indicates that there should be free course in what it denotes. There will be little advantage however if it be allowed to advance and take the lead.",
+    "image": "The trigram representing a mountain with that for fire under it form Pi. The superior person, in accordance with this, throws a brilliancy around their various processes of government, but does not dare in a similar way to decide cases of criminal litigation.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows one adorning the way of their feet. They can discard a carriage and walk on foot."
+      },
+      "2": {
+        "position": "second",
+        "type": "six",
+        "text": "shows one adorning their beard."
+      },
+      "3": {
+        "position": "third",
+        "type": "nine",
+        "text": "shows its subject with the appearance of being adorned and bedewed with rich favours. But let them ever maintain their firm correctness, and there will be good fortune."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows one looking as if adorned, but only in white. As if mounted on a white horse, and furnished with wings, they seek union with the subject of the first line, while the intervening third pursues, not as a robber, but intent on a matrimonial alliance."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "six",
+        "text": "shows its subject adorned by the occupants of the heights and gardens. They bear their roll of silk, small and slight. They may appear stingy; but there will be good fortune in the end."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "nine",
+        "text": "has its subject with white as their only ornament. There will be no error."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {
+    "wilhelm_baynes": {
+      "source_id": "wilhelm_baynes",
+      "name": "[Hexagram 22 - Manual extraction needed]",
+      "english_name": "[To be extracted]",
+      "judgment": "[Wilhelm/Baynes judgment text to be extracted from source]",
+      "image": "[Wilhelm/Baynes image text to be extracted from source]",
+      "lines": {
+        "1": {
+          "position": "bottom",
+          "type": "nine",
+          "text": "[Line 1 to be extracted]"
+        },
+        "2": {
+          "position": "second",
+          "type": "nine",
+          "text": "[Line 2 to be extracted]"
+        },
+        "3": {
+          "position": "third",
+          "type": "nine",
+          "text": "[Line 3 to be extracted]"
+        },
+        "4": {
+          "position": "fourth",
+          "type": "nine",
+          "text": "[Line 4 to be extracted]"
+        },
+        "5": {
+          "position": "fifth",
+          "type": "nine",
+          "text": "[Line 5 to be extracted]"
+        },
+        "6": {
+          "position": "top",
+          "type": "nine",
+          "text": "[Line 6 to be extracted]"
+        }
+      },
+      "metadata": {
+        "translator": "Richard Wilhelm / Cary F. Baynes",
+        "year": 1950,
+        "language": "en",
+        "extraction_date": "2025-11-18",
+        "verified": false,
+        "manual_extraction_required": true,
+        "url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html"
+      }
+    }
+  }
+}

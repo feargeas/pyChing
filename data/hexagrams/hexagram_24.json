@@ -1,0 +1,108 @@
+{
+  "hexagram_id": "hexagram_24",
+  "number": 24,
+  "king_wen_sequence": 24,
+  "fu_xi_sequence": 24,
+  "binary": "000001",
+  "trigrams": {
+    "upper": "kun",
+    "lower": "zhen"
+  },
+  "canonical": {
+    "source_id": "legge_1882",
+    "name": "Fou",
+    "english_name": "The Return, Amendment",
+    "title": "24. Fou / The Return, Amendment",
+    "judgment": "Fou indicates that where will be free course and progress in what it denotes; the subject of it finds no one to distress them in their exits and entrances; friends come to them, and no error is committed. They will return and repeat their proper course. In seven days comes their return. There will be advantage in whatever direction movement is made.",
+    "image": "The trigram representing the earth, and that for thunder in the midst of it, form Fou. The ancient kings, in accordance with this, on the day of the winter solstice, shut the gates of the passes from one state to another, so that the travelling merchants could not then pursue their journeys, nor the princes go on with the inspection of their states.",
+    "lines": {
+      "1": {
+        "position": "bottom",
+        "type": "nine",
+        "text": "shows its subject returning from an error of no great extent, which would not proceed to anything requiring repentance. There will be great good fortune."
+      },
+      "2": {
+        "position": "second",
+        "type": "six",
+        "text": "shows the admirable return of its subject. There will be good fortune."
+      },
+      "3": {
+        "position": "third",
+        "type": "six",
+        "text": "shows one who has made repeated returns. The position is perilous, but there will be no error."
+      },
+      "4": {
+        "position": "fourth",
+        "type": "six",
+        "text": "shows its subject moving right in the centre among those represented by the other divided lines, and yet returning alone to their proper path."
+      },
+      "5": {
+        "position": "fifth",
+        "type": "six",
+        "text": "shows the noble return of its subject. There will be no ground for repentance."
+      },
+      "6": {
+        "position": "topmost",
+        "type": "six",
+        "text": "shows its subject all astray on the subject of returning. There will be evil. There will be calamities and errors. If with their views they put the hosts in motion, the end will be a great defeat, whose issues will extend to the ruler of the state. Even in ten years they will not they able to repair the disaster."
+      }
+    },
+    "metadata": {
+      "translator": "James Legge",
+      "year": 1882,
+      "language": "en",
+      "verified": true,
+      "notes": "Original translation preserved from pyChing v1.2.2"
+    }
+  },
+  "sources": {
+    "wilhelm_baynes": {
+      "source_id": "wilhelm_baynes",
+      "name": "[Hexagram 24 - Manual extraction needed]",
+      "english_name": "[To be extracted]",
+      "judgment": "[Wilhelm/Baynes judgment text to be extracted from source]",
+      "image": "[Wilhelm/Baynes image text to be extracted from source]",
+      "lines": {
+        "1": {
+          "position": "bottom",
+          "type": "nine",
+          "text": "[Line 1 to be extracted]"
+        },
+        "2": {
+          "position": "second",
+          "type": "nine",
+          "text": "[Line 2 to be extracted]"
+        },
+        "3": {
+          "position": "third",
+          "type": "nine",
+          "text": "[Line 3 to be extracted]"
+        },
+        "4": {
+          "position": "fourth",
+          "type": "nine",
+          "text": "[Line 4 to be extracted]"
+        },
+        "5": {
+          "position": "fifth",
+          "type": "nine",
+          "text": "[Line 5 to be extracted]"
+        },
+        "6": {
+          "position": "top",
+          "type": "nine",
+          "text": "[Line 6 to be extracted]"
+        }
+      },
+      "metadata": {
+        "translator": "Richard Wilhelm / Cary F. Baynes",
+        "year": 1950,
+        "language": "en",
+        "extraction_date": "2025-11-18",
+        "verified": false,
+        "manual_extraction_required": true,
+        "url": "http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html"
+      }
+    }
+  }
+}
