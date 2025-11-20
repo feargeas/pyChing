@@ -127,6 +127,10 @@ dmypy.json
 *.swo
 *~
 
+# Emacs
+\#*\#
+.#*
+
 # OS
 .DS_Store
 Thumbs.db

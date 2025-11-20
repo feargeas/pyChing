@@ -1,0 +1,9 @@
+# Optional runtime dependencies
+# Install with: pip install -r requirements.txt
+
+# For Air casting method (RANDOM.ORG true random numbers)
+requests>=2.28
+
+# For development (tests)
+# pytest>=7.0
+# pytest-cov>=4.0

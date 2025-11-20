@@ -30,8 +30,17 @@ classifiers = [
 "Repository" = "https://github.com/feargeas/pyChing"
 "Bug Tracker" = "https://github.com/feargeas/pyChing/issues"
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+]
+air = [
+    "requests>=2.28",  # For Air method (RANDOM.ORG API)
+]
+
 [project.scripts]
-pyching = "pyching:main"
+pyching = "pyching_cli:main"
 
 [build-system]
 requires = ["setuptools>=61.0"]
