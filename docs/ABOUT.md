@@ -12,7 +12,7 @@ PancakeBunny is a persona inspired by [Oolong the rabbit](https://en.wikipedia.o
 
 The meme's caption: "I have no idea what I'm talking about, so here's a picture of a bunny with a pancake on its head."
 
-This became shorthand for approaching the unknown with honesty and humor rather than false expertise.
+This became shorthand for approaching the unknown with honesty and humour rather than false expertise.
 
 ## Why PancakeBunny Matters to This Project
 
@@ -30,7 +30,7 @@ PancakeBunny isn't just a mascot. PB represents:
 - The gap between cultures, honestly acknowledged
 
 ### 3. Playful Seriousness
-- Using humor to approach profound subjects
+- Using humour to approach profound subjects
 - British understatement and irony
 - Creating cognitive dissonance deliberately
 - Deep respect expressed through light touch

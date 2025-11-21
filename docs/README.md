@@ -1,6 +1,6 @@
 # Documentation
 
-PancakeBunny try keep docs organized here!
+PancakeBunny try keep docs organised here!
 
 ## For Users
 
