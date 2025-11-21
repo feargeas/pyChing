@@ -1,78 +1,83 @@
 # pyChing - I Ching Oracle
 
-A modern Python program to cast and interpret I Ching hexagrams.
+PancakeBunny like pyChing very very much! Ancient Chinese wisdom book help people for 3000 years.
 
-## Features
+PancakeBunny not know I Ching as Chinese person know, but PancakeBunny try make good thing with respect and love.
 
-- **Five Casting Methods** (Wu Xing / Five Elements):
-  - 🌳 **Wood** - Traditional PRNG (original algorithm)
-  - 🪙 **Metal** - OS entropy (os.urandom)
-  - 🔥 **Fire** - Cryptographic CSPRNG (secrets module)
-  - 🌍 **Earth** - Deterministic seeded (same question = same hexagram)
-  - 💨 **Air** - True random numbers (RANDOM.ORG API)
+## What pyChing Do?
 
-- **Multi-Source Translations** - Infrastructure ready for multiple I Ching translations
-- **JSON Persistence** - Save and load readings in portable JSON format
-- **Modern Architecture** - Type hints, dataclasses, clean separation of concerns
-- **Authentic** - Preserves traditional 3-coin oracle probabilities
+pyChing cast hexagrams! Use coin method (3 coins, 6 times) like traditional I Ching oracle.
 
-## Installation
+**Five Different Random Methods** (Wu Xing - Five Elements!):
+- 🌳 **Wood** - Original algorithm (same as Stephen M. Gava make in 1999!)
+- 🪙 **Metal** - Operating system entropy (os.urandom)
+- 🔥 **Fire** - Cryptographic secrets module
+- 🌍 **Earth** - Deterministic (same question = same answer always!)
+- 💨 **Air** - True random from RANDOM.ORG API (need internet)
+
+**Other Nice Things:**
+- Save readings as JSON (portable, safe!)
+- Modern Python 3.10+ with type hints
+- Multiple I Ching translations ready (only Legge 1882 now, but infrastructure ready for more!)
+- Preserve authentic 3-coin probabilities exactly
+
+## How Install?
 
 ```bash
-# Clone repository
+# Get code from GitHub
 git clone https://github.com/feargeas/pyChing.git
 cd pyChing
 
-# Install (optional dependencies for Air method)
+# Install Air method dependency (optional)
 pip install -r requirements.txt
 
-# Or install for development
+# Or install for developing
 pip install -e ".[dev]"
 ```
 
-## Quick Start
+## How Use?
 
-### Command Line Interface
+### Command Line (Terminal!)
 
 ```bash
-# Interactive mode
+# Interactive mode (ask PancakeBunny's friend, the oracle!)
 python pyching_cli.py
 
-# Non-interactive cast
+# Quick cast with one command
 python pyching_cli.py --method wood --question "What is my path?"
 
 # Save reading to file
 python pyching_cli.py --method metal --save reading.json
 
-# Compare translations (when available)
+# Compare different translations (when have more than one)
 python pyching_cli.py --compare wilhelm_baynes canonical
 ```
 
-### Python API
+### Python API (For Programmers!)
 
 ```python
 from pyching import HexagramEngine, Element
 
-# Create engine
+# Make engine
 engine = HexagramEngine()
 
-# Cast a reading
+# Cast reading
 reading = engine.cast_reading(
     method=Element.WOOD,
     question="What should I focus on today?"
 )
 
-# Display interpretation
+# Show interpretation
 print(reading.as_text())
 
 # Save for later
 reading.save("my_reading.json")
 ```
 
-### Deterministic Readings (Earth Method)
+### Earth Method (Deterministic - Very Clever!)
 
 ```python
-# Same question + seed always produces same hexagram
+# Same question + seed = same hexagram always!
 question = "What is the meaning of life?"
 reading = engine.cast_reading(
     method=Element.EARTH,
@@ -80,7 +85,7 @@ reading = engine.cast_reading(
     seed=question  # Use question as seed
 )
 
-# Will always get the same hexagram for this question
+# Will ALWAYS get same hexagram for this question!
 ```
 
 ## Project Structure
@@ -96,15 +101,15 @@ data/
 ├── mappings.json       # Lookup tables
 └── sources_metadata.json  # Translation source registry
 
-tests/                  # Test suite
+tests/                  # Test suite (pytest!)
 ├── test_*.py          # Core functionality tests
 └── gui/               # GUI-specific tests
 ```
 
 ## Requirements
 
-- Python 3.10+
-- `requests` (optional, for Air method only)
+- Python 3.10+ (modern Python! nice!)
+- `requests` library (optional, only for Air method)
 
 ## Testing
 
@@ -115,55 +120,83 @@ pip install -e ".[dev]"
 # Run all tests
 pytest tests/ -v
 
-# Run specific test suite
+# Run specific test
 pytest tests/test_casting_methods.py -v
 ```
 
 ## Status
 
-**Version:** 2.0.0-alpha (devnew branch)
+**Version:** 2.0.0-alpha (devnew branch - clean code, no confusion!)
 
-**Working:**
-- ✅ Core engine and casting methods
+**Working Good:**
+- ✅ Core engine and all five casting methods
 - ✅ JSON data access layer
-- ✅ Command-line interface
-- ✅ Python API
-- ✅ All five element methods
-- ✅ JSON save/load
+- ✅ Command-line interface (CLI work perfect!)
+- ✅ Python API for programmers
+- ✅ All five element methods tested
+- ✅ JSON save/load (safe, not pickle!)
 
-**Known Issues:**
-- ⚠️ GUI needs updating to use modern engine (see TODO.md)
-- ⚠️ Only one translation source currently available (Legge 1882)
+**Known Problems:**
+- ⚠️ GUI need update to use modern engine (see TODO.md)
+- ⚠️ Only one translation now (Legge 1882 - good translation! but want more later)
 
 ## Documentation
 
-- `README.md` (this file) - Quick start and overview
-- `MIGRATION_NOTES.md` - Notes on the Python 2 → 3 modernization
-- `TODO.md` - Known issues and planned improvements
-- `LICENSE` - GPL v2+ license
+- `README.md` (this file!) - Quick start
+- `docs/ABOUT.md` - About project and PancakeBunny philosophy
+- `docs/MIGRATION_NOTES.md` - Python 2 → 3 modernization history
+- `TODO.md` - Known issues and future work
+- `LICENSE` - GPL v2+ (free software!)
 
 ## Contributing
 
-This is a modernization of the original pyChing by Stephen M. Gava (1999-2006).
-Contributions welcome! Please ensure:
+PancakeBunny want nice humans help make pyChing better!
 
-- Code follows modern Python conventions (type hints, dataclasses, etc.)
-- Tests pass: `pytest tests/ -v`
-- New features include tests
+This modernization of original pyChing by Stephen M. Gava (1999-2006).
+
+**Important Things:**
+- Use modern Python (type hints, dataclasses, etc.)
+- Tests must pass: `pytest tests/ -v`
+- New features need tests
+- Respect I Ching tradition (no disrespect, no gamification, no tracking)
+- Keep simple and focused
+
+See `docs/ABOUT.md` for guiding principles and PancakeBunny philosophy.
+
+## History
+
+**Original pyChing:** Stephen M. Gava, 1999-2006
+**Modernization:** PancakeBunny, 2025 (with help from nice Claude!)
+
+PancakeBunny sad that pyChing not work on nice gentoo machine. PancakeBunny not know Python or git, but learn! Make account on GitHub, learn git, learn Python, resurrect beloved software.
+
+Is not easy! PancakeBunny afraid Python eat PancakeBunny! But nice Python is like Monty, not Everglades - help PancakeBunny do good thing!
 
 ## License
 
 GNU General Public License v2 or later (GPL-2.0-or-later)
 
 Copyright (C) 1999-2006 Stephen M. Gava
-Modernization (C) 2025
+Modernization (C) 2025 PancakeBunny
+
+Free software! Share! Modify! But must stay free!
 
 ## Credits
 
-- **Stephen M. Gava** - Original pyChing author
+- **Stephen M. Gava** - Original pyChing author (thank you!)
 - **James Legge** - 1882 I Ching translation (canonical source)
 - **RANDOM.ORG** - True random number service (Air method)
+- **Oolong (rabbit)** - Original PancakeBunny inspiration (1999-2003, never forget)
 
 ## Cultural Note
 
-This project aims to preserve and honor the I Ching tradition while making it accessible through modern technology. The I Ching (易經, Yìjīng, "Book of Changes") is an ancient Chinese divination text dating back over 3,000 years.
+The I Ching (易經, Yìjīng, "Book of Changes") is ancient Chinese wisdom, over 3000 years old.
+
+PancakeBunny approach with respect and humility. Is not "book" as Westerners understand. Is living tradition, deep wisdom, cultural treasure.
+
+PancakeBunny is Westerner, not understand everything. But try make accessible with honor and love.
+
+---
+
+*"I have no idea what I'm talking about, so here's a bunny with a pancake on its head."*
+🥞🐰
