@@ -191,18 +191,20 @@ class HexagramInfoWindow(Toplevel):
         center_frame = Frame(header_frame, bg='white')
         center_frame.pack(side=LEFT, expand=True, fill=BOTH, padx=20)
 
-        # Hexagram number
-        Label(center_frame, text=f"{self.hexagram.number}.",
-              font=('Arial', 24, 'bold'), bg='white').pack(anchor='w')
+        # Line 1: Hexagram number and Wade-Giles romanization on same line
+        line1_frame = Frame(center_frame, bg='white')
+        line1_frame.pack(anchor='w')
 
-        # Wade-Giles romanization
+        Label(line1_frame, text=f"{self.hexagram.number}.",
+              font=('Arial', 24, 'bold'), bg='white').pack(side=LEFT)
+
         wade_giles = self.metadata.get('wade_giles', self.hexagram.name)
-        Label(center_frame, text=wade_giles,
-              font=('Arial', 18), bg='white', fg='#666').pack(anchor='w')
+        Label(line1_frame, text=f"  {wade_giles}",
+              font=('Arial', 20), bg='white', fg='#666').pack(side=LEFT)
 
-        # English name
+        # Line 2: English name below
         Label(center_frame, text=self.hexagram.english_name,
-              font=('Arial', 16), bg='white').pack(anchor='w')
+              font=('Arial', 16), bg='white').pack(anchor='w', pady=(5, 0))
 
         # Right: SVG hexagram (if available)
         self._add_svg_diagram(header_frame)

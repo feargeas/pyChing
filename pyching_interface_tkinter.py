@@ -870,10 +870,10 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         # but disabled/invisible when not in use
         self.frameInfoButtons = Frame(self.frameCast, bg=self.colors.bgReading)
         self.buttonViewHex1Info = Button(self.frameInfoButtons, text='', underline=0,
-                        width=30, bg=None, fg=None, font=self.fonts.button, highlightthickness=0,
+                        bg=None, fg=None, font=self.fonts.button, highlightthickness=0,
                         takefocus=False, state='disabled', command=self.ViewHex1Info)
         self.buttonViewHex2Info = Button(self.frameInfoButtons, text='', underline=1,
-                        width=30, bg=None, fg=None, font=self.fonts.button, highlightthickness=0,
+                        bg=None, fg=None, font=self.fonts.button, highlightthickness=0,
                         takefocus=False, state='disabled', command=self.ViewHex2Info)
 
         # Grid them immediately so they're always part of layout (ensures correct minsize)
