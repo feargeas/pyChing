@@ -59,6 +59,7 @@ class TextEditorWindow(Toplevel):
         super().__init__(parent)
         self.title(title)
         self.file_path = file_path
+        self.is_modified = False  # Track if text has been modified
 
         # Set window size and make it prominent
         self.geometry(f"{width}x{height}")
@@ -80,6 +81,9 @@ class TextEditorWindow(Toplevel):
         # Load existing content
         self._load_content()
 
+        # Bind text modification event
+        self.text_widget.bind('<<Modified>>', self._on_text_modified)
+
         # Button frame
         button_frame = Frame(main_frame, bg='lightgray', relief=RAISED, borderwidth=2)
         button_frame.pack(fill=X, pady=(10, 0))
@@ -88,18 +92,19 @@ class TextEditorWindow(Toplevel):
         inner_frame = Frame(button_frame, bg='lightgray')
         inner_frame.pack(fill=X, padx=5, pady=5)
 
-        # Save button (prominent)
-        Button(inner_frame, text='Save', command=self._save_content,
-               width=12, bg='#4CAF50', fg='white', font=('TkDefaultFont', 10, 'bold'),
-               relief=RAISED, borderwidth=2).pack(side=LEFT, padx=(0, 5))
+        # Save button (starts unhighlighted)
+        self.save_button = Button(inner_frame, text='Save', command=self._save_content,
+                                  width=12, relief=RAISED)
+        self.save_button.pack(side=LEFT, padx=(0, 5))
 
         # Close button
         Button(inner_frame, text='Close', command=self.destroy,
                width=12, relief=RAISED).pack(side=LEFT)
 
-        # Info label
-        Label(inner_frame, text="Remember to click Save!",
-              font=('TkDefaultFont', 10, 'bold'), fg='#D32F2F', bg='lightgray').pack(side=RIGHT, padx=10)
+        # Info label (changes based on modification state)
+        self.info_label = Label(inner_frame, text="",
+                               font=('TkDefaultFont', 10), bg='lightgray')
+        self.info_label.pack(side=RIGHT, padx=10)
 
     def _load_content(self):
         """Load file content into text widget."""
@@ -120,6 +125,36 @@ class TextEditorWindow(Toplevel):
             help_text += "The same seed + question will always produce the same hexagram.\n"
             self.text_widget.insert('1.0', help_text)
 
+        # Reset modified flag after loading
+        self.text_widget.edit_modified(False)
+        self.is_modified = False
+
+    def _on_text_modified(self, event=None):
+        """Called when text is modified."""
+        if self.text_widget.edit_modified():
+            if not self.is_modified:
+                self.is_modified = True
+                self._highlight_save_button()
+            # Reset the modified flag (required for Tkinter)
+            self.text_widget.edit_modified(False)
+
+    def _highlight_save_button(self):
+        """Make save button prominent when text is modified."""
+        self.save_button.config(bg='#4CAF50', fg='white',
+                               font=('TkDefaultFont', 10, 'bold'),
+                               borderwidth=2)
+        self.info_label.config(text="Remember to click Save!",
+                              font=('TkDefaultFont', 10, 'bold'),
+                              fg='#D32F2F')
+
+    def _unhighlight_save_button(self):
+        """Return save button to normal state after saving."""
+        self.save_button.config(bg='SystemButtonFace', fg='black',
+                               font=('TkDefaultFont', 10),
+                               borderwidth=1)
+        self.info_label.config(text="Saved", fg='#4CAF50',
+                              font=('TkDefaultFont', 10))
+
     def _save_content(self):
         """Save text widget content to file."""
         try:
@@ -131,7 +166,10 @@ class TextEditorWindow(Toplevel):
             with open(self.file_path, 'w', encoding='utf-8') as f:
                 f.write(content)
 
-            tkMessageBox.showinfo("Saved", f"File saved successfully:\n{self.file_path}")
+            # Reset modified state and unhighlight button
+            self.is_modified = False
+            self._unhighlight_save_button()
+
         except Exception as e:
             tkMessageBox.showerror("Save Error",
                                   f"Could not save file:\n\n{str(e)}")
