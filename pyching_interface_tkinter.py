@@ -872,7 +872,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
 
         # Grid them immediately so they're always part of layout (ensures correct minsize)
         self.buttonViewHex1Info.grid(column=0, row=0, pady=15)
-        self.frameInfoButtons.grid(column=1, row=0, columnspan=3, sticky='nw', pady=5)
+        self.frameInfoButtons.grid(column=0, row=2, columnspan=4, sticky='nw', pady=10, padx=20)
                 
     def ShowInfoButtons(self):
         """Show and enable info buttons by setting text, state, and making frame visible"""
@@ -882,7 +882,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         textStub = 'View information on:  '
 
         # Ensure frame is visible (in case it was hidden)
-        self.frameInfoButtons.grid(column=1, row=0, columnspan=3, sticky='nw', pady=5)
+        self.frameInfoButtons.grid(column=0, row=2, columnspan=4, sticky='nw', pady=10, padx=20)
 
         # Always update hex1 button (always visible when there's a reading)
         self.buttonViewHex1Info.configure(
