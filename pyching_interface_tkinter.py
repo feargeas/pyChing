@@ -649,6 +649,15 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             # For Earth method: use seed field if provided, otherwise use question
             if method == Element.EARTH:
                 seed = self.seedVar.get() if self.seedVar.get() else questionDialog.result
+                # Save seed to earth.txt for next time
+                try:
+                    earth_file = pyching.configPath / 'earth.txt'
+                    if not pyching.configPath.exists():
+                        pyching.configPath.mkdir(parents=True, exist_ok=True)
+                    with open(earth_file, 'w') as f:
+                        f.write(seed)
+                except Exception:
+                    pass  # Non-critical if save fails
             else:
                 seed = None
 
@@ -756,7 +765,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         )
 
         # Display hexagram 1 lines
-        for i, line_value in enumerate(self.reading.line_values):
+        for i, line_value in enumerate(self.reading.primary.lines):
             if self.showPlaces.get():
                 self.labelsHexPlaces[i].configure(fg=self.colors.fgLabelPlaces)
             self.hexLines[0][i].Draw(line_value)
@@ -768,9 +777,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 text=f"{self.reading.relating.number}.  {self.reading.relating.english_name}"
             )
 
-            # Transform and display hex2 lines
-            hex2_lines = [Hexagram.transform_line(lv) for lv in self.reading.line_values]
-            for i, line_value in enumerate(hex2_lines):
+            # Display hex2 lines (already transformed in relating hexagram)
+            for i, line_value in enumerate(self.reading.relating.lines):
                 self.hexLines[1][i].Draw(line_value)
         else:
             # Show "no moving lines" message
@@ -911,6 +919,29 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         """Show/hide seed input when Earth method is selected."""
         method = self.methodVar.get()
         if method == 'earth':
+            # Load default seed from earth.txt if it exists
+            earth_file = pyching.configPath / 'earth.txt'
+            if earth_file.exists():
+                try:
+                    with open(earth_file, 'r') as f:
+                        default_seed = f.read().strip()
+                        if default_seed and not self.seedVar.get():
+                            self.seedVar.set(default_seed)
+                except Exception:
+                    pass  # If error reading, just leave blank
+            else:
+                # Create earth.txt with current timestamp as default
+                try:
+                    if not pyching.configPath.exists():
+                        pyching.configPath.mkdir(parents=True, exist_ok=True)
+                    default_seed = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    with open(earth_file, 'w') as f:
+                        f.write(default_seed)
+                    if not self.seedVar.get():
+                        self.seedVar.set(default_seed)
+                except Exception:
+                    pass  # If error creating, just leave blank
+
             self.frameSeed.grid(row=1,column=0,columnspan=5,sticky=W,pady=5)
         else:
             self.frameSeed.grid_forget()
@@ -928,11 +959,13 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
 
         # Get the hexagram data
         source = self.sourceVar.get()
-        hex_data = Hexagram.from_number(hex_number, source=source)
 
-        # Convert binary to line values (initially all stable)
+        # Convert hexagram number to line values (initially all stable)
+        # Get base hexagram to know the binary pattern
+        base_hex = Hexagram.from_number(hex_number, source=source)
+
         line_values = []
-        for i, bit in enumerate(hex_data.binary):
+        for i, bit in enumerate(base_hex.binary):
             if bit == '1':
                 # Yang line - check if it's moving
                 if (i + 1) in moving_lines:
@@ -945,6 +978,9 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                     line_values.append(6)  # Old yin (moving)
                 else:
                     line_values.append(8)  # Young yin (stable)
+
+        # Create primary hexagram with line values
+        hex_data = Hexagram.from_number(hex_number, source=source, lines=line_values)
 
         # Calculate relating hexagram if there are moving lines
         relating_hex = None
@@ -969,7 +1005,6 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             method='manual',
             source_id=source,
             changing_lines=moving_lines,
-            line_values=line_values,
             oracle_values=[]
         )
 
@@ -1248,7 +1283,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         textData += f"Source: {self.reading.source_id}\n\n"
         textData += f"Hexagram {self.reading.primary.number}: {self.reading.primary.english_name}\n"
         textData += "-" * 60 + "\n"
-        textData += f"Line values: {self.reading.line_values}\n"
+        textData += f"Line values: {self.reading.primary.lines}\n"
         if self.reading.relating:
             textData += f"\nChanging to Hexagram {self.reading.relating.number}: {self.reading.relating.english_name}\n"
             textData += f"Moving lines: {self.reading.changing_lines}\n"
