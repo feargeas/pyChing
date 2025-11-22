@@ -55,6 +55,9 @@ import pyching_themes
 from pyching import HexagramEngine, Element, Reading, Hexagram
 from pyching.data import HexagramResolver
 
+# Enhanced GUI windows
+from gui_windows import HexagramInfoWindow, TextEditorWindow
+
 #smg library module imports
 from smgDialog import smgDialog
 from smgHtmlView import smgHtmlView
@@ -845,6 +848,12 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.seedEntry.pack(side='left', padx=5)
         Label(self.frameSeed, text='(defaults to question)', bg=self.colors.bgReading,
               fg=self.colors.fgLabelLines, font=('TkDefaultFont', 9)).pack(side='left', padx=5)
+
+        # "View earth text" button (initially hidden, shows with Earth method)
+        self.buttonViewEarthText = Button(self.frameSeed, text='View earth text',
+                                          bg=None, fg=None, font=self.fonts.button,
+                                          command=self.ViewEarthText)
+        self.buttonViewEarthText.pack(side='left', padx=10)
         # Initially hidden - will show when Earth method selected
 
         # Cast button
@@ -1016,26 +1025,28 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         """Legacy method - redirects to DisplayReading()"""
         self.DisplayReading()
 
+    def ViewEarthText(self):
+        """Open earth.txt in an editable window."""
+        earth_file = pyching.configPath / 'earth.txt'
+        window = TextEditorWindow(self.master, "Earth Method Seed - Edit Text", earth_file)
+
     def ViewHex1Info(self):
-        """View hexagram 1 information."""
+        """View hexagram 1 information with Chinese character, SVG, and changing lines."""
         if not hasattr(self, 'reading') or not self.reading:
             return
-        # For now, just show a simple message - could be enhanced to show full hexagram data
-        title = f"Hexagram {self.reading.primary.number}: {self.reading.primary.english_name}"
-        message = f"Hexagram {self.reading.primary.number}\n{self.reading.primary.english_name}\n\n"
-        message += f"Judgment: {self.reading.primary.judgment}\n\n"
-        message += f"Image: {self.reading.primary.image}\n"
-        tkMessageBox.showinfo(title=title, message=message)
+
+        # Open sophisticated info window with changing lines
+        window = HexagramInfoWindow(self.master, self.reading.primary,
+                                    changing_lines=self.reading.changing_lines)
 
     def ViewHex2Info(self):
         """View hexagram 2 (relating) information."""
         if not hasattr(self, 'reading') or not self.reading or not self.reading.relating:
             return
-        title = f"Hexagram {self.reading.relating.number}: {self.reading.relating.english_name}"
-        message = f"Hexagram {self.reading.relating.number}\n{self.reading.relating.english_name}\n\n"
-        message += f"Judgment: {self.reading.relating.judgment}\n\n"
-        message += f"Image: {self.reading.relating.image}\n"
-        tkMessageBox.showinfo(title=title, message=message)
+
+        # For hex2, no changing lines (they've already transformed)
+        window = HexagramInfoWindow(self.master, self.reading.relating,
+                                    changing_lines=[])
 
     def MakeHexDisplay(self, parent):
         self.frameHexes = Frame(parent, bg=self.colors.bgReading)
