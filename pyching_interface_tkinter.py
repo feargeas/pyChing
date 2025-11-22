@@ -2170,8 +2170,39 @@ class DialogCompareSources(Toplevel):
         # Set window size
         self.geometry('900x600')
 
-#create an instance of the app details for use throughout this module
-pyching = pyching_engine.PychingAppDetails()
+# Application details (replacing old pyching_engine.PychingAppDetails)
+class AppDetails:
+    """Simple application details class"""
+    def __init__(self):
+        self.title = 'pyChing'
+        self.version = '2.0.0-devnew'
+        self.execPath = Path(__file__).parent
+        self.osType = os.name  # 'posix' or 'nt'
+
+        # Config paths
+        home = Path.home()
+        if self.osType == 'nt':  # Windows
+            self.configPath = home / 'AppData' / 'Local' / 'pyChing'
+        else:  # Unix/Linux/Mac
+            self.configPath = home / '.pyching'
+
+        self.configFile = self.configPath / 'config.json'
+        self.savePath = self.configPath / 'readings'
+
+        # Create save path if it doesn't exist
+        if not self.savePath.exists():
+            self.savePath.mkdir(parents=True, exist_ok=True)
+
+        # Contact info
+        self.emailAddress = 'feargeas@gmail.com'
+        self.webAddress = 'https://github.com/feargeas/pyChing'
+
+        # Legacy attributes (may not be needed)
+        self.saveFileExt = '.json'
+        self.saveFileID = ('pyChing', '2.0')
+
+# Create an instance of the app details for use throughout this module
+pyching = AppDetails()
 
 # Main execution
 if __name__ == '__main__':
@@ -2204,9 +2235,6 @@ Examples:
         print("[pyChing] Verbose mode enabled")
         print("[pyChing] Starting pyChing I Ching Oracle...")
 
-    # Create an instance of the app details for use throughout this module
-    pyching = pyching_engine.PychingAppDetails()
-
     vprint(f"Application path: {pyching.execPath}")
     vprint(f"Config path: {pyching.configPath}")
     vprint(f"Config file: {pyching.configFile}")
@@ -2218,6 +2246,3 @@ Examples:
     vprint("Entering main event loop...")
     windowRoot.mainloop()
     vprint("Application exited")
-else:
-    # Module imported, not run directly - initialize pyching for imports
-    pyching = pyching_engine.PychingAppDetails()
