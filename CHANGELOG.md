@@ -9,11 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - devnew branch
 
+### Philosophy Established
+- **PancakeBunny voice** - Documentation now in PB's authentic voice
+- **Organic growth** - Growing from seed of v1.2.2, not rushed
+- **Guiding principles** - Cultural Reverence, Honor the Craft, Universal Access
+- **British spelling** - Proper en_GB throughout (humour, organised)
+
 ### Major Refactoring
 - Created clean `devnew` branch from dev
-- Removed all legacy Python 2 code
+- Removed all legacy Python 2 code (21,601 lines)
 - Removed historical planning documentation (PHASE*.md, etc.)
 - Established clear modern codebase without conflicts
+- Harmonised aims (project_notes.txt) with objectives (TODO.md)
 
 ### Removed
 - `pyching.py` - Old entry point (replaced by pyching_cli.py)
@@ -26,18 +33,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Entry point now `pyching_cli:main` in pyproject.toml
-- Tests reorganized: modern tests in tests/, GUI tests in tests/gui/
+- Tests reorganised: modern tests in tests/, GUI tests in tests/gui/
 - .gitignore updated for Emacs backup files
+- README.md rewritten in PancakeBunny voice
+- TODO.md updated to reflect organic growth philosophy and current phase status
+- Documentation organised in docs/ directory
 
 ### Added
 - requirements.txt for runtime dependencies
 - pytest and pytest-cov as dev dependencies
 - Optional `air` extras for Air method (requests library)
-- Fresh README.md, TODO.md, CHANGELOG.md
+- docs/ABOUT.md - PancakeBunny philosophy and guiding principles
+- docs/README.md - Documentation index
+- CHANGELOG.md (this file)
+- TODO.md with harmonised objectives
 
 ### Known Issues
 - GUI (pyching_interface_tkinter.py) needs updating to use modern engine
-- Only one translation source available (Legge 1882)
+- Only one translation source available (Legge 1882 - more available but deliberately held back)
+
+### Current Phase Status
+- Phase 1 (Foundation & Preservation): ✅ Complete
+- Phase 2 (Code Modernization): 🔄 ~95% complete (GUI update remaining)
+- Phase 3 (Enhanced Features): 🌱 Ready to begin
 
 ---
 

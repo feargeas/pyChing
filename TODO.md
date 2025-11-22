@@ -5,6 +5,10 @@
 This is a **clean slate** branch created from dev, with all legacy code removed.
 Only modern `pyching/` package code remains.
 
+**Context:** This TODO tracks current objectives. For overall aims and vision, see `project_notes.txt`.
+
+**Philosophy:** Growing pyChing organically from the seed of v1.2.2 - steady, thoughtful growth.
+
 ---
 
 ## High Priority
@@ -38,22 +42,27 @@ Only modern `pyching/` package code remains.
 
 ## Medium Priority
 
-### 2. Extract Additional Translation Sources
+### 2. Integrate Additional Translation Sources (When Ready)
 
-**Status:** Infrastructure complete, actual text extraction pending
+**Status:** Infrastructure complete and ready. Sources available but deliberately held back.
 
-**Target sources:**
-1. **Wilhelm/Baynes** (1950) - Most requested, influential Western translation
-2. **Simplified Legge** (TwoDreams, 2020) - Modern language
-3. **DeKorne's Gnostic Book of Changes** - Alternative interpretation
-4. **Hermetica I Ching** - Hermetic perspective
+**Philosophy:** Staying with Legge (1882) for now keeps things simple and provides solid basis.
+Additional sources will be integrated when GUI is stable and system is proven.
 
-**What's needed:**
-- Web scraping / PDF extraction scripts
-- Manual verification of extracted text
-- Update JSON hexagram files with new source data
+**What we have:**
+- Multi-source JSON structure already implemented
+- HexagramResolver can handle multiple translations
+- Source comparison functionality built-in
+- Various sources ready in different formats (PDF, text, web scrapes, .doc files)
 
-**Estimated effort:** 8-12 hours per source (Wilhelm first priority)
+**What's needed when time comes:**
+- Convert source materials to JSON format (regardless of input format)
+- Integrate into `data/hexagrams/*.json` structure (add to "sources" key)
+- Update `data/sources_metadata.json` with new source info
+- Verify all 64 hexagrams present and complete
+- Test with both CLI and GUI
+
+**Estimated effort:** 4-8 hours per source (infrastructure already built)
 
 ---
 
@@ -120,11 +129,58 @@ Once GUI is updated and objectives are clarified:
 
 ---
 
+## Eventually / Future Vision
+
+See `project_notes.txt` for long-term aspirational goals (Phases 4-5):
+
+**Phase 4: Universal Access**
+- Internationalization (multiple languages)
+- Accessibility features (WCAG compliance, screen readers, keyboard navigation)
+- Alternative interfaces (web interface, TUI with Rich/Textual)
+- RTL language support
+
+**Phase 5: Distribution & Community**
+- Distribution (Docker, PyPI, Flatpak, Homebrew, Windows installer)
+- Documentation website (Sphinx, ReadTheDocs)
+- Community building (code of conduct, contributor guidelines)
+- Scholar consultation and collaboration
+
+These remain on the horizon. The plant grows from strong roots.
+
+---
+
+## Current Phase Status
+
+We are completing **Phase 2** (Code Modernization) and beginning **Phase 3** (Enhanced Features):
+
+- ✅ **Phase 1: Foundation & Preservation** - Complete
+  - Python 2 → 3 migration done
+  - Tests comprehensive
+  - Oracle authenticity preserved
+
+- 🔄 **Phase 2: Code Modernization** - ~95% complete
+  - Type hints ✅
+  - Dataclasses ✅
+  - Modern patterns (pathlib, f-strings, context managers) ✅
+  - JSON data structure ✅
+  - Package structure ✅
+  - Five Elements casting methods ✅
+  - Modern CLI ✅
+  - GUI update remaining ⏳
+
+- 🌱 **Phase 3: Enhanced Features** - Ready to begin
+  - Multiple translation sources (infrastructure ready, sources available)
+  - Reading journal (planned)
+  - Yarrow stalk method (planned)
+  - Educational content (future)
+
+---
+
 ## Notes
 
-- All legacy code has been removed from devnew
-- Focus is on completing GUI update first
-- Then extract additional translation sources
-- Then package and distribute
+- All legacy code removed from devnew - clean foundation
+- Growing organically: GUI first, then sources, then enhancements
+- Infrastructure built to adapt to different input formats
+- Staying simple with Legge until system proven stable
 
-**Philosophy:** Working modern codebase with clear direction, even if some features temporarily broken.
+**Philosophy:** Working modern codebase with clear direction. Plant grows from strong roots, not rushed.
