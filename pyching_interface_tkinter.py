@@ -649,18 +649,25 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             method = Element(self.methodVar.get())
             source = self.sourceVar.get()
 
-            # For Earth method: use seed field if provided, otherwise use question
+            # For Earth method: use earth.txt content as seed (the "soil")
             if method == Element.EARTH:
-                seed = self.seedVar.get() if self.seedVar.get() else questionDialog.result
-                # Save seed to earth.txt for next time
-                try:
-                    earth_file = pyching.configPath / 'earth.txt'
-                    if not pyching.configPath.exists():
-                        pyching.configPath.mkdir(parents=True, exist_ok=True)
-                    with open(earth_file, 'w') as f:
-                        f.write(seed)
-                except Exception:
-                    pass  # Non-critical if save fails
+                earth_file = pyching.configPath / 'earth.txt'
+                if earth_file.exists():
+                    try:
+                        with open(earth_file, 'r', encoding='utf-8') as f:
+                            seed = f.read().strip()
+                    except Exception:
+                        seed = questionDialog.result  # Fallback to question
+                else:
+                    # Create default earth.txt if it doesn't exist
+                    try:
+                        if not pyching.configPath.exists():
+                            pyching.configPath.mkdir(parents=True, exist_ok=True)
+                        seed = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                        with open(earth_file, 'w', encoding='utf-8') as f:
+                            f.write(seed)
+                    except Exception:
+                        seed = questionDialog.result  # Fallback to question
             else:
                 seed = None
 
@@ -839,22 +846,12 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                                    command=self.ManualInput)
         self.buttonManual.grid(row=0, column=4, sticky='w', padx=10)
 
-        # Seed input for Earth method (initially hidden)
-        self.frameSeed = Frame(self.frameControls, bg=self.colors.bgReading)
-        Label(self.frameSeed, text='Seed (optional):', bg=self.colors.bgReading,
-              fg=self.colors.fgLabelLines, font=self.fonts.label).pack(side='left', padx=5)
-        self.seedVar = StringVar()
-        self.seedEntry = Entry(self.frameSeed, textvariable=self.seedVar, width=20, font=self.fonts.label)
-        self.seedEntry.pack(side='left', padx=5)
-        Label(self.frameSeed, text='(defaults to question)', bg=self.colors.bgReading,
-              fg=self.colors.fgLabelLines, font=('TkDefaultFont', 9)).pack(side='left', padx=5)
-
-        # "View earth text" button (initially hidden, shows with Earth method)
-        self.buttonViewEarthText = Button(self.frameSeed, text='View earth text',
-                                          bg=None, fg=None, font=self.fonts.button,
+        # "View earth text" button (initially hidden, shows when Earth method selected)
+        self.buttonViewEarthText = Button(self.frameControls, text='View earth text',
+                                          width=15, bg=None, fg=None, font=self.fonts.button,
+                                          highlightthickness=0, takefocus=False,
                                           command=self.ViewEarthText)
-        self.buttonViewEarthText.pack(side='left', padx=10)
-        # Initially hidden - will show when Earth method selected
+        # Initially hidden - will be grid()'ed when Earth method is selected
 
         # Cast button
         self.buttonCast = Button(self.frameCast, text='Cast New Hexagram', underline=0,
@@ -925,35 +922,14 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.frameInfoButtons.grid_remove()
 
     def OnMethodChange(self, *args):
-        """Show/hide seed input when Earth method is selected."""
+        """Show/hide 'View earth text' button when Earth method is selected."""
         method = self.methodVar.get()
         if method == 'earth':
-            # Load default seed from earth.txt if it exists
-            earth_file = pyching.configPath / 'earth.txt'
-            if earth_file.exists():
-                try:
-                    with open(earth_file, 'r') as f:
-                        default_seed = f.read().strip()
-                        if default_seed and not self.seedVar.get():
-                            self.seedVar.set(default_seed)
-                except Exception:
-                    pass  # If error reading, just leave blank
-            else:
-                # Create earth.txt with current timestamp as default
-                try:
-                    if not pyching.configPath.exists():
-                        pyching.configPath.mkdir(parents=True, exist_ok=True)
-                    default_seed = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                    with open(earth_file, 'w') as f:
-                        f.write(default_seed)
-                    if not self.seedVar.get():
-                        self.seedVar.set(default_seed)
-                except Exception:
-                    pass  # If error creating, just leave blank
-
-            self.frameSeed.grid(row=1,column=0,columnspan=5,sticky=W,pady=5)
+            # Show the "View earth text" button
+            self.buttonViewEarthText.grid(row=1, column=0, columnspan=5, sticky='w', padx=20, pady=5)
         else:
-            self.frameSeed.grid_forget()
+            # Hide the button
+            self.buttonViewEarthText.grid_forget()
 
     def ManualInput(self):
         """Allow manual input of hexagram number and moving lines."""

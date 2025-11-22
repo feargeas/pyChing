@@ -45,7 +45,7 @@ class TextEditorWindow(Toplevel):
     - Save button
     """
 
-    def __init__(self, parent, title: str, file_path: Path, width: int = 600, height: int = 400):
+    def __init__(self, parent, title: str, file_path: Path, width: int = 700, height: int = 500):
         """
         Initialize text editor window.
 
@@ -60,8 +60,9 @@ class TextEditorWindow(Toplevel):
         self.title(title)
         self.file_path = file_path
 
-        # Set window size
+        # Set window size and make it prominent
         self.geometry(f"{width}x{height}")
+        self.minsize(500, 400)  # Ensure buttons are always visible
 
         # Create main frame
         main_frame = Frame(self)
@@ -80,20 +81,25 @@ class TextEditorWindow(Toplevel):
         self._load_content()
 
         # Button frame
-        button_frame = Frame(main_frame)
-        button_frame.pack(fill=X)
+        button_frame = Frame(main_frame, bg='lightgray', relief=RAISED, borderwidth=2)
+        button_frame.pack(fill=X, pady=(10, 0))
 
-        # Save button
-        Button(button_frame, text='Save', command=self._save_content,
-               width=10).pack(side=LEFT, padx=(0, 5))
+        # Inner frame for buttons
+        inner_frame = Frame(button_frame, bg='lightgray')
+        inner_frame.pack(fill=X, padx=5, pady=5)
+
+        # Save button (prominent)
+        Button(inner_frame, text='Save', command=self._save_content,
+               width=12, bg='#4CAF50', fg='white', font=('TkDefaultFont', 10, 'bold'),
+               relief=RAISED, borderwidth=2).pack(side=LEFT, padx=(0, 5))
 
         # Close button
-        Button(button_frame, text='Close', command=self.destroy,
-               width=10).pack(side=LEFT)
+        Button(inner_frame, text='Close', command=self.destroy,
+               width=12, relief=RAISED).pack(side=LEFT)
 
         # Info label
-        Label(button_frame, text="(Changes saved automatically when you click Save)",
-              font=('TkDefaultFont', 9), fg='gray').pack(side=RIGHT)
+        Label(inner_frame, text="Remember to click Save!",
+              font=('TkDefaultFont', 10, 'bold'), fg='#D32F2F', bg='lightgray').pack(side=RIGHT, padx=10)
 
     def _load_content(self):
         """Load file content into text widget."""
