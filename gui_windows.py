@@ -289,23 +289,39 @@ class HexagramInfoWindow(Toplevel):
             return
 
         self.text_widget.insert(END, "Changing Lines\n", 'heading')
-        self.text_widget.insert(END,
-                              f"The following lines are changing (moving): {', '.join(map(str, self.changing_lines))}\n\n",
-                              'body')
 
         # Get line texts from hexagram data
         line_texts = self.hexagram.line_texts
+
+        # Position name mapping
+        position_map = {
+            'bottom': 'bottom',
+            'second': 'second',
+            'third': 'third',
+            'fourth': 'fourth',
+            'fifth': 'fifth',
+            'topmost': 'topmost'
+        }
+
+        # Type name mapping (nine/six)
+        type_map = {
+            'nine': 'nine',
+            'six': 'six'
+        }
 
         for line_pos in sorted(self.changing_lines):
             line_key = str(line_pos)
             if line_key in line_texts:
                 line_data = line_texts[line_key]
-                position_name = line_data.get('position', f'Line {line_pos}')
-                line_type = line_data.get('type', '').capitalize()
+                position_name = line_data.get('position', f'line {line_pos}')
+                line_type = line_data.get('type', 'nine').lower()
                 line_text = line_data.get('text', '[No text available]')
 
-                # Heading
-                heading = f"{position_name.capitalize()} ({line_type})\n"
+                # Format: "the bottom line, as nine" instead of "Bottom (Nine)"
+                position_lower = position_map.get(position_name.lower(), position_name.lower())
+                type_lower = type_map.get(line_type, line_type)
+                heading = f"The {position_lower} line, as {type_lower}\n"
+
                 self.text_widget.insert(END, heading, 'changing_line')
 
                 # Text
