@@ -23,7 +23,7 @@ from pyching.casting import (
     WoodMethod,
     FireMethod,
     EarthMethod,
-    AirMethod,
+    WaterMethod,
     get_registry
 )
 
@@ -190,22 +190,22 @@ class TestEarthMethod:
         assert line in [6, 7, 8, 9]
 
 
-class TestAirMethod:
-    """Test Air element method (RANDOM.ORG)."""
+class TestWaterMethod:
+    """Test Water element method (RANDOM.ORG)."""
 
     def test_element(self):
-        """Air method has correct element."""
-        method = AirMethod()
-        assert method.element == Element.AIR
+        """Water method has correct element."""
+        method = WaterMethod()
+        assert method.element == Element.WATER
 
     def test_requires_network(self):
-        """Air method requires network."""
-        method = AirMethod()
+        """Water method requires network."""
+        method = WaterMethod()
         assert method.requires_network
 
     def test_availability_check(self):
-        """Air method checks availability."""
-        method = AirMethod()
+        """Water method checks availability."""
+        method = WaterMethod()
         available, error = method.is_available()
 
         # Should return a boolean and optional error
@@ -217,8 +217,8 @@ class TestAirMethod:
 
     @pytest.mark.skip(reason="Requires network - run manually")
     def test_cast_line_with_network(self):
-        """Air method can cast lines (requires network)."""
-        method = AirMethod()
+        """Water method can cast lines (requires network)."""
+        method = WaterMethod()
 
         available, error = method.is_available()
         if not available:
@@ -244,7 +244,7 @@ class TestCastingMethodRegistry:
         assert Element.WOOD in elements
         assert Element.FIRE in elements
         assert Element.EARTH in elements
-        assert Element.AIR in elements
+        assert Element.WATER in elements
 
     def test_get_by_element(self):
         """Can retrieve methods by element."""

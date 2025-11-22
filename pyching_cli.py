@@ -76,7 +76,7 @@ def get_method_choice(engine: HexagramEngine) -> Optional[Element]:
     print("  2. Metal - OS Entropy (highest quality local randomness)")
     print("  3. Fire  - Cryptographic CSPRNG (unpredictable)")
     print("  4. Earth - Deterministic (same question = same answer)")
-    print("  5. Air   - True RNG via RANDOM.ORG (requires network)")
+    print("  5. Water - True RNG via RANDOM.ORG (requires network)")
     print()
 
     while True:
@@ -93,11 +93,11 @@ def get_method_choice(engine: HexagramEngine) -> Optional[Element]:
                 return Element.EARTH
             elif choice == '5':
                 # Check availability
-                available, error = engine.check_method_available(Element.AIR)
+                available, error = engine.check_method_available(Element.WATER)
                 if available:
-                    return Element.AIR
+                    return Element.WATER
                 else:
-                    print(f"\n⚠ Air method unavailable: {error}")
+                    print(f"\n⚠ Water method unavailable: {error}")
                     print("Suggestion: Use Fire method for high-quality randomness")
                     print("Please choose another method.\n")
                     continue
@@ -359,7 +359,7 @@ def parse_args() -> argparse.Namespace:
 
     parser.add_argument(
         '--method', '-m',
-        choices=['wood', 'metal', 'fire', 'earth', 'air'],
+        choices=['wood', 'metal', 'fire', 'earth', 'water'],
         default='wood',
         help="Casting method (default: wood - original algorithm)"
     )

@@ -13,7 +13,7 @@ pyChing cast hexagrams! Use coin method (3 coins, 6 times) like traditional I Ch
 - 🪙 **Metal** - Operating system entropy (os.urandom)
 - 🔥 **Fire** - Cryptographic secrets module
 - 🌍 **Earth** - Deterministic (same question = same answer always!)
-- 💨 **Air** - True random from RANDOM.ORG API (need internet)
+- 💧 **Water** - True random from RANDOM.ORG API (need internet)
 
 **Other Nice Things:**
 - Save readings as JSON (portable, safe!)
@@ -28,7 +28,7 @@ pyChing cast hexagrams! Use coin method (3 coins, 6 times) like traditional I Ch
 git clone https://github.com/feargeas/pyChing.git
 cd pyChing
 
-# Install Air method dependency (optional)
+# Install Water method dependency (optional)
 pip install -r requirements.txt
 
 # Or install for developing
@@ -109,7 +109,7 @@ tests/                  # Test suite (pytest!)
 ## Requirements
 
 - Python 3.10+ (modern Python! nice!)
-- `requests` library (optional, only for Air method)
+- `requests` library (optional, only for Water method)
 
 ## Testing
 
@@ -185,7 +185,7 @@ Free software! Share! Modify! But must stay free!
 
 - **Stephen M. Gava** - Original pyChing author (thank you!)
 - **James Legge** - 1882 I Ching translation (canonical source)
-- **RANDOM.ORG** - True random number service (Air method)
+- **RANDOM.ORG** - True random number service (Water method)
 - **Oolong (rabbit)** - Original PancakeBunny inspiration (1999-2003, never forget)
 
 ## Cultural Note

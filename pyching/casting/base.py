@@ -17,7 +17,7 @@ class Element(Enum):
     Each element corresponds to a different casting method with
     distinct randomness characteristics.
     """
-    AIR = "air"      # 風/氣 - True RNG via RANDOM.ORG API
+    WATER = "water"  # 水 - True RNG via RANDOM.ORG API
     WOOD = "wood"    # 木 - Standard PRNG (Mersenne Twister)
     FIRE = "fire"    # 火 - Cryptographic CSPRNG
     EARTH = "earth"  # 土 - Seeded/Deterministic
@@ -76,7 +76,7 @@ class CastingMethod(ABC):
             int: Line value (6, 7, 8, or 9)
 
         Raises:
-            Exception: If casting fails (e.g., network error for Air method)
+            Exception: If casting fails (e.g., network error for Water method)
         """
         pass
 
@@ -97,7 +97,7 @@ class CastingMethod(ABC):
         Check if this casting method is currently available.
 
         For most methods this is always True. For methods requiring
-        external resources (like Air/RANDOM.ORG), this checks connectivity.
+        external resources (like Water/RANDOM.ORG), this checks connectivity.
 
         Returns:
             tuple[bool, Optional[str]]: (available, error_message)

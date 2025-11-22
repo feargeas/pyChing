@@ -55,14 +55,14 @@ def demo_all_five_elements():
         (Element.METAL, "OS Entropy (cryptographic quality)"),
         (Element.FIRE, "CSPRNG (secrets module)"),
         (Element.EARTH, "Deterministic (seeded)"),
-        (Element.AIR, "True RNG (RANDOM.ORG API)")
+        (Element.WATER, "True RNG (RANDOM.ORG API)")
     ]
 
     for element, description in methods:
         print(f"\n{element.value.upper()} Method - {description}")
         print("-" * 70)
 
-        # Check availability (important for Air method)
+        # Check availability (important for Water method)
         available, error = engine.check_method_available(element)
 
         if not available:

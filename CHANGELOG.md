@@ -42,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - requirements.txt for runtime dependencies
 - pytest and pytest-cov as dev dependencies
-- Optional `air` extras for Air method (requests library)
+- Optional water extras for Water method (requests library)
 - docs/ABOUT.md - PancakeBunny philosophy and guiding principles
 - docs/README.md - Documentation index
 - CHANGELOG.md (this file)
@@ -63,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added - Modern Architecture (Phases 1-4)
 - Modern `pyching/` package structure
-- Five element casting methods (Wood, Metal, Fire, Earth, Air)
+- Five element casting methods (Wood, Metal, Fire, Earth, Water)
 - JSON-based data storage (64 hexagram files)
 - HexagramEngine orchestration layer
 - Hexagram and Reading dataclasses

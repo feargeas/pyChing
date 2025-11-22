@@ -30,7 +30,7 @@ def test_engine_initialization():
     assert 'metal' in methods
     assert 'fire' in methods
     assert 'earth' in methods
-    # Note: air might not be available if no network
+    # Note: water might not be available if no network
     print(f"✓ Available methods: {methods}")
 
 
@@ -189,12 +189,12 @@ def test_check_method_available():
     assert available
     print(f"✓ Metal method available")
 
-    # Air method might not be available (network required)
-    available, error = engine.check_method_available(Element.AIR)
+    # Water method might not be available (network required)
+    available, error = engine.check_method_available(Element.WATER)
     if available:
-        print(f"✓ Air method available (network connected)")
+        print(f"✓ Water method available (network connected)")
     else:
-        print(f"✓ Air method unavailable: {error}")
+        print(f"✓ Water method unavailable: {error}")
 
 
 def test_oracle_values_preservation():

@@ -841,7 +841,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
               fg=self.colors.fgLabelLines, font=self.fonts.label).grid(row=0, column=0, sticky='w', padx=5)
         self.methodVar = StringVar(value='wood')
         self.methodMenu = OptionMenu(self.frameControls, self.methodVar,
-                                      'wood', 'metal', 'fire', 'earth', 'air',
+                                      'wood', 'metal', 'fire', 'earth', 'water',
                                       command=self.OnMethodChange)
         self.methodMenu.config(width=8, font=self.fonts.button)
         self.methodMenu.grid(row=0, column=1, sticky='w', padx=5)

@@ -10,7 +10,7 @@ from .metal import MetalMethod
 from .wood import WoodMethod
 from .fire import FireMethod
 from .earth import EarthMethod
-from .air import AirMethod
+from .water import WaterMethod
 
 
 class CastingMethodRegistry:
@@ -31,7 +31,7 @@ class CastingMethodRegistry:
         self.register(WoodMethod())
         self.register(FireMethod())
         self.register(EarthMethod())  # Without seed initially
-        self.register(AirMethod())
+        self.register(WaterMethod())
 
     def register(self, method: CastingMethod) -> None:
         """

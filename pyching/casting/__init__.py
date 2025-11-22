@@ -12,7 +12,7 @@ from .metal import MetalMethod
 from .wood import WoodMethod
 from .fire import FireMethod
 from .earth import EarthMethod
-from .air import AirMethod
+from .water import WaterMethod
 from .registry import CastingMethodRegistry, get_registry
 
 __all__ = [
@@ -22,7 +22,7 @@ __all__ = [
     'WoodMethod',
     'FireMethod',
     'EarthMethod',
-    'AirMethod',
+    'WaterMethod',
     'CastingMethodRegistry',
     'get_registry',
 ]

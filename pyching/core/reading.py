@@ -37,7 +37,7 @@ class Reading:
     """When the reading was cast"""
 
     method: str = "wood"
-    """Casting method used (element name: wood, metal, fire, earth, air)"""
+    """Casting method used (element name: wood, metal, fire, earth, water)"""
 
     source_id: str = "canonical"
     """Source used for interpretation"""

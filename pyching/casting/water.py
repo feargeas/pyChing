@@ -1,7 +1,7 @@
 """
-Air Element casting method - True RNG via RANDOM.ORG API.
+Water Element casting method - True RNG via RANDOM.ORG API.
 
-Element: Air (風/氣)
+Element: Water (水)
 Source: RANDOM.ORG - atmospheric noise-based true RNG
 Characteristics: True physical randomness, requires internet
 
@@ -28,7 +28,7 @@ from typing import Optional
 from .base import CastingMethod, Element
 
 
-class AirMethod(CastingMethod):
+class WaterMethod(CastingMethod):
     """
     True random number generation via RANDOM.ORG JSON-RPC API.
 
@@ -46,11 +46,11 @@ class AirMethod(CastingMethod):
 
     @property
     def element(self) -> Element:
-        return Element.AIR
+        return Element.WATER
 
     @property
     def name(self) -> str:
-        return "True RNG via RANDOM.ORG (Air Element 風/氣)"
+        return "True RNG via RANDOM.ORG (Water Element 水)"
 
     @property
     def description(self) -> str:
@@ -111,7 +111,7 @@ class AirMethod(CastingMethod):
             return (
                 False,
                 "RANDOM.ORG API key not configured.\n\n"
-                "To use the Air method:\n"
+                "To use the Water method:\n"
                 "1. Visit: https://api.random.org/dashboard\n"
                 "2. Create account and choose 'Developer' type\n"
                 "3. Generate API key in API Keys section\n"
@@ -147,7 +147,7 @@ class AirMethod(CastingMethod):
             import requests
         except ImportError:
             raise ImportError(
-                "requests library required for Air method. "
+                "requests library required for Water method. "
                 "Install with: pip install requests"
             )
 

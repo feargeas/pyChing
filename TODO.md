@@ -23,7 +23,7 @@ Only modern `pyching/` package code remains.
 - Remove all old `pyching_engine` imports (will break initially - that's OK)
 - Use `from pyching import HexagramEngine, Element, Reading, Hexagram`
 - Add UI elements for:
-  - Method selection (Wood/Metal/Fire/Earth/Air dropdown)
+  - Method selection (Wood/Metal/Fire/Earth/Water dropdown)
   - Source selection (when multi-source available)
   - Seed input (for Earth method)
 - Update casting logic to use `HexagramEngine.cast_reading()`
@@ -103,7 +103,7 @@ Additional sources will be integrated when GUI is stable and system is proven.
 ### Missing test coverage:
 - GUI functionality (manual testing needed after update)
 - CLI argument parsing edge cases
-- Error handling for network failures (Air method)
+- Error handling for network failures (Water method)
 - Large-scale data integrity checks
 
 ---

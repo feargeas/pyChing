@@ -35,14 +35,14 @@ class HexagramEngine:
         if registry is None:
             # Create default registry with all five element methods
             from pyching.casting import (WoodMethod, MetalMethod, FireMethod,
-                                        EarthMethod, AirMethod)
+                                        EarthMethod, WaterMethod)
 
             registry = CastingMethodRegistry()
             registry.register(WoodMethod())  # Default/original method
             registry.register(MetalMethod())
             registry.register(FireMethod())
             registry.register(EarthMethod())
-            registry.register(AirMethod())
+            registry.register(WaterMethod())
 
         self.registry = registry
 
@@ -246,7 +246,7 @@ class HexagramEngine:
         Get list of available casting method names.
 
         Returns:
-            List of element names (e.g., ['wood', 'metal', 'fire', 'earth', 'air'])
+            List of element names (e.g., ['wood', 'metal', 'fire', 'earth', 'water'])
         """
         methods = self.registry.get_available_methods()
         return [method.element.value for method in methods]
@@ -255,7 +255,7 @@ class HexagramEngine:
         """
         Check if a method is available and usable.
 
-        Particularly useful for Air method which requires network.
+        Particularly useful for Water method which requires network.
 
         Args:
             method: Element enum or element name string
@@ -267,9 +267,9 @@ class HexagramEngine:
 
         Example:
             >>> engine = HexagramEngine()
-            >>> available, error = engine.check_method_available(Element.AIR)
+            >>> available, error = engine.check_method_available(Element.WATER)
             >>> if not available:
-            ...     print(f"Air method unavailable: {error}")
+            ...     print(f"Water method unavailable: {error}")
         """
         # Convert string to Element
         if isinstance(method, str):

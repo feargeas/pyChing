@@ -3,7 +3,7 @@ pyChing - Modern I Ching oracle with multi-source translations and five elements
 
 This package provides a complete I Ching divination system with:
 - Multiple translation sources (Legge, Wilhelm, etc.)
-- Five element casting methods (Metal, Wood, Fire, Earth, Air)
+- Five element casting methods (Metal, Wood, Fire, Earth, Water)
 - Modern Python architecture with type hints and dataclasses
 - JSON-based data storage for easy maintenance and extension
 
@@ -31,7 +31,7 @@ from pyching.casting.wood import WoodMethod
 from pyching.casting.metal import MetalMethod
 from pyching.casting.fire import FireMethod
 from pyching.casting.earth import EarthMethod
-from pyching.casting.air import AirMethod
+from pyching.casting.water import WaterMethod
 from pyching.casting.registry import CastingMethodRegistry
 
 # Data access layer (Phase 3)
@@ -56,7 +56,7 @@ __all__ = [
     'MetalMethod',
     'FireMethod',
     'EarthMethod',
-    'AirMethod',
+    'WaterMethod',
     'CastingMethodRegistry',
 
     # Data access (for advanced usage or custom sources)
