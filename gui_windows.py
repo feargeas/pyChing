@@ -97,6 +97,10 @@ class TextEditorWindow(Toplevel):
                                   width=12, relief=RAISED)
         self.save_button.pack(side=LEFT, padx=(0, 5))
 
+        # Store original button colors for restoration after save
+        self.original_bg = self.save_button.cget('bg')
+        self.original_fg = self.save_button.cget('fg')
+
         # Close button
         Button(inner_frame, text='Close', command=self.destroy,
                width=12, relief=RAISED).pack(side=LEFT)
@@ -149,7 +153,7 @@ class TextEditorWindow(Toplevel):
 
     def _unhighlight_save_button(self):
         """Return save button to normal state after saving."""
-        self.save_button.config(bg='SystemButtonFace', fg='black',
+        self.save_button.config(bg=self.original_bg, fg=self.original_fg,
                                font=('TkDefaultFont', 10),
                                borderwidth=1)
         self.info_label.config(text="Saved", fg='#4CAF50',
