@@ -87,9 +87,13 @@ def test_coin_animator():
     # Note: We can't fully test animate_full_reading without time.sleep mocking
     # but we can verify it doesn't crash
     try:
-        # Set delay to 0 to speed up test
-        animator.animate_full_reading(reading, delay=0, spins=1, pause_between_lines=0)
-        print("✓ Full reading animation logic executes without errors")
+        # Test with wood method (default)
+        animator.animate_full_reading(reading, method='wood')
+        print("✓ Full reading animation logic executes without errors (wood)")
+
+        # Test with water method (has random variation)
+        animator.animate_full_reading(reading, method='water')
+        print("✓ Water method animation with random variation works")
     except Exception as e:
         print(f"✗ Animation failed: {e}")
         raise

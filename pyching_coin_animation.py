@@ -24,6 +24,7 @@ Separated from main GUI code for modularity and maintainability.
 """
 
 import time
+import random
 from typing import List, Optional
 
 
@@ -33,7 +34,24 @@ class CoinAnimator:
 
     This class provides a clean interface for animating the coin flip
     process, independent of the casting engine or reading structure.
+
+    Each casting method has its own animation character:
+    - Earth: Slow and grounded
+    - Wood: Natural growth pace (baseline)
+    - Metal: Sharp and precise
+    - Fire: Quick and energetic
+    - Water: Flowing and variable
     """
+
+    # Animation timing profiles for each element
+    # Format: (frame_delay, spins, pause_between_lines)
+    ELEMENT_TIMINGS = {
+        'earth': (0.04, 2, 0.9),   # Slowest - grounded, deliberate
+        'wood':  (0.02, 2, 0.5),   # Baseline - natural growth
+        'metal': (0.015, 2, 0.3),  # Faster - sharp, precise
+        'fire':  (0.01, 2, 0.2),   # Quick - energetic
+        'water': (0.008, 2, 0.15), # Fastest but will have random variation
+    }
 
     def __init__(self, coin_labels, coin_images, master, hex_lines=None, place_labels=None, show_places_var=None, colors=None):
         """
@@ -56,19 +74,26 @@ class CoinAnimator:
         self.show_places_var = show_places_var
         self.colors = colors
 
-    def animate_full_reading(self, reading, delay=0.02, spins=2, pause_between_lines=0.5):
+    def animate_full_reading(self, reading, method='wood'):
         """
         Animate the complete casting process for all 6 lines.
 
         This simulates the traditional line-by-line casting experience,
-        showing coin flips for each line of the hexagram.
+        showing coin flips for each line of the hexagram. Animation speed
+        and character varies based on the casting method.
 
         Args:
             reading: A Reading object from HexagramEngine
-            delay: Time in seconds between animation frames (default 0.02)
-            spins: Number of complete spin cycles (default 2)
-            pause_between_lines: Pause in seconds after each line (default 0.5)
+            method: Casting method name ('earth', 'wood', 'metal', 'fire', 'water')
+                   Determines animation speed and character
         """
+        # Get timing profile for this element (default to wood if unknown)
+        method_lower = method.lower() if isinstance(method, str) else 'wood'
+        delay, spins, pause = self.ELEMENT_TIMINGS.get(method_lower, self.ELEMENT_TIMINGS['wood'])
+
+        # Water has variable/random timing to reflect its flowing nature
+        is_water = (method_lower == 'water')
+
         # Get line values from the primary hexagram (6 lines, bottom to top)
         line_values = reading.primary.lines
 
@@ -82,8 +107,17 @@ class CoinAnimator:
             #            2+3+3=8 (young yin), 3+3+3=9 (old yang)
             coin_display_values = self._line_value_to_coin_display(line_value)
 
+            # For water, add random variation to timing (flowing, unpredictable)
+            if is_water:
+                # Vary frame delay ±30% and pause ±40% for water's flowing character
+                current_delay = delay * random.uniform(0.7, 1.3)
+                current_pause = pause * random.uniform(0.6, 1.4)
+            else:
+                current_delay = delay
+                current_pause = pause
+
             # Animate the coin flip for this line
-            self._animate_single_flip(coin_display_values, delay, spins)
+            self._animate_single_flip(coin_display_values, current_delay, spins)
 
             # Draw the line on the hexagram immediately after animation
             if self.hex_lines:
@@ -97,7 +131,7 @@ class CoinAnimator:
 
             # Pause to let user see the result
             if line_idx < 5:  # Don't pause after the last line
-                time.sleep(pause_between_lines)
+                time.sleep(current_pause)
 
     def _line_value_to_coin_display(self, line_value: int) -> List[int]:
         """

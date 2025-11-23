@@ -727,8 +727,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
 
                 # Animate coin flips if enabled
                 if self.showCoinAnimation.get():
-                    vprint("Running coin animation for all 6 lines...")
-                    self.coin_animator.animate_full_reading(self.reading)
+                    vprint(f"Running coin animation for all 6 lines (method: {method.value})...")
+                    self.coin_animator.animate_full_reading(self.reading, method=method.value)
                     vprint("Animation complete")
 
                 self.DisplayReading()
