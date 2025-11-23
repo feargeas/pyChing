@@ -18,9 +18,19 @@ must be reinstated. Look in branch dev for missing resources.
 
 ### 1. Restore the coin animation in the gui
 
-**Status:** The coin animation was removed to make gui testing easier, it needs to be selectively reinstated.
-see claude_report.md, where it is referred to as legacy code; it may be best to have this code as a separate module. The animation
-will run unless deselected in the Settings dropdow.
+**Status:** ✅ **Complete**
+
+The coin animation has been restored as a separate module (`pyching_coin_animation.py`) with the following features:
+- Progressive hexagram line drawing (builds from bottom to top as coins are cast)
+- Toggle option in Settings menu ('Show Coin Animation')
+- Element-specific animation speeds reflecting each method's character:
+  - Earth: Slow and grounded
+  - Wood: Natural growth pace (baseline)
+  - Metal: Sharp and precise
+  - Fire: Quick and energetic
+  - Water: Extreme variation (cognitive dissonance - slow buildups, sudden breaks)
+- Settings persist across sessions
+- Clean architecture - no legacy code reintroduced
 
 ### 2. Fix Help Menus
 
