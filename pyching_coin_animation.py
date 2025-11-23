@@ -50,7 +50,7 @@ class CoinAnimator:
         'wood':  (0.02, 2, 0.5),   # Baseline - natural growth
         'metal': (0.015, 2, 0.3),  # Faster - sharp, precise
         'fire':  (0.01, 2, 0.2),   # Quick - energetic
-        'water': (0.012, 2, 0.25), # Flowing with random variation (still fastest on average)
+        'water': (0.018, 2, 0.4),  # Flowing - slow buildup, sudden breaks (wide random variation)
     }
 
     def __init__(self, coin_labels, coin_images, master, hex_lines=None, place_labels=None, show_places_var=None, colors=None):
@@ -109,9 +109,10 @@ class CoinAnimator:
 
             # For water, add random variation to timing (flowing, unpredictable)
             if is_water:
-                # Vary frame delay ±30% and pause ±40% for water's flowing character
-                current_delay = delay * random.uniform(0.7, 1.3)
-                current_pause = pause * random.uniform(0.6, 1.4)
+                # Water: dramatic variation like waves - slow buildup (2x), sudden break (0.5x)
+                # Each line feels different: some slow and building, some quick and breaking
+                current_delay = delay * random.uniform(0.5, 2.0)
+                current_pause = pause * random.uniform(0.4, 1.8)
             else:
                 current_delay = delay
                 current_pause = pause
