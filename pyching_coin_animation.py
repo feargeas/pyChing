@@ -50,7 +50,7 @@ class CoinAnimator:
         'wood':  (0.02, 2, 0.5),   # Baseline - natural growth
         'metal': (0.015, 2, 0.3),  # Faster - sharp, precise
         'fire':  (0.01, 2, 0.2),   # Quick - energetic
-        'water': (0.008, 2, 0.15), # Fastest but will have random variation
+        'water': (0.012, 2, 0.25), # Flowing with random variation (still fastest on average)
     }
 
     def __init__(self, coin_labels, coin_images, master, hex_lines=None, place_labels=None, show_places_var=None, colors=None):
