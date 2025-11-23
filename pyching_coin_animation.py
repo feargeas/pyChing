@@ -35,7 +35,7 @@ class CoinAnimator:
     process, independent of the casting engine or reading structure.
     """
 
-    def __init__(self, coin_labels, coin_images, master):
+    def __init__(self, coin_labels, coin_images, master, hex_lines=None, place_labels=None, show_places_var=None, colors=None):
         """
         Initialize the coin animator.
 
@@ -43,10 +43,18 @@ class CoinAnimator:
             coin_labels: List of 3 tkinter Label widgets for displaying coins
             coin_images: CoinImages object with coinFrames attribute
             master: Tkinter root/master widget for update_idletasks()
+            hex_lines: Optional list of HexLine widgets to draw progressively
+            place_labels: Optional list of place label widgets
+            show_places_var: Optional BooleanVar for show places setting
+            colors: Optional WidgetColors object for place label colors
         """
         self.coin_labels = coin_labels
         self.coin_images = coin_images
         self.master = master
+        self.hex_lines = hex_lines
+        self.place_labels = place_labels
+        self.show_places_var = show_places_var
+        self.colors = colors
 
     def animate_full_reading(self, reading, delay=0.02, spins=2, pause_between_lines=0.5):
         """
@@ -76,6 +84,16 @@ class CoinAnimator:
 
             # Animate the coin flip for this line
             self._animate_single_flip(coin_display_values, delay, spins)
+
+            # Draw the line on the hexagram immediately after animation
+            if self.hex_lines:
+                # Show place label if enabled
+                if self.place_labels and self.show_places_var and self.show_places_var.get():
+                    self.place_labels[line_idx].configure(fg=self.colors.fgLabelPlaces)
+
+                # Draw the line on hexagram 1
+                self.hex_lines[0][line_idx].Draw(line_value)
+                self.master.update_idletasks()
 
             # Pause to let user see the result
             if line_idx < 5:  # Don't pause after the last line

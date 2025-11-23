@@ -267,10 +267,23 @@ class WindowMain:
         self.frameMain.pack(expand=True, fill='both')
         
         self.MakeCastDisplay(self.frameMain)
-        
+
         self.MakeQuestionDisplay(self.frameMain)
 
         self.MakeHexDisplay(self.frameMain)
+
+        # Create coin animator with hex line drawing capability
+        # (must be after MakeHexDisplay since it needs self.hexLines)
+        self.coin_animator = CoinAnimator(
+            self.labelsCoins,
+            self.images,
+            self.master,
+            hex_lines=self.hexLines,
+            place_labels=self.labelsHexPlaces,
+            show_places_var=self.showPlaces,
+            colors=self.colors
+        )
+        vprint("Created coin animator with progressive line drawing")
 
         # Set dynamic minimum size based on natural content size
         # This ensures the window is never larger than needed initially
@@ -883,9 +896,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                             bg=self.colors.bgReading) )
             self.labelsCoins[i].grid(column=i+1,row=1,padx=10,pady=10)
 
-        # Create coin animator
-        self.coin_animator = CoinAnimator(self.labelsCoins, self.images, self.master)
-        vprint("Created coin animator")
+        # Note: coin animator will be created after hex display is set up
+        # (needs access to hexLines which are created in MakeHexDisplay)
 
         # Info button frame and buttons
         # These are always grid()'ed to be included in layout calculations,
