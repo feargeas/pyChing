@@ -50,6 +50,7 @@ import tkinter.colorchooser as tkColorChooser
 #pyChing source specific imports
 import pyching_cimages
 import pyching_themes
+from pyching_coin_animation import CoinAnimator
 
 # Modern pyChing imports
 from pyching import HexagramEngine, Element, Reading, Hexagram
@@ -242,7 +243,9 @@ class WindowMain:
         self.showLineHints.set(True)
         self.castAll = BooleanVar()
         self.castAll.set(True)
-        vprint("Default settings: showPlaces=True, showLineHints=True, castAll=True")
+        self.showCoinAnimation = BooleanVar()
+        self.showCoinAnimation.set(True)
+        vprint("Default settings: showPlaces=True, showLineHints=True, castAll=True, showCoinAnimation=True")
 
         #instantiate default colour and font values
         self.colors = WidgetColors()
@@ -339,7 +342,8 @@ class WindowMain:
                                                     ('c','Compare Sources...',0,self.CompareSourcesDialog),('s',),
                                                     ('c','Exit',1,self.Quit)) )
         AddMenuItems(self.menuMainSettings,(('k','Show Places',5,self.__ToggleLabelsPlaces,self.showPlaces),
-            ('k','Show Line Hints',10,None,self.showLineHints),('s',),
+            ('k','Show Line Hints',10,None,self.showLineHints),
+            ('k','Show Coin Animation',10,None,self.showCoinAnimation),('s',),
             ('r','Cast Each Line Separately',10,None,self.castAll,False),
             ('r','Cast Entire Hexagram Automatically',12,None,self.castAll,True),('s',),
             ('c','Select Theme...',7,self.SelectTheme),
@@ -512,10 +516,11 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         castAllValue = self.castAll.get()
         showPlacesValue = self.showPlaces.get()
         showLineHintsValue = self.showLineHints.get()
+        showCoinAnimationValue = self.showCoinAnimation.get()
         theme_name = getattr(self.colors, 'theme_name', 'default')
         font_scale = self.fonts.scale
 
-        vprint(f"  castAll={castAllValue}, showPlaces={showPlacesValue}, showLineHints={showLineHintsValue}")
+        vprint(f"  castAll={castAllValue}, showPlaces={showPlacesValue}, showLineHints={showLineHintsValue}, showCoinAnimation={showCoinAnimationValue}")
         vprint(f"  theme='{theme_name}', font_scale={font_scale:.2f} ({int(font_scale*100)}%)")
 
         # Create JSON config structure
@@ -528,7 +533,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             'display': {
                 'cast_all': castAllValue,
                 'show_places': showPlacesValue,
-                'show_line_hints': showLineHintsValue
+                'show_line_hints': showLineHintsValue,
+                'show_coin_animation': showCoinAnimationValue
             }
         }
         dprint(f"  Config structure: {config}")
@@ -562,9 +568,10 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 castAllValue = config.get('display', {}).get('cast_all', True)
                 showPlacesValue = config.get('display', {}).get('show_places', True)
                 showLineHintsValue = config.get('display', {}).get('show_line_hints', True)
+                showCoinAnimationValue = config.get('display', {}).get('show_coin_animation', True)
 
                 vprint(f"  Loaded theme='{theme_name}', font_scale={font_scale:.2f} ({int(font_scale*100)}%)")
-                dprint(f"  Display settings: cast_all={castAllValue}, show_places={showPlacesValue}, show_line_hints={showLineHintsValue}")
+                dprint(f"  Display settings: cast_all={castAllValue}, show_places={showPlacesValue}, show_line_hints={showLineHintsValue}, show_coin_animation={showCoinAnimationValue}")
 
                 # Apply theme and fonts
                 self.colors = WidgetColors(theme_name)
@@ -574,8 +581,9 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 self.castAll.set(castAllValue)
                 self.showPlaces.set(showPlacesValue)
                 self.showLineHints.set(showLineHintsValue)
+                self.showCoinAnimation.set(showCoinAnimationValue)
 
-                vprint(f"  Settings loaded: castAll={castAllValue}, showPlaces={showPlacesValue}, showLineHints={showLineHintsValue}")
+                vprint(f"  Settings loaded: castAll={castAllValue}, showPlaces={showPlacesValue}, showLineHints={showLineHintsValue}, showCoinAnimation={showCoinAnimationValue}")
 
             except (IOError, OSError) as e:
                 vprint(f"ERROR: Unable to read configuration file: {pyching.configFile}")
@@ -585,6 +593,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 self.castAll.set(True)
                 self.showPlaces.set(True)
                 self.showLineHints.set(True)
+                self.showCoinAnimation.set(True)
             except json.JSONDecodeError as e:
                 vprint(f"ERROR: Invalid JSON in configuration file: {pyching.configFile}")
                 dprint(f"  JSONDecodeError: {e}")
@@ -593,6 +602,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 self.castAll.set(True)
                 self.showPlaces.set(True)
                 self.showLineHints.set(True)
+                self.showCoinAnimation.set(True)
             except Exception as e:
                 vprint(f"ERROR: Unexpected error loading configuration: {e}")
                 dprint(f"  Exception: {e}")
@@ -601,6 +611,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 self.castAll.set(True)
                 self.showPlaces.set(True)
                 self.showLineHints.set(True)
+                self.showCoinAnimation.set(True)
         else:
             vprint(f"No config file found at: {pyching.configFile}, using defaults")
             dprint("  Using default settings")
@@ -700,6 +711,13 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 for coin in self.labelsCoins:  # initialise coins display
                     coin.configure(image=self.images.coinFrames[0])
                 self.ShowQuestion()
+
+                # Animate coin flips if enabled
+                if self.showCoinAnimation.get():
+                    vprint("Running coin animation for all 6 lines...")
+                    self.coin_animator.animate_full_reading(self.reading)
+                    vprint("Animation complete")
+
                 self.DisplayReading()
 
             except Exception as e:
@@ -864,6 +882,10 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             self.labelsCoins.append(Label(self.frameCast,image=self.images.coinFrames[16],
                             bg=self.colors.bgReading) )
             self.labelsCoins[i].grid(column=i+1,row=1,padx=10,pady=10)
+
+        # Create coin animator
+        self.coin_animator = CoinAnimator(self.labelsCoins, self.images, self.master)
+        vprint("Created coin animator")
 
         # Info button frame and buttons
         # These are always grid()'ed to be included in layout calculations,
