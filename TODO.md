@@ -2,8 +2,8 @@
 
 ## Current Branch: devnew
 
-This is a **clean slate** branch created from dev, with all legacy code removed.
-Only modern `pyching/` package code remains.
+This is a **clean slate** branch created from dev, with all legacy code removed. Look to branch dev for missing files.
+
 
 **Context:** This TODO tracks current objectives. For overall aims and vision, see `project_notes.txt`.
 
@@ -13,21 +13,40 @@ Only modern `pyching/` package code remains.
 
 ## Immediate
 
-### 1. Fix Help Menus
+Work is needed to improve the gui. The option to 'Cast each line separately' was removed for simplicity in development, and 
+must be reinstated. Look in branch dev for missing resources. 
 
-**Status:** Help menu functionality needs review and correction.
+### 1. Restore the coin animation in the gui
 
-### 2. Themes Need Attention
+**Status:** The coin animation was removed to make gui testing easier, it needs to be selectively reinstated.
+see claude_report.md, where it is referred to as legacy code; it may be best to have this code as a separate module. The animation
+will run unless deselected in the Settings dropdow.
 
-**Status:** GUI theming requires improvement and consistency.
+### 2. Fix Help Menus
 
-### 3. Fonts Need Attention
+**Status:** Help menu functionality needs review and correction. 
+Currently the window returns only [html data error]
+
+### 3. Themes Need Attention
+
+**Status:** GUI theming requires improvement and consistency. Some elements currently are not themed,
+and selecting 'System Default' does not work properly.
+
+### 4. Fonts Need Attention
 
 **Status:** Font usage and display needs refinement across the GUI.
 
-### 4. Put back coin animation in gui
+### 5. Issue: gui will clear  when 'Cast New Hexagram' is selected
 
-**Status:** The coin animation was removed to make gui testing easier, it needs to be selectively reinstated.
+**Needed:** When a reading has been cast but not saved, and the user selects 'Cast New Hexagram', the user
+will be given the option to save; after which the gui will clear but the session settings will not change.
+
+### 6. Issue: Settings dropdown 
+
+***Add Feature*** In addition to 'Save Settings' there will be 'Default Settings' 'Load Settings' and 'Save Settings As...' options.
+Users may name and store settings, On startup, the last used settings will be used. Initially there will be 'default' and 'user' as available
+settings to load (and of course they will be the same until 'Save Settings' is selected). settings will include the 'Method' and  'Source' choices.
+
 ---
 
 ## High Priority
@@ -54,33 +73,40 @@ Additional sources will be integrated when GUI is stable and system is proven.
 
 **Estimated effort:** 4-8 hours per source (infrastructure already built)
 
+
+### 2. Include Notetaking Functionality
+
+The user will have tha ability to save text notes, for reflections and research, which are associated with a particular reading. Additionally, there will be utility for notes to be stored which are for general, long term reference, and the opportunity to journal. now, <vibe=on| consider the user: understand the context, make it easy and all-joined-up (by whatver means, with the overrides of beauty and simplicity) for someone with no technical nous to be able to  say what they mean in-the-moment, perhaps make general remarks, future notes, look up a few web sources, whatever: make it easy for these folk to be able to come back later and 'follow the breadcrumbs' of that experience, perhaps to rationalise it, blog about it, follow it through and extend the process - and... |vibe=off> #rem we know 'pebkac', make this a feature, not a bug. [note: a webui ie access to this software through a browser via localhost is coming quite soon (but not now) which may inform design decisions,]
+
+
+
 ---
 
-## Low Priority / Future Enhancements
+## Low Priority / Future Enhancements [some things below are a bit sketchy, have a rake through see what you think]
 
-### 1. Package for PyPI
+### 5. Package for PyPI
 
 - Create proper package distribution
 - Upload to PyPI
 - Users can `pip install pyching`
 
-### 2. Documentation Website
+### 4. Documentation Website
 
 - Convert documentation to static site (MkDocs, Sphinx, etc.)
 - Host on GitHub Pages
 
-### 3. Yarrow Stalk Method
+### 3 Yarrow Stalk Method
 
 - Implement traditional yarrow stalk casting
 - Different probability distribution than 3-coin method
 
-### 4. Reading Journal
+### 1. Reading Journal
 
 - SQLite database for storing readings
 - Search and analyze reading history
 - Export to various formats (PDF, HTML, Markdown)
 
-### 5. Web Interface
+### 2. Web Interface
 
 - Flask/FastAPI backend
 - Browser-based GUI
@@ -110,6 +136,8 @@ Once GUI is updated and objectives are clarified:
 ---
 
 ## Technical Debt
+
+No account so far about how Mac users might incorporate this software. This is important, do not want to exclude anybody. Sorry, BSD* but ifyouwantityoucanhaveitDIY.
 
 ### Minor issues:
 - Some docstrings need updating
