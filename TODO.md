@@ -25,6 +25,9 @@ Only modern `pyching/` package code remains.
 
 **Status:** Font usage and display needs refinement across the GUI.
 
+### 4. Put back coin animation in gui
+
+**Status:** The coin animation was removed to make gui testing easier, it needs to be selectively reinstated.
 ---
 
 ## High Priority
