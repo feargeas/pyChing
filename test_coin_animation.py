@@ -39,7 +39,7 @@ class MockHexagram:
     """Mock Hexagram with line values"""
     def __init__(self):
         # Example: mix of line types
-        self.line_values = [6, 7, 8, 9, 7, 8]  # old yin, young yang, young yin, old yang, young yang, young yin
+        self.lines = [6, 7, 8, 9, 7, 8]  # old yin, young yang, young yin, old yang, young yang, young yin
 
 
 def test_coin_animator():
@@ -82,7 +82,7 @@ def test_coin_animator():
 
     # Test animation with mock reading (won't actually animate, just test logic)
     reading = MockReading()
-    print("✓ Mock reading created with line_values:", reading.primary.line_values)
+    print("✓ Mock reading created with lines:", reading.primary.lines)
 
     # Note: We can't fully test animate_full_reading without time.sleep mocking
     # but we can verify it doesn't crash

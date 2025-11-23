@@ -62,7 +62,7 @@ class CoinAnimator:
             pause_between_lines: Pause in seconds after each line (default 0.5)
         """
         # Get line values from the primary hexagram (6 lines, bottom to top)
-        line_values = reading.primary.line_values
+        line_values = reading.primary.lines
 
         # For each line, we need to determine what coin combination created it
         # Line values are 6, 7, 8, 9 but we need coin faces for display
