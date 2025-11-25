@@ -419,10 +419,8 @@ class WindowMain:
         )
 
         if hexNum:
-            # Load the hexagram
-            from pyching.data import HexagramResolver
-            resolver = HexagramResolver()
-            hexagram = resolver.get_hexagram(hexNum)
+            # Load the hexagram using the from_number class method
+            hexagram = Hexagram.from_number(hexNum)
 
             # Display using modern HexagramInfoWindow (no changing lines for browsing)
             HexagramInfoWindow(self.master, hexagram, changing_lines=[])
