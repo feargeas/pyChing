@@ -40,7 +40,8 @@ class smgDialog(Toplevel):
                 buttons: list[dict[str, Any]] = [{'name':'buttonOk','title':'Ok',
                 'binding':'Ok','underline':None,'hotKey':'<Return>'}],
                 buttonsDef: int = -1, buttonsWidth: int = 0, buttonsPad: int = 5,
-                resizeable: int = 0, transient: int = 1, wait: int = 1) -> None:  # buttonsPos='BOTTOM',
+                resizeable: int = 0, transient: int = 1, wait: int = 1,
+                colors: Any = None) -> None:  # buttonsPos='BOTTOM',
         """
         buttons - a list of button dictionaries, in placement order
                             keys -  'name'      button name, required
@@ -69,10 +70,15 @@ class smgDialog(Toplevel):
         if title:
             self.title(title)
         self.parent = parent
-        
+
         self.result = None
 
-        self.frameMain = Frame(self)
+        # Store and apply theme colors
+        self.colors = colors
+        if colors:
+            self.configure(bg=colors.bgControls)
+
+        self.frameMain = Frame(self, bg=colors.bgControls if colors else None)
 
         #buttons should be created before body in case they are referred to in 
         #self.Body of a derived class
@@ -108,9 +114,9 @@ class smgDialog(Toplevel):
         #wait for window to close (modal) or not (non modal)
         if wait: self.wait_window(self)
 
-    def buildButtonBox(self, buttons, bDef, bWidth, bPad): # bPos, 
+    def buildButtonBox(self, buttons, bDef, bWidth, bPad): # bPos,
     # add button box
-        self.frameButtonBox = Frame(self)
+        self.frameButtonBox = Frame(self, bg=self.colors.bgControls if self.colors else None)
         bGreatestWidth = 0
         bRow = 0
         bCol = 0
@@ -145,6 +151,14 @@ class smgDialog(Toplevel):
         for button in buttons:
             exec ('self.'+ button['name'] +
                         '.configure(width=' + str(bWidth) + ')' )
+            # Apply theme colors to buttons
+            if self.colors:
+                exec ('self.'+ button['name'] +
+                            '.configure(bg="' + self.colors.bgButton +
+                            '", fg="' + self.colors.fgButton +
+                            '", activebackground="' + self.colors.bgButtonActive +
+                            '", activeforeground="' + self.colors.fgButton +
+                            '", highlightthickness=0, relief="raised", borderwidth=1)' )
 
     def showButtonBox(self): #, bPos
         #show the button box

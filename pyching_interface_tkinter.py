@@ -486,7 +486,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         """Show theme selection dialog and apply the selected theme"""
         vprint("Opening theme selection dialog...")
         dialogSelectTheme = DialogSelectTheme(self.master,
-                                              current_theme=getattr(self.colors, 'theme', None))
+                                              current_theme=getattr(self.colors, 'theme', None),
+                                              colors=self.colors)
         if dialogSelectTheme.result:  # user selected a theme
             # Apply the new theme
             theme_name = dialogSelectTheme.result
@@ -503,7 +504,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         old_scale = self.fonts.scale
         vprint(f"Opening font size dialog (current scale={old_scale:.2f} = {int(old_scale*100)}%)...")
         dialogFontSize = DialogAdjustFontSize(self.master,
-                                              current_scale=self.fonts.scale)
+                                              current_scale=self.fonts.scale,
+                                              colors=self.colors)
         if dialogFontSize.result is not None:  # user selected a new size
             # Apply the new font scale
             new_scale = dialogFontSize.result
@@ -699,7 +701,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         vprint("Cast button pressed - starting new reading...")
         self.labelLineHint.show = 0 #disable line hints
         #get the question
-        questionDialog = DialogGetQuestion(self.master)
+        questionDialog = DialogGetQuestion(self.master, self.colors)
         self.master.update()#makes sure the main app window gets redrawn properly (seems only to be a problem on win32)
         if questionDialog.result: #the user didn't cancel
             # Use modern HexagramEngine
@@ -1028,7 +1030,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
 
     def ManualInput(self):
         """Allow manual input of hexagram number and moving lines."""
-        dialogManual = DialogManualInput(self.master)
+        dialogManual = DialogManualInput(self.master, self.colors)
         if dialogManual.result:  # User didn't cancel
             hex_number, moving_lines = dialogManual.result
             self.CastManualHexagram(hex_number, moving_lines)
@@ -1792,7 +1794,7 @@ class DialogSelectTheme(smgDialog):
     """
     Display a theme selection dialog
     """
-    def __init__(self, parent: Any, current_theme: Optional[Any] = None) -> None:
+    def __init__(self, parent: Any, current_theme: Optional[Any] = None, colors: Any = None) -> None:
         # Determine current theme name
         if current_theme and hasattr(current_theme, 'name'):
             # Search THEMES for matching theme class
@@ -1812,15 +1814,15 @@ class DialogSelectTheme(smgDialog):
                     buttons=[{'name':'buttonOk','title':'Ok','binding':'Ok','underline':None,'hotKey':'<Return>'},
                                 {'name':'buttonCancel','title':'Cancel','binding':'Cancel','underline':None,'hotKey':'<Escape>'}],
                     buttonsDef=0, buttonsWidth=0, buttonsPad=5,
-                    resizeable=0, transient=1, wait=1)
+                    resizeable=0, transient=1, wait=1, colors=colors)
 
     def Body(self, master):
         """Create the theme selection UI"""
-        master.configure(borderwidth=2, relief='sunken', highlightthickness=4)
-
         # Title
         label_title = Label(master, text='Select a theme for pyChing:',
-                           font=('Helvetica', 11, 'bold'))
+                           font=('Helvetica', 11, 'bold'),
+                           bg=self.colors.bgControls if self.colors else None,
+                           fg=self.colors.fgControls if self.colors else None)
         label_title.grid(row=0, column=0, columnspan=2, sticky='w', padx=10, pady=(10, 5))
 
         # Create radio buttons for each theme
@@ -1830,12 +1832,19 @@ class DialogSelectTheme(smgDialog):
 
             # Radio button
             rb = Radiobutton(master, text=theme.name,
-                            variable=self.selected_theme, value=theme_name)
+                            variable=self.selected_theme, value=theme_name,
+                            bg=self.colors.bgControls if self.colors else None,
+                            fg=self.colors.fgControls if self.colors else None,
+                            activebackground=self.colors.bgButtonActive if self.colors else None,
+                            activeforeground=self.colors.fgButton if self.colors else None,
+                            selectcolor=self.colors.bgButton if self.colors else None)
             rb.grid(row=row, column=0, sticky='w', padx=20, pady=2)
 
             # Description
             label_desc = Label(master, text=theme.description,
-                              font=('Helvetica', 9), foreground='#666666')
+                              font=('Helvetica', 9),
+                              bg=self.colors.bgControls if self.colors else None,
+                              fg=self.colors.fgControls if self.colors else None)
             label_desc.grid(row=row, column=1, sticky='w', padx=5, pady=2)
 
             row += 1
@@ -1850,7 +1859,7 @@ class DialogAdjustFontSize(smgDialog):
     """
     Display a font size adjustment dialog with slider
     """
-    def __init__(self, parent: Any, current_scale: float = 1.0) -> None:
+    def __init__(self, parent: Any, current_scale: float = 1.0, colors: Any = None) -> None:
         self.current_scale = current_scale
         self.scale_var = DoubleVar()
         self.scale_var.set(current_scale)
@@ -1859,51 +1868,74 @@ class DialogAdjustFontSize(smgDialog):
                     buttons=[{'name':'buttonOk','title':'Ok','binding':'Ok','underline':None,'hotKey':'<Return>'},
                                 {'name':'buttonCancel','title':'Cancel','binding':'Cancel','underline':None,'hotKey':'<Escape>'}],
                     buttonsDef=0, buttonsWidth=0, buttonsPad=5,
-                    resizeable=0, transient=1, wait=1)
+                    resizeable=0, transient=1, wait=1, colors=colors)
 
     def Body(self, master):
         """Create the font size adjustment UI"""
-        master.configure(borderwidth=2, relief='sunken', highlightthickness=4)
-
         # Title
         label_title = Label(master, text='Adjust Font Size:',
-                           font=('Helvetica', 11, 'bold'))
+                           font=('Helvetica', 11, 'bold'),
+                           bg=self.colors.bgControls if self.colors else None,
+                           fg=self.colors.fgControls if self.colors else None)
         label_title.grid(row=0, column=0, columnspan=3, sticky='w', padx=10, pady=(10, 5))
 
         # Instructions
         label_inst = Label(master, text='Move the slider to adjust all font sizes proportionally.',
-                          font=('Helvetica', 9))
+                          font=('Helvetica', 9),
+                          bg=self.colors.bgControls if self.colors else None,
+                          fg=self.colors.fgControls if self.colors else None)
         label_inst.grid(row=1, column=0, columnspan=3, sticky='w', padx=10, pady=5)
 
         # Current size display
         self.label_current = Label(master, text=f'{int(self.current_scale * 100)}%',
-                                   font=('Helvetica', 14, 'bold'))
+                                   font=('Helvetica', 14, 'bold'),
+                                   bg=self.colors.bgControls if self.colors else None,
+                                   fg=self.colors.fgControls if self.colors else None)
         self.label_current.grid(row=2, column=0, columnspan=3, pady=(5, 10))
 
         # Scale slider
         self.slider = Scale(master, from_=50, to=200, orient='horizontal',
                            variable=self.scale_var, command=self.on_scale_change,
-                           length=300, showvalue=False, resolution=10)
+                           length=300, showvalue=False, resolution=10,
+                           bg=self.colors.bgControls if self.colors else None,
+                           fg=self.colors.fgControls if self.colors else None,
+                           troughcolor=self.colors.bgButton if self.colors else None,
+                           activebackground=self.colors.bgButtonActive if self.colors else None)
         self.slider.grid(row=3, column=0, columnspan=3, padx=20, pady=10)
 
         # Size labels
-        label_small = Label(master, text='50%', font=('Helvetica', 8))
+        label_small = Label(master, text='50%', font=('Helvetica', 8),
+                          bg=self.colors.bgControls if self.colors else None,
+                          fg=self.colors.fgControls if self.colors else None)
         label_small.grid(row=4, column=0, sticky='w', padx=20)
 
-        label_normal = Label(master, text='100% (Normal)', font=('Helvetica', 9, 'bold'))
+        label_normal = Label(master, text='100% (Normal)', font=('Helvetica', 9, 'bold'),
+                           bg=self.colors.bgControls if self.colors else None,
+                           fg=self.colors.fgControls if self.colors else None)
         label_normal.grid(row=4, column=1)
 
-        label_large = Label(master, text='200%', font=('Helvetica', 8))
+        label_large = Label(master, text='200%', font=('Helvetica', 8),
+                          bg=self.colors.bgControls if self.colors else None,
+                          fg=self.colors.fgControls if self.colors else None)
         label_large.grid(row=4, column=2, sticky='e', padx=20)
 
         # Preset buttons
-        frame_presets = Frame(master)
+        frame_presets = Frame(master, bg=self.colors.bgControls if self.colors else None)
         frame_presets.grid(row=5, column=0, columnspan=3, pady=(10, 10))
 
-        Button(frame_presets, text='Small (80%)', command=lambda: self.set_preset(0.8)).pack(side='left', padx=5)
-        Button(frame_presets, text='Normal (100%)', command=lambda: self.set_preset(1.0)).pack(side='left', padx=5)
-        Button(frame_presets, text='Large (120%)', command=lambda: self.set_preset(1.2)).pack(side='left', padx=5)
-        Button(frame_presets, text='Extra Large (150%)', command=lambda: self.set_preset(1.5)).pack(side='left', padx=5)
+        btn_config = {
+            'bg': self.colors.bgButton if self.colors else None,
+            'fg': self.colors.fgButton if self.colors else None,
+            'activebackground': self.colors.bgButtonActive if self.colors else None,
+            'activeforeground': self.colors.fgButton if self.colors else None,
+            'highlightthickness': 0,
+            'relief': 'raised',
+            'borderwidth': 1
+        }
+        Button(frame_presets, text='Small (80%)', command=lambda: self.set_preset(0.8), **btn_config).pack(side='left', padx=5)
+        Button(frame_presets, text='Normal (100%)', command=lambda: self.set_preset(1.0), **btn_config).pack(side='left', padx=5)
+        Button(frame_presets, text='Large (120%)', command=lambda: self.set_preset(1.2), **btn_config).pack(side='left', padx=5)
+        Button(frame_presets, text='Extra Large (150%)', command=lambda: self.set_preset(1.5), **btn_config).pack(side='left', padx=5)
 
     def on_scale_change(self, value):
         """Update the percentage label when slider moves"""
@@ -2268,16 +2300,19 @@ class DialogGetQuestion(smgDialog):
     """
     gets the question for a reading
     """
-    def __init__(self, parent: Any) -> None:
+    def __init__(self, parent: Any, colors: Any = None) -> None:
         smgDialog.__init__(self, parent, title='Enter Question',
                     buttons=[{'name':'buttonOk','title':'Ok','binding':'Ok','underline':None,'hotKey':'<Return>'},
                                 {'name':'buttonCancel','title':'Cancel','binding':'Cancel','underline':None,'hotKey':'<Escape>'}],
                     buttonsDef=-1, buttonsWidth=0, buttonsPad=5,
-                    resizeable=0, transient=1, wait=1) # buttonsPos='bottom',
+                    resizeable=0, transient=1, wait=1, colors=colors) # buttonsPos='bottom',
 
     def Body(self, master):
         labelPrompt = Label(master, text='Enter a question to ask the I Ching (maximum 70 characters):',
-                        ).grid(column=0, row=0, sticky='w', padx=5, pady=5)
+                        bg=self.colors.bgControls if self.colors else None,
+                        fg=self.colors.fgControls if self.colors else None
+                        )
+        labelPrompt.grid(column=0, row=0, sticky='w', padx=5, pady=5)
         self.questionText = StringVar()
         self.questionText.set('Tell me about my current circumstances.')
         self.entryQuestion = Entry(master, textvariable=self.questionText, width=70)
@@ -2303,25 +2338,34 @@ class DialogManualInput(smgDialog):
     """
     Allows manual input of hexagram number and moving lines.
     """
-    def __init__(self, parent: Any) -> None:
+    def __init__(self, parent: Any, colors: Any = None) -> None:
         smgDialog.__init__(self,parent,title='Manual Hexagram Input',
                     buttons=[{'name':'buttonOk','title':'Ok','binding':'Ok','underline':None,'hotKey':'<Return>'},
                                 {'name':'buttonCancel','title':'Cancel','binding':'Cancel','underline':None,'hotKey':'<Escape>'}],
                     buttonsDef=-1,buttonsWidth=0,buttonsPad=5,
-                    resizeable=0, transient=1, wait=1)
+                    resizeable=0, transient=1, wait=1, colors=colors)
 
     def Body(self,master):
         # Hexagram number input
-        Label(master,text='Enter hexagram number (1-64):').grid(column=0,row=0,sticky=W,padx=5,pady=5)
+        Label(master,text='Enter hexagram number (1-64):',
+              bg=self.colors.bgControls if self.colors else None,
+              fg=self.colors.fgControls if self.colors else None
+              ).grid(column=0,row=0,sticky=W,padx=5,pady=5)
         self.hexNumberVar = StringVar()
         self.hexNumberVar.set('1')
         self.entryHexNumber = Entry(master,textvariable=self.hexNumberVar,width=10)
         self.entryHexNumber.grid(column=1,row=0,sticky=W,padx=5,pady=5)
 
         # Moving lines input
-        Label(master,text='Enter moving lines (optional):').grid(column=0,row=1,sticky=W,padx=5,pady=5)
+        Label(master,text='Enter moving lines (optional):',
+              bg=self.colors.bgControls if self.colors else None,
+              fg=self.colors.fgControls if self.colors else None
+              ).grid(column=0,row=1,sticky=W,padx=5,pady=5)
         Label(master,text='(comma-separated, e.g., 1,3,6)',
-              font=('TkDefaultFont',9)).grid(column=0,row=2,columnspan=2,sticky=W,padx=5)
+              font=('TkDefaultFont',9),
+              bg=self.colors.bgControls if self.colors else None,
+              fg=self.colors.fgControls if self.colors else None
+              ).grid(column=0,row=2,columnspan=2,sticky=W,padx=5)
         self.movingLinesVar = StringVar()
         self.entryMovingLines = Entry(master,textvariable=self.movingLinesVar,width=30)
         self.entryMovingLines.grid(column=1,row=1,sticky=W,padx=5,pady=5)
@@ -2333,7 +2377,10 @@ class DialogManualInput(smgDialog):
                    "Line positions: 1=bottom, 2=second, 3=third,\n"
                    "                4=fourth, 5=fifth, 6=top")
         Label(master,text=helpText,justify=LEFT,
-              font=('TkDefaultFont',9)).grid(column=0,row=3,columnspan=2,sticky=W,padx=5,pady=10)
+              font=('TkDefaultFont',9),
+              bg=self.colors.bgControls if self.colors else None,
+              fg=self.colors.fgControls if self.colors else None
+              ).grid(column=0,row=3,columnspan=2,sticky=W,padx=5,pady=10)
 
         return self.entryHexNumber
 
