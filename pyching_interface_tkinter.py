@@ -1216,8 +1216,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
 
     def MakeStatusBar(self, parent):
         self.frameStatusBar = Frame(parent, bg=self.colors.bgStatusBar,
-                                    borderwidth=2, relief='sunken', highlightthickness=2)
-        self.frameStatusBar.pack(anchor='sw', side='bottom', fill='x', padx=2)#,expand=True
+                                    highlightthickness=0)
+        self.frameStatusBar.pack(anchor='sw', side='bottom', fill='x', padx=2, pady=2)#,expand=True
         self.labelStatus = Label(self.frameStatusBar,
                         text=pyching.title + '  ' + pyching.version,
                         bg=self.colors.bgStatusBar, fg=self.colors.fgStatusBar,
