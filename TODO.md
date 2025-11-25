@@ -34,8 +34,13 @@ The coin animation has been restored as a separate module (`pyching_coin_animati
 
 ### 2. Fix Help Menus
 
-**Status:** Help menu functionality needs review and correction. 
-Currently the window returns only [html data error]
+**Status:** ✅ **Complete**
+
+All help menu items are now fully functional:
+- Restored `pyching_hlhtx_data.py` from dev branch with HTML help content
+- "Using pyChing" and "Introduction to the I Ching" menus now display correctly
+- "Browse Hexagram Information" modernized to use HexagramInfoWindow with number prompt
+- Fixed import issues (added tkSimpleDialog) and corrected Hexagram instantiation method
 
 ### 3. Themes Need Attention
 
