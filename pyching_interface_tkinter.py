@@ -271,6 +271,9 @@ class WindowMain:
         #load configuration file (if any)
         self.LoadSettings()
 
+        # Set master window background to match theme
+        self.master.configure(bg=self.colors.bgControls)
+
         self.MakeMenus(self.master)
 
         self.MakeStatusBar(self.master)
@@ -1258,7 +1261,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             self.labelsNoMovingLines[key].configure(bg=self.colors.bgReading,fg=self.colors.fgLabelLines)
 
         # === NEW: Theme control panel, buttons, and menus ===
-        # Main window border frame
+        # Master window and border frame
+        self.master.configure(bg=self.colors.bgControls)
         if hasattr(self, 'frameMainBevel'):
             self.frameMainBevel.configure(bg=self.colors.bgControls)
 
