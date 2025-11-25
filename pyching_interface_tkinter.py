@@ -443,20 +443,20 @@ class WindowMain:
             hexagram = Hexagram.from_number(hexNum)
 
             # Display using modern HexagramInfoWindow (no changing lines for browsing)
-            HexagramInfoWindow(self.master, hexagram, changing_lines=[])
+            HexagramInfoWindow(self.master, hexagram, changing_lines=[], colors=self.colors)
             
     def ShowText(self,title=None,textFile=None):
         #dialogTxt = DialogShowHtml(self.master,title=title,htmlFile=textFile,
         #    plainText=1)
         dialogTxt = smgHtmlView(self.master,title=title,htmlSource=textFile,
-                plainText=1)
+                plainText=1,colors=self.colors)
 
     def ShowHtml(self,title=None,htmlSource=None,index=None,hexBrowser=0):
         #dialoghtml = DialogShowHtml(self.master,title=title,htmlFile=textFile,
         #    indexFile=indexFile)
         dialoghtml = smgHtmlView(self.master,title=title,
                 htmlSource=htmlSource,
-                internalLink=None,index=index,hexBrowser=hexBrowser)
+                internalLink=None,index=index,hexBrowser=hexBrowser,colors=self.colors)
         
     def ShowAbout(self):
         #dialogAbout = DialogAbout(self.master,currentColors=self.colors)
@@ -467,7 +467,7 @@ GAbmx3bw5jX31yB1Y0C4+EjpJDlJuRXZh5k5hsIp58l2acc42hhqeoqqUcoZ0nqjGuooq0i7
 GJuJmyvHOvbqGwacJjxcKHiMfDgFyuxbjLcJnStNQl1New0UuUzcG2icyDxXKj2IfHqJzhf9
 B7un8/4Sn9VGbg3fB4zvRq+hVpYJ4cC9WudvnjZRLxJS+KaKEReCEPk1zIGiIkMfVxgTaVwy
 EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
-        dialogAbout = smgAbout(self.master,title='About '+pyching.title, 
+        dialogAbout = smgAbout(self.master,title='About '+pyching.title,
                 appTitle=pyching.title,
                 version='Version: '+pyching.version,
                 copyright='Copyright (c) 1999-2003 Stephen M. Gava',
@@ -477,10 +477,11 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                 pictureData=aboutPicData,
                 licenceFile=pyching.execPath / 'COPYING',
                 creditsFile=pyching.execPath / 'CREDITS',
-                fontAppTitle=self.fonts.labelHexTitles,  
+                fontAppTitle=self.fonts.labelHexTitles,
                 fontText=self.fonts.label,
                 fg=self.colors.fgLabelHexTitles,
-                bg=self.colors.bgReading )
+                bg=self.colors.bgReading,
+                colors=self.colors)
 
     def SelectTheme(self):
         """Show theme selection dialog and apply the selected theme"""
@@ -1111,7 +1112,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
 
         # Open sophisticated info window with changing lines
         window = HexagramInfoWindow(self.master, self.reading.primary,
-                                    changing_lines=self.reading.changing_lines)
+                                    changing_lines=self.reading.changing_lines,
+                                    colors=self.colors)
 
     def ViewHex2Info(self):
         """View hexagram 2 (relating) information."""
@@ -1120,7 +1122,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
 
         # For hex2, no changing lines (they've already transformed)
         window = HexagramInfoWindow(self.master, self.reading.relating,
-                                    changing_lines=[])
+                                    changing_lines=[],
+                                    colors=self.colors)
 
     def MakeHexDisplay(self, parent):
         self.frameHexes = Frame(parent, bg=self.colors.bgReading)
@@ -1478,7 +1481,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             return
 
         # Create a simple comparison window
-        dialogCompare = DialogCompareSources(self.master, str(self.reading.primary.number))
+        dialogCompare = DialogCompareSources(self.master, str(self.reading.primary.number), self.colors)
         # The dialog will display itself
 
 class HexLine(Canvas):
@@ -1965,10 +1968,9 @@ class DialogSetColors(smgDialog):
                     buttons=[{'name':'buttonOk','title':'Ok','binding':'Ok','underline':None,'hotKey':'<Return>'},
                                 {'name':'buttonCancel','title':'Cancel','binding':'Cancel','underline':None,'hotKey':'<Escape>'}],
                     buttonsDef=-1, buttonsWidth=0, buttonsPad=5,
-                    resizeable=0, transient=1, wait=1)#buttonsPos='bottom',
+                    resizeable=0, transient=1, wait=1, colors=self.colors)#buttonsPos='bottom',
 
     def Body(self, master):
-        master.configure(borderwidth=2, relief='sunken', highlightthickness=4)
 
         self.frameDemo = Frame(master, bg=self.colors.bgReading, borderwidth=2, relief='flat')
         self.frameDemo.grid(row=1,column=0,padx=0,pady=10)
@@ -2432,10 +2434,15 @@ class DialogCompareSources(Toplevel):
     """
     Simple dialog to compare hexagram interpretations from different sources.
     """
-    def __init__(self, parent: Any, hex_number: str) -> None:
+    def __init__(self, parent: Any, hex_number: str, colors: Any = None) -> None:
         Toplevel.__init__(self, parent)
         self.title(f'Source Comparison - Hexagram {hex_number}')
         self.transient(parent)
+        self.colors = colors
+
+        # Apply theme colors to dialog window
+        if colors:
+            self.configure(bg=colors.bgControls)
 
         # Get hexagram from different sources
         hex_num = int(hex_number)
@@ -2454,14 +2461,23 @@ class DialogCompareSources(Toplevel):
 
         if not available_sources:
             Label(self, text='No alternative sources available yet.',
-                  padx=20, pady=20).pack()
-            Button(self, text='Close', command=self.destroy).pack(pady=10)
+                  padx=20, pady=20,
+                  bg=colors.bgControls if colors else None,
+                  fg=colors.fgControls if colors else None).pack()
+            Button(self, text='Close', command=self.destroy,
+                  bg=colors.bgButton if colors else None,
+                  fg=colors.fgButton if colors else None,
+                  activebackground=colors.bgButtonActive if colors else None,
+                  activeforeground=colors.fgButton if colors else None).pack(pady=10)
             return
 
         # Create scrollable frame
-        canvas = Canvas(self)
-        scrollbar = Scrollbar(self, orient="vertical", command=canvas.yview)
-        scrollable_frame = Frame(canvas)
+        canvas = Canvas(self,
+                       bg=colors.bgReading if colors else None)
+        scrollbar = Scrollbar(self, orient="vertical", command=canvas.yview,
+                             bg=colors.bgControls if colors else None)
+        scrollable_frame = Frame(canvas,
+                                bg=colors.bgReading if colors else None)
 
         scrollable_frame.bind(
             "<Configure>",
@@ -2473,29 +2489,42 @@ class DialogCompareSources(Toplevel):
 
         # Display each source
         for source_id, hex_data in available_sources:
-            frame = Frame(scrollable_frame, relief=RIDGE, borderwidth=2, padx=10, pady=10)
+            frame = Frame(scrollable_frame, relief=RIDGE, borderwidth=2, padx=10, pady=10,
+                         bg=colors.bgControls if colors else None)
             frame.pack(fill=BOTH, expand=True, padx=5, pady=5)
 
             # Source title
             source_name = hex_data.metadata.get('translator', source_id)
             year = hex_data.metadata.get('year', '')
             title = f"{source_id.upper()}\n{source_name} ({year})"
-            Label(frame, text=title, font=('TkDefaultFont', 10, 'bold')).pack(anchor=W)
+            Label(frame, text=title, font=('TkDefaultFont', 10, 'bold'),
+                 bg=colors.bgControls if colors else None,
+                 fg=colors.fgControls if colors else None).pack(anchor=W)
 
             # Hexagram name
             Label(frame, text=f"\nHexagram {hex_data.number}: {hex_data.english_name}",
-                  font=('TkDefaultFont', 9, 'bold')).pack(anchor=W)
+                  font=('TkDefaultFont', 9, 'bold'),
+                  bg=colors.bgControls if colors else None,
+                  fg=colors.fgControls if colors else None).pack(anchor=W)
 
             # Judgment
-            Label(frame, text="\nJUDGMENT:", font=('TkDefaultFont', 9, 'bold')).pack(anchor=W)
-            judgment_text = Text(frame, height=5, width=80, wrap=WORD)
+            Label(frame, text="\nJUDGMENT:", font=('TkDefaultFont', 9, 'bold'),
+                 bg=colors.bgControls if colors else None,
+                 fg=colors.fgControls if colors else None).pack(anchor=W)
+            judgment_text = Text(frame, height=5, width=80, wrap=WORD,
+                               bg=colors.bgReading if colors else None,
+                               fg=colors.fgControls if colors else None)
             judgment_text.insert('1.0', hex_data.judgment)
             judgment_text.config(state=DISABLED)
             judgment_text.pack(fill=BOTH, expand=True, pady=5)
 
             # Image
-            Label(frame, text="IMAGE:", font=('TkDefaultFont', 9, 'bold')).pack(anchor=W)
-            image_text = Text(frame, height=3, width=80, wrap=WORD)
+            Label(frame, text="IMAGE:", font=('TkDefaultFont', 9, 'bold'),
+                 bg=colors.bgControls if colors else None,
+                 fg=colors.fgControls if colors else None).pack(anchor=W)
+            image_text = Text(frame, height=3, width=80, wrap=WORD,
+                            bg=colors.bgReading if colors else None,
+                            fg=colors.fgControls if colors else None)
             image_text.insert('1.0', hex_data.image)
             image_text.config(state=DISABLED)
             image_text.pack(fill=BOTH, expand=True, pady=5)

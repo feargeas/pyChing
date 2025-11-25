@@ -67,7 +67,8 @@ class smgHtmlView(smgDialog):
     def __init__(self, parent: Any, title: Optional[str] = None, htmlSource: Optional[str] = None,
                 sourceIsStr: int = 1, internalLink: Optional[str] = None, index: Optional[str] = None,
                 plainText: int = 0, modal: int = 1, hexBrowser: int = 0,
-                imageModule: Optional[Any] = None, bg: str = '#e8e8e8', fg: str = '#000000') -> None:
+                imageModule: Optional[Any] = None, bg: str = '#e8e8e8', fg: str = '#000000',
+                colors: Any = None) -> None:
         """
         title - string, dialog title
         htmlSource - either a filename or a string containing html data
@@ -128,8 +129,8 @@ class smgHtmlView(smgDialog):
                             'hotKey':'<Alt-q>'}  ]
 
         smgDialog.__init__(self,parent,title=title, buttons=btns,
-                    buttonsDef=-1, buttonsWidth=0, buttonsPad=5, 
-                    resizeable=1, transient=1, wait=1) #buttonsPos='BOTTOM'
+                    buttonsDef=-1, buttonsWidth=0, buttonsPad=5,
+                    resizeable=1, transient=1, wait=1, colors=colors) #buttonsPos='BOTTOM'
  
     #def ImportDataModules(self, dataModules=[]):
     #  """

@@ -192,7 +192,7 @@ class HexagramInfoWindow(Toplevel):
     """
 
     def __init__(self, parent, hexagram, changing_lines: Optional[List[int]] = None,
-                 width: int = 700, height: int = 600):
+                 width: int = 700, height: int = 600, colors: Any = None):
         """
         Initialize hexagram info window.
 
@@ -202,10 +202,16 @@ class HexagramInfoWindow(Toplevel):
             changing_lines: List of changing line positions (1-6)
             width: Window width
             height: Window height
+            colors: Theme colors object
         """
         super().__init__(parent)
         self.hexagram = hexagram
         self.changing_lines = changing_lines or []
+        self.colors = colors
+
+        # Apply theme colors to window
+        if colors:
+            self.configure(bg=colors.bgControls)
 
         # Load metadata for Chinese characters
         self.metadata = load_hexagram_metadata(hexagram.number)
@@ -220,46 +226,51 @@ class HexagramInfoWindow(Toplevel):
 
     def _create_header(self):
         """Create header with Chinese char, name, and SVG."""
-        header_frame = Frame(self, bg='white', height=100)
+        bg_color = self.colors.bgControls if self.colors else 'white'
+        fg_color = self.colors.fgControls if self.colors else 'black'
+
+        header_frame = Frame(self, bg=bg_color, height=100)
         header_frame.pack(fill=X, padx=10, pady=10)
         header_frame.pack_propagate(False)
 
         # Left: Chinese character
         chinese_char = self.metadata.get('chinese', '?')
         Label(header_frame, text=chinese_char,
-              font=('Arial', 48), bg='white').pack(side=LEFT, padx=10)
+              font=('Arial', 48), bg=bg_color, fg=fg_color).pack(side=LEFT, padx=10)
 
         # Center: Number and bilingual name
-        center_frame = Frame(header_frame, bg='white')
+        center_frame = Frame(header_frame, bg=bg_color)
         center_frame.pack(side=LEFT, expand=True, fill=BOTH, padx=20)
 
         # Line 1: Hexagram number and Wade-Giles romanization on same line
-        line1_frame = Frame(center_frame, bg='white')
+        line1_frame = Frame(center_frame, bg=bg_color)
         line1_frame.pack(anchor='w')
 
         Label(line1_frame, text=f"{self.hexagram.number}.",
-              font=('Arial', 24, 'bold'), bg='white').pack(side=LEFT)
+              font=('Arial', 24, 'bold'), bg=bg_color, fg=fg_color).pack(side=LEFT)
 
         wade_giles = self.metadata.get('wade_giles', self.hexagram.name)
         Label(line1_frame, text=f"  {wade_giles}",
-              font=('Arial', 20), bg='white', fg='#666').pack(side=LEFT)
+              font=('Arial', 20), bg=bg_color, fg=fg_color).pack(side=LEFT)
 
         # Line 2: English name below
         Label(center_frame, text=self.hexagram.english_name,
-              font=('Arial', 16), bg='white').pack(anchor='w', pady=(5, 0))
+              font=('Arial', 16), bg=bg_color, fg=fg_color).pack(anchor='w', pady=(5, 0))
 
         # Right: SVG hexagram (if available)
         self._add_svg_diagram(header_frame)
 
     def _add_svg_diagram(self, parent_frame):
         """Add SVG hexagram diagram to header."""
+        bg_color = self.colors.bgControls if self.colors else 'white'
+        fg_color = self.colors.fgControls if self.colors else 'black'
         svg_path = Path(__file__).parent / 'data' / 'svg' / f"hexagram_{self.hexagram.number:02d}.svg"
 
         if not svg_path.exists():
             # Fallback: show unicode hexagram symbol
             unicode_char = self.metadata.get('unicode', '?')
             Label(parent_frame, text=unicode_char,
-                  font=('Arial', 48), bg='white').pack(side=RIGHT, padx=10)
+                  font=('Arial', 48), bg=bg_color, fg=fg_color).pack(side=RIGHT, padx=10)
             return
 
         # Try to load and display SVG
@@ -270,7 +281,7 @@ class HexagramInfoWindow(Toplevel):
                 image = Image.open(io.BytesIO(png_data))
                 photo = ImageTk.PhotoImage(image)
 
-                label = Label(parent_frame, image=photo, bg='white')
+                label = Label(parent_frame, image=photo, bg=bg_color)
                 label.image = photo  # Keep reference
                 label.pack(side=RIGHT, padx=10)
                 return
@@ -280,17 +291,21 @@ class HexagramInfoWindow(Toplevel):
         # Fallback: show unicode symbol
         unicode_char = self.metadata.get('unicode', '?')
         Label(parent_frame, text=unicode_char,
-              font=('Arial', 48), bg='white').pack(side=RIGHT, padx=10)
+              font=('Arial', 48), bg=bg_color, fg=fg_color).pack(side=RIGHT, padx=10)
 
     def _create_content(self):
         """Create scrollable content area with judgment, image, and lines."""
+        bg_color = self.colors.bgReading if self.colors else 'white'
+        fg_color = self.colors.fgControls if self.colors else 'black'
+
         # Scrollable text area
-        text_frame = Frame(self)
+        text_frame = Frame(self, bg=bg_color)
         text_frame.pack(fill=BOTH, expand=True, padx=10, pady=(0, 10))
 
         self.text_widget = ScrolledText(text_frame, wrap=WORD,
                                         font=('TkDefaultFont', 11),
-                                        padx=15, pady=15)
+                                        padx=15, pady=15,
+                                        bg=bg_color, fg=fg_color)
         self.text_widget.pack(fill=BOTH, expand=True)
 
         # Configure tags for formatting

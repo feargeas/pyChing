@@ -50,7 +50,7 @@ class smgAbout(smgDialog):
                 pictureData: str = '', licenceFile: str = '', creditsFile: str = '',
                 showToolVersions: int = 1,
                 fontAppTitle: Optional[str] = None, fontText: Optional[str] = None,
-                fg: Optional[str] = None, bg: Optional[str] = None) -> None:
+                fg: Optional[str] = None, bg: Optional[str] = None, colors: Any = None) -> None:
         self.appTitle=appTitle
         self.version=version
         self.copyright=copyright
@@ -61,14 +61,19 @@ class smgAbout(smgDialog):
         self.licenceFile=licenceFile
         self.creditsFile=creditsFile
         self.showToolVersions = showToolVersions
-        self.fontAppTitle=fontAppTitle 
+        self.fontAppTitle=fontAppTitle
         self.fontText=fontText
-        self.fg=fg
-        self.bg=bg
+        # Use colors from theme if provided, otherwise use custom fg/bg
+        if colors:
+            self.fg = fg if fg else colors.fgControls
+            self.bg = bg if bg else colors.bgControls
+        else:
+            self.fg = fg
+            self.bg = bg
         smgDialog.__init__(self, parent, title='About '+ appTitle,
                     buttons=[{'name':'buttonOk','title':'Ok','binding':'Ok','underline':None,'hotKey':'<Return>'}],
                     buttonsDef=-1, buttonsWidth=0, buttonsPad=5,
-                    resizeable=0, transient=1, wait=1) # buttonsPos='bottom'
+                    resizeable=0, transient=1, wait=1, colors=colors) # buttonsPos='bottom'
         
     def ShowLicense(self):
         smgHtmlView(self,title='About - License',
