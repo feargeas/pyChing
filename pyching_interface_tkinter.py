@@ -46,6 +46,7 @@ from tkinter import font as tkFont
 import tkinter.filedialog as tkFileDialog
 import tkinter.messagebox as tkMessageBox
 import tkinter.colorchooser as tkColorChooser
+import tkinter.simpledialog as tkSimpleDialog
 
 #pyChing source specific imports
 import pyching_cimages
