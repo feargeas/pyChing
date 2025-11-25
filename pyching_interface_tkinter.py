@@ -276,9 +276,9 @@ class WindowMain:
         self.MakeStatusBar(self.master)
 
         #main frame
-        frameMainBevel = Frame(self.master, borderwidth=2, relief='sunken', highlightthickness=0)
-        frameMainBevel.pack(expand=True, fill='both', padx=4)#used as a bevel for the main frame
-        self.frameMain = Frame(frameMainBevel, bg=self.colors.bgReading)#highlightthickness=4,borderwidth=4,relief='sunken')#,borderwidth=1,relief='solid'
+        self.frameMainBevel = Frame(self.master, bg=self.colors.bgControls, borderwidth=2, relief='sunken', highlightthickness=0)
+        self.frameMainBevel.pack(expand=True, fill='both', padx=4)#used as a bevel for the main frame
+        self.frameMain = Frame(self.frameMainBevel, bg=self.colors.bgReading)#highlightthickness=4,borderwidth=4,relief='sunken')#,borderwidth=1,relief='solid'
         self.frameMain.pack(expand=True, fill='both')
         
         self.MakeCastDisplay(self.frameMain)
@@ -1258,6 +1258,10 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             self.labelsNoMovingLines[key].configure(bg=self.colors.bgReading,fg=self.colors.fgLabelLines)
 
         # === NEW: Theme control panel, buttons, and menus ===
+        # Main window border frame
+        if hasattr(self, 'frameMainBevel'):
+            self.frameMainBevel.configure(bg=self.colors.bgControls)
+
         # Menus (menubar and dropdowns)
         if hasattr(self, 'menuMain'):
             self.menuMain.configure(bg=self.colors.bgControls, fg=self.colors.fgControls,
