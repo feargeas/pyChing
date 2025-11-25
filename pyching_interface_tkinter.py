@@ -104,6 +104,7 @@ class WidgetColors:
         dprint(f"  Theme line_style: {theme.line_style}")
 
         # Copy all color attributes from theme
+        # Reading area colors
         self.bgReading = theme.bgReading
         self.bgLabelHint = theme.bgLabelHint
         self.fgLabelHint = theme.fgLabelHint
@@ -111,6 +112,19 @@ class WidgetColors:
         self.fgLabelHexTitles = theme.fgLabelHexTitles
         self.fgLabelLines = theme.fgLabelLines
         self.fgMessageQuestion = theme.fgMessageQuestion
+
+        # Control panel and button colors
+        self.bgControls = theme.bgControls
+        self.fgControls = theme.fgControls
+        self.bgButton = theme.bgButton
+        self.fgButton = theme.fgButton
+        self.bgButtonActive = theme.bgButtonActive
+
+        # Status bar colors
+        self.bgStatusBar = theme.bgStatusBar
+        self.fgStatusBar = theme.fgStatusBar
+
+        # Line colors
         self.colorLineBody = theme.colorLineBody
         self.colorLineHighlight = theme.colorLineHighlight
         self.colorLineShadow = theme.colorLineShadow
@@ -864,45 +878,59 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.frameCast.pack(anchor='nw', side='top')
 
         # Modern controls frame
-        self.frameControls = Frame(self.frameCast, bg=self.colors.bgReading)
+        self.frameControls = Frame(self.frameCast, bg=self.colors.bgControls)
         self.frameControls.grid(column=0, row=0, columnspan=5, sticky='nw', padx=20, pady=10)
 
         # Method selection
-        Label(self.frameControls, text='Method:', bg=self.colors.bgReading,
-              fg=self.colors.fgLabelLines, font=self.fonts.label).grid(row=0, column=0, sticky='w', padx=5)
+        Label(self.frameControls, text='Method:', bg=self.colors.bgControls,
+              fg=self.colors.fgControls, font=self.fonts.label).grid(row=0, column=0, sticky='w', padx=5)
         self.methodVar = StringVar(value='wood')
         self.methodMenu = OptionMenu(self.frameControls, self.methodVar,
                                       'wood', 'metal', 'fire', 'earth', 'water',
                                       command=self.OnMethodChange)
-        self.methodMenu.config(width=8, font=self.fonts.button)
+        self.methodMenu.config(width=8, font=self.fonts.button,
+                              bg=self.colors.bgButton, fg=self.colors.fgButton,
+                              activebackground=self.colors.bgButtonActive,
+                              activeforeground=self.colors.fgButton)
         self.methodMenu.grid(row=0, column=1, sticky='w', padx=5)
 
         # Source selection
-        Label(self.frameControls, text='Source:', bg=self.colors.bgReading,
-              fg=self.colors.fgLabelLines, font=self.fonts.label).grid(row=0, column=2, sticky='w', padx=5)
+        Label(self.frameControls, text='Source:', bg=self.colors.bgControls,
+              fg=self.colors.fgControls, font=self.fonts.label).grid(row=0, column=2, sticky='w', padx=5)
         self.sourceVar = StringVar(value='canonical')
         self.sourceMenu = OptionMenu(self.frameControls, self.sourceVar,
                                       'canonical', 'wilhelm_baynes', 'legge_simplified')
-        self.sourceMenu.config(width=12, font=self.fonts.button)
+        self.sourceMenu.config(width=12, font=self.fonts.button,
+                              bg=self.colors.bgButton, fg=self.colors.fgButton,
+                              activebackground=self.colors.bgButtonActive,
+                              activeforeground=self.colors.fgButton)
         self.sourceMenu.grid(row=0, column=3, sticky='w', padx=5)
 
         # Manual input button
         self.buttonManual = Button(self.frameControls, text='Manual Input',
-                                   width=12, bg=None, fg=None, font=self.fonts.button,
+                                   width=12, bg=self.colors.bgButton, fg=self.colors.fgButton,
+                                   activebackground=self.colors.bgButtonActive,
+                                   activeforeground=self.colors.fgButton,
+                                   font=self.fonts.button,
                                    highlightthickness=0, takefocus=False,
                                    command=self.ManualInput)
         self.buttonManual.grid(row=0, column=4, sticky='w', padx=10)
 
         # "View earth text" button (initially hidden, shows when Earth method selected)
         self.buttonViewEarthText = Button(self.frameControls, text='View earth text',
-                                          width=15, bg=None, fg=None, font=self.fonts.button,
+                                          width=15, bg=self.colors.bgButton, fg=self.colors.fgButton,
+                                          activebackground=self.colors.bgButtonActive,
+                                          activeforeground=self.colors.fgButton, font=self.fonts.button,
                                           highlightthickness=0, takefocus=False,
                                           command=self.ViewEarthText)
         # Initially hidden - will be grid()'ed when Earth method is selected
 
         # Cast button
         self.buttonCast = Button(self.frameCast, text='Cast New Hexagram', underline=0,
-                        width=20, bg=None, fg=None, font=self.fonts.button, highlightthickness=0,
+                        width=20, bg=self.colors.bgButton, fg=self.colors.fgButton,
+                        activebackground=self.colors.bgButtonActive,
+                        activeforeground=self.colors.fgButton,
+                        font=self.fonts.button, highlightthickness=0,
                         takefocus=False, command=self.CastHexes)
         self.buttonCast.grid(column=0, row=1, sticky='nw', padx=20, pady=10)
 
@@ -920,10 +948,16 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         # but disabled/invisible when not in use
         self.frameInfoButtons = Frame(self.frameCast, bg=self.colors.bgReading)
         self.buttonViewHex1Info = Button(self.frameInfoButtons, text='', underline=0,
-                        bg=None, fg=None, font=self.fonts.button, highlightthickness=0,
+                        bg=self.colors.bgButton, fg=self.colors.fgButton,
+                        activebackground=self.colors.bgButtonActive,
+                        activeforeground=self.colors.fgButton,
+                        font=self.fonts.button, highlightthickness=0,
                         takefocus=False, state='disabled', command=self.ViewHex1Info)
         self.buttonViewHex2Info = Button(self.frameInfoButtons, text='', underline=1,
-                        bg=None, fg=None, font=self.fonts.button, highlightthickness=0,
+                        bg=self.colors.bgButton, fg=self.colors.fgButton,
+                        activebackground=self.colors.bgButtonActive,
+                        activeforeground=self.colors.fgButton,
+                        font=self.fonts.button, highlightthickness=0,
                         takefocus=False, state='disabled', command=self.ViewHex2Info)
 
         # Grid them immediately so they're always part of layout (ensures correct minsize)
@@ -1170,10 +1204,13 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.messageQuestion.configure(width=20,text=None)
 
     def MakeStatusBar(self, parent):
-        self.frameStatusBar = Frame(parent, borderwidth=2, relief='sunken', highlightthickness=2)
+        self.frameStatusBar = Frame(parent, bg=self.colors.bgStatusBar,
+                                    borderwidth=2, relief='sunken', highlightthickness=2)
         self.frameStatusBar.pack(anchor='sw', side='bottom', fill='x', padx=2)#,expand=True
         self.labelStatus = Label(self.frameStatusBar,
-                        text=pyching.title + '  ' + pyching.version,font=self.fonts.label)
+                        text=pyching.title + '  ' + pyching.version,
+                        bg=self.colors.bgStatusBar, fg=self.colors.fgStatusBar,
+                        font=self.fonts.label)
         self.labelStatus.pack()
 
         #button for debug/testing purposes only
@@ -1211,6 +1248,62 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.labelH2Title.configure(bg=self.colors.bgReading,fg=self.colors.fgLabelHexTitles)
         for key in self.labelsNoMovingLines.keys():
             self.labelsNoMovingLines[key].configure(bg=self.colors.bgReading,fg=self.colors.fgLabelLines)
+
+        # === NEW: Theme control panel and buttons ===
+        # Control panel frame and labels
+        self.frameControls.configure(bg=self.colors.bgControls)
+        for widget in self.frameControls.winfo_children():
+            if isinstance(widget, Label):
+                widget.configure(bg=self.colors.bgControls, fg=self.colors.fgControls)
+
+        # OptionMenus (Method and Source dropdowns)
+        # Need to configure both the menu button and the internal menu
+        if hasattr(self, 'methodMenu'):
+            self.methodMenu.configure(bg=self.colors.bgButton, fg=self.colors.fgButton,
+                                     activebackground=self.colors.bgButtonActive,
+                                     activeforeground=self.colors.fgButton)
+            # Configure the internal menu
+            method_menu = self.methodMenu['menu']
+            method_menu.configure(bg=self.colors.bgButton, fg=self.colors.fgButton,
+                                activebackground=self.colors.bgButtonActive,
+                                activeforeground=self.colors.fgButton)
+
+        if hasattr(self, 'sourceMenu'):
+            self.sourceMenu.configure(bg=self.colors.bgButton, fg=self.colors.fgButton,
+                                     activebackground=self.colors.bgButtonActive,
+                                     activeforeground=self.colors.fgButton)
+            # Configure the internal menu
+            source_menu = self.sourceMenu['menu']
+            source_menu.configure(bg=self.colors.bgButton, fg=self.colors.fgButton,
+                                activebackground=self.colors.bgButtonActive,
+                                activeforeground=self.colors.fgButton)
+
+        # Buttons
+        button_config = {
+            'bg': self.colors.bgButton,
+            'fg': self.colors.fgButton,
+            'activebackground': self.colors.bgButtonActive,
+            'activeforeground': self.colors.fgButton
+        }
+
+        if hasattr(self, 'buttonCast'):
+            self.buttonCast.configure(**button_config)
+        if hasattr(self, 'buttonManual'):
+            self.buttonManual.configure(**button_config)
+        if hasattr(self, 'buttonViewEarthText'):
+            self.buttonViewEarthText.configure(**button_config)
+        if hasattr(self, 'buttonViewHex1Info'):
+            self.buttonViewHex1Info.configure(**button_config)
+        if hasattr(self, 'buttonViewHex2Info'):
+            self.buttonViewHex2Info.configure(**button_config)
+
+        # Status bar
+        if hasattr(self, 'frameStatusBar'):
+            self.frameStatusBar.configure(bg=self.colors.bgStatusBar)
+        if hasattr(self, 'labelStatus'):
+            self.labelStatus.configure(bg=self.colors.bgStatusBar, fg=self.colors.fgStatusBar)
+        # === END NEW ===
+
         #the backgrounds of these are always repainted
         for hexNum in range(2):
             for lineNum in range(6):

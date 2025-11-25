@@ -22,6 +22,10 @@ class Theme:
     def __init__(self):
         # === BACKGROUND COLORS ===
         self.bgReading = "#323c4a"          # Main reading area background
+        self.bgControls = "#d9d9d9"         # Control panel background (Tk default gray)
+        self.bgButton = "#d9d9d9"           # Button background
+        self.bgButtonActive = "#ececec"     # Button background when hovered/pressed
+        self.bgStatusBar = "#d9d9d9"        # Status bar background
 
         # === FOREGROUND COLORS ===
         self.fgLabelHexTitles = "#FFFFFF"   # Hexagram title text (white)
@@ -29,6 +33,9 @@ class Theme:
         self.fgLabelLines = "#FFFFFF"       # Line labels text (white)
         self.fgLabelHint = "#000000"        # Line hint text (black)
         self.fgMessageQuestion = "#FFFFFF"  # Question text (white)
+        self.fgControls = "#000000"         # Control panel text (black)
+        self.fgButton = "#000000"           # Button text
+        self.fgStatusBar = "#000000"        # Status bar text
 
         # === LINE HINT COLORS ===
         self.bgLabelHint = "#DAA520"        # Line hint background (goldenrod)
@@ -64,6 +71,10 @@ class SystemTheme(Theme):
         # Use neutral gray palette that matches most OS themes
         # (System color names like "SystemButtonText" aren't universally supported)
         self.bgReading = "#e0e0e0"          # Light gray background
+        self.bgControls = "#f0f0f0"         # Very light gray (lighter than reading area)
+        self.bgButton = "#e0e0e0"           # Light gray (matches reading area)
+        self.bgButtonActive = "#d0d0d0"     # Slightly darker on hover
+        self.bgStatusBar = "#f0f0f0"        # Very light gray
         self.bgLabelHint = "#f5f5f5"        # Very light gray
 
         self.fgLabelHexTitles = "#202020"   # Very dark gray
@@ -71,6 +82,9 @@ class SystemTheme(Theme):
         self.fgLabelLines = "#303030"       # Very dark gray
         self.fgLabelHint = "#000000"        # Black
         self.fgMessageQuestion = "#202020"  # Very dark gray
+        self.fgControls = "#202020"         # Very dark gray
+        self.fgButton = "#202020"           # Very dark gray
+        self.fgStatusBar = "#404040"        # Dark gray
 
         self.colorLineBody = "#404040"      # Dark gray lines
         self.colorLineHighlight = "#606060" # Medium gray
@@ -80,7 +94,7 @@ class SystemTheme(Theme):
         self.line_style = 'flat'
         self.line_width = 2
 
-        self.name = "System Default"
+        self.name = "System Theme"
         self.description = "Matches your operating system theme"
         self.author = "pyChing team"
 
@@ -116,11 +130,19 @@ class SolarizedDarkTheme(Theme):
 
         # Apply Solarized palette
         self.bgReading = base03             # Dark background
+        self.bgControls = base02            # Slightly lighter for controls
+        self.bgButton = base02              # Background highlights
+        self.bgButtonActive = base01        # Lighter when active
+        self.bgStatusBar = base02           # Background highlights
+
         self.fgLabelHexTitles = blue        # Blue titles
         self.fgLabelPlaces = green          # Green place names
         self.fgLabelLines = yellow          # Yellow line labels
         self.fgLabelHint = base03           # Dark text on yellow bg
         self.fgMessageQuestion = cyan       # Cyan question text
+        self.fgControls = base0             # Primary content
+        self.fgButton = base0               # Primary content
+        self.fgStatusBar = base00           # Body text
 
         self.bgLabelHint = yellow           # Yellow hint background
 
@@ -170,11 +192,19 @@ class SolarizedLightTheme(Theme):
 
         # Apply light palette
         self.bgReading = base3              # Light background
+        self.bgControls = base2             # Background highlights
+        self.bgButton = base2               # Background highlights
+        self.bgButtonActive = base1         # Darker when active
+        self.bgStatusBar = base2            # Background highlights
+
         self.fgLabelHexTitles = blue        # Blue titles
         self.fgLabelPlaces = green          # Green place names
         self.fgLabelLines = orange          # Orange line labels
         self.fgLabelHint = base3            # Light text on dark bg
         self.fgMessageQuestion = violet     # Violet question text
+        self.fgControls = base00            # Primary content
+        self.fgButton = base00              # Primary content
+        self.fgStatusBar = base01           # Optional emphasized
 
         self.bgLabelHint = base01           # Dark hint background
 
@@ -224,11 +254,19 @@ class TokyoNightTheme(Theme):
 
         # Apply Tokyo Night palette
         self.bgReading = bg                 # Dark background
+        self.bgControls = bg_highlight      # Highlight background
+        self.bgButton = bg_highlight        # Highlight background
+        self.bgButtonActive = purple        # Purple when active
+        self.bgStatusBar = bg_dark          # Darker variant
+
         self.fgLabelHexTitles = blue        # Blue titles
         self.fgLabelPlaces = green          # Green place names
         self.fgLabelLines = purple          # Purple line labels
         self.fgLabelHint = bg               # Dark on light
         self.fgMessageQuestion = cyan       # Cyan question
+        self.fgControls = fg                # Foreground text
+        self.fgButton = fg                  # Foreground text
+        self.fgStatusBar = fg_dark          # Darker foreground
 
         self.bgLabelHint = yellow           # Yellow hint bg
 
@@ -275,11 +313,19 @@ class TokyoNightStormTheme(Theme):
 
         # Apply Storm palette
         self.bgReading = bg
+        self.bgControls = bg_dark           # Darker variant
+        self.bgButton = bg_dark             # Darker variant
+        self.bgButtonActive = cyan          # Cyan when active
+        self.bgStatusBar = bg_dark          # Darker variant
+
         self.fgLabelHexTitles = blue
         self.fgLabelPlaces = green
         self.fgLabelLines = cyan
         self.fgLabelHint = bg
         self.fgMessageQuestion = purple
+        self.fgControls = fg                # Foreground text
+        self.fgButton = fg                  # Foreground text
+        self.fgStatusBar = fg               # Foreground text
 
         self.bgLabelHint = yellow
 
@@ -333,11 +379,19 @@ class NordTheme(Theme):
 
         # Apply Nord palette
         self.bgReading = nord0              # Dark background
+        self.bgControls = nord1             # Dark variant
+        self.bgButton = nord1               # Dark variant
+        self.bgButtonActive = nord2         # Medium dark
+        self.bgStatusBar = nord1            # Dark variant
+
         self.fgLabelHexTitles = nord8       # Cyan titles
         self.fgLabelPlaces = nord14         # Green place names
         self.fgLabelLines = nord13          # Yellow line labels
         self.fgLabelHint = nord0            # Dark on light
         self.fgMessageQuestion = nord9      # Blue question
+        self.fgControls = nord4             # Medium light
+        self.fgButton = nord4               # Medium light
+        self.fgStatusBar = nord4            # Medium light
 
         self.bgLabelHint = nord13           # Yellow hint
 
@@ -383,11 +437,19 @@ class DraculaTheme(Theme):
 
         # Apply Dracula palette
         self.bgReading = bg
+        self.bgControls = selection         # Selection color
+        self.bgButton = selection           # Selection color
+        self.bgButtonActive = comment       # Comment blue when active
+        self.bgStatusBar = selection        # Selection color
+
         self.fgLabelHexTitles = purple      # Purple titles
         self.fgLabelPlaces = green          # Green place names
         self.fgLabelLines = orange          # Orange labels
         self.fgLabelHint = bg               # Dark on light
         self.fgMessageQuestion = cyan       # Cyan question
+        self.fgControls = fg                # Foreground
+        self.fgButton = fg                  # Foreground
+        self.fgStatusBar = fg               # Foreground
 
         self.bgLabelHint = yellow           # Yellow hint
 
@@ -437,11 +499,19 @@ class GruvboxDarkTheme(Theme):
 
         # Apply Gruvbox palette
         self.bgReading = bg0                # Dark background
+        self.bgControls = bg1               # Lighter background
+        self.bgButton = bg1                 # Lighter background
+        self.bgButtonActive = bg2           # Selection
+        self.bgStatusBar = bg0_h            # Hard background
+
         self.fgLabelHexTitles = blue        # Blue titles
         self.fgLabelPlaces = green          # Green place names
         self.fgLabelLines = yellow          # Yellow labels
         self.fgLabelHint = bg0              # Dark on light
         self.fgMessageQuestion = aqua       # Aqua question
+        self.fgControls = fg1               # Default foreground
+        self.fgButton = fg1                 # Default foreground
+        self.fgStatusBar = fg2              # Darker foreground
 
         self.bgLabelHint = yellow           # Yellow hint
 
