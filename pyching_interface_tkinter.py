@@ -328,11 +328,14 @@ class WindowMain:
     def __AddMenu(self,parent,title):
         if title == 'Help': menuName = 'help'#name option to right justify help menu under X
         else: menuName = None
-        _menu = Menu(parent,name=menuName,tearoff=0,font=self.fonts.menu)#create the menu
+        _menu = Menu(parent,name=menuName,tearoff=0,font=self.fonts.menu,
+                    bg=self.colors.bgControls, fg=self.colors.fgControls,
+                    activebackground=self.colors.bgButtonActive,
+                    activeforeground=self.colors.fgButton)#create the menu
         if parent == self.master:#this is the menubar itself
             parent.configure(menu=_menu)#make _menu the menubar
             _menu.configure(borderwidth=0)
-        else: #this is a dropdown from the menubar  
+        else: #this is a dropdown from the menubar
             parent.add_cascade(label=title,underline=0,menu=_menu)#add the menu to the menubar
         return _menu
 
@@ -891,7 +894,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.methodMenu.config(width=8, font=self.fonts.button,
                               bg=self.colors.bgButton, fg=self.colors.fgButton,
                               activebackground=self.colors.bgButtonActive,
-                              activeforeground=self.colors.fgButton)
+                              activeforeground=self.colors.fgButton,
+                              highlightthickness=0, relief='raised', borderwidth=1)
         self.methodMenu.grid(row=0, column=1, sticky='w', padx=5)
 
         # Source selection
@@ -903,7 +907,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         self.sourceMenu.config(width=12, font=self.fonts.button,
                               bg=self.colors.bgButton, fg=self.colors.fgButton,
                               activebackground=self.colors.bgButtonActive,
-                              activeforeground=self.colors.fgButton)
+                              activeforeground=self.colors.fgButton,
+                              highlightthickness=0, relief='raised', borderwidth=1)
         self.sourceMenu.grid(row=0, column=3, sticky='w', padx=5)
 
         # Manual input button
@@ -912,8 +917,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                                    activebackground=self.colors.bgButtonActive,
                                    activeforeground=self.colors.fgButton,
                                    font=self.fonts.button,
-                                   highlightthickness=0, takefocus=False,
-                                   command=self.ManualInput)
+                                   highlightthickness=0, relief='raised', borderwidth=1,
+                                   takefocus=False, command=self.ManualInput)
         self.buttonManual.grid(row=0, column=4, sticky='w', padx=10)
 
         # "View earth text" button (initially hidden, shows when Earth method selected)
@@ -921,8 +926,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                                           width=15, bg=self.colors.bgButton, fg=self.colors.fgButton,
                                           activebackground=self.colors.bgButtonActive,
                                           activeforeground=self.colors.fgButton, font=self.fonts.button,
-                                          highlightthickness=0, takefocus=False,
-                                          command=self.ViewEarthText)
+                                          highlightthickness=0, relief='raised', borderwidth=1,
+                                          takefocus=False, command=self.ViewEarthText)
         # Initially hidden - will be grid()'ed when Earth method is selected
 
         # Cast button
@@ -931,6 +936,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                         activebackground=self.colors.bgButtonActive,
                         activeforeground=self.colors.fgButton,
                         font=self.fonts.button, highlightthickness=0,
+                        relief='raised', borderwidth=1,
                         takefocus=False, command=self.CastHexes)
         self.buttonCast.grid(column=0, row=1, sticky='nw', padx=20, pady=10)
 
@@ -952,12 +958,14 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                         activebackground=self.colors.bgButtonActive,
                         activeforeground=self.colors.fgButton,
                         font=self.fonts.button, highlightthickness=0,
+                        relief='raised', borderwidth=1,
                         takefocus=False, state='disabled', command=self.ViewHex1Info)
         self.buttonViewHex2Info = Button(self.frameInfoButtons, text='', underline=1,
                         bg=self.colors.bgButton, fg=self.colors.fgButton,
                         activebackground=self.colors.bgButtonActive,
                         activeforeground=self.colors.fgButton,
                         font=self.fonts.button, highlightthickness=0,
+                        relief='raised', borderwidth=1,
                         takefocus=False, state='disabled', command=self.ViewHex2Info)
 
         # Grid them immediately so they're always part of layout (ensures correct minsize)
@@ -1249,7 +1257,25 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         for key in self.labelsNoMovingLines.keys():
             self.labelsNoMovingLines[key].configure(bg=self.colors.bgReading,fg=self.colors.fgLabelLines)
 
-        # === NEW: Theme control panel and buttons ===
+        # === NEW: Theme control panel, buttons, and menus ===
+        # Menus (menubar and dropdowns)
+        if hasattr(self, 'menuMain'):
+            self.menuMain.configure(bg=self.colors.bgControls, fg=self.colors.fgControls,
+                                   activebackground=self.colors.bgButtonActive,
+                                   activeforeground=self.colors.fgButton)
+        if hasattr(self, 'menuMainFile'):
+            self.menuMainFile.configure(bg=self.colors.bgControls, fg=self.colors.fgControls,
+                                       activebackground=self.colors.bgButtonActive,
+                                       activeforeground=self.colors.fgButton)
+        if hasattr(self, 'menuMainSettings'):
+            self.menuMainSettings.configure(bg=self.colors.bgControls, fg=self.colors.fgControls,
+                                           activebackground=self.colors.bgButtonActive,
+                                           activeforeground=self.colors.fgButton)
+        if hasattr(self, 'menuMainHelp'):
+            self.menuMainHelp.configure(bg=self.colors.bgControls, fg=self.colors.fgControls,
+                                       activebackground=self.colors.bgButtonActive,
+                                       activeforeground=self.colors.fgButton)
+
         # Control panel frame and labels
         self.frameControls.configure(bg=self.colors.bgControls)
         for widget in self.frameControls.winfo_children():
@@ -1261,20 +1287,22 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         if hasattr(self, 'methodMenu'):
             self.methodMenu.configure(bg=self.colors.bgButton, fg=self.colors.fgButton,
                                      activebackground=self.colors.bgButtonActive,
-                                     activeforeground=self.colors.fgButton)
+                                     activeforeground=self.colors.fgButton,
+                                     highlightthickness=0, relief='raised', borderwidth=1)
             # Configure the internal menu
             method_menu = self.methodMenu['menu']
-            method_menu.configure(bg=self.colors.bgButton, fg=self.colors.fgButton,
+            method_menu.configure(bg=self.colors.bgControls, fg=self.colors.fgControls,
                                 activebackground=self.colors.bgButtonActive,
                                 activeforeground=self.colors.fgButton)
 
         if hasattr(self, 'sourceMenu'):
             self.sourceMenu.configure(bg=self.colors.bgButton, fg=self.colors.fgButton,
                                      activebackground=self.colors.bgButtonActive,
-                                     activeforeground=self.colors.fgButton)
+                                     activeforeground=self.colors.fgButton,
+                                     highlightthickness=0, relief='raised', borderwidth=1)
             # Configure the internal menu
             source_menu = self.sourceMenu['menu']
-            source_menu.configure(bg=self.colors.bgButton, fg=self.colors.fgButton,
+            source_menu.configure(bg=self.colors.bgControls, fg=self.colors.fgControls,
                                 activebackground=self.colors.bgButtonActive,
                                 activeforeground=self.colors.fgButton)
 
@@ -1283,7 +1311,10 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
             'bg': self.colors.bgButton,
             'fg': self.colors.fgButton,
             'activebackground': self.colors.bgButtonActive,
-            'activeforeground': self.colors.fgButton
+            'activeforeground': self.colors.fgButton,
+            'highlightthickness': 0,
+            'relief': 'raised',
+            'borderwidth': 1
         }
 
         if hasattr(self, 'buttonCast'):
