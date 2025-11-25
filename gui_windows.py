@@ -308,15 +308,19 @@ class HexagramInfoWindow(Toplevel):
                                         bg=bg_color, fg=fg_color)
         self.text_widget.pack(fill=BOTH, expand=True)
 
-        # Configure tags for formatting
+        # Configure tags for formatting (use theme colors if available)
+        heading_color = fg_color if self.colors else '#333'
+        line_color = fg_color if self.colors else '#006600'
+        changing_color = fg_color if self.colors else '#CC0000'
+
         self.text_widget.tag_config('heading', font=('Arial', 12, 'bold'),
-                                    foreground='#333', spacing1=10, spacing3=5)
+                                    foreground=heading_color, spacing1=10, spacing3=5)
         self.text_widget.tag_config('body', font=('TkDefaultFont', 11),
                                    spacing1=5)
         self.text_widget.tag_config('line_heading', font=('Arial', 11, 'bold'),
-                                   foreground='#006600', spacing1=8, spacing3=3)
+                                   foreground=line_color, spacing1=8, spacing3=3)
         self.text_widget.tag_config('changing_line', font=('Arial', 11, 'bold'),
-                                   foreground='#CC0000', spacing1=8, spacing3=3)
+                                   foreground=changing_color, spacing1=8, spacing3=3)
 
         # Add content
         self._add_judgment()
@@ -326,9 +330,20 @@ class HexagramInfoWindow(Toplevel):
         # Make read-only
         self.text_widget.config(state=DISABLED)
 
-        # Close button
+        # Close button with theme colors
+        btn_config = {}
+        if self.colors:
+            btn_config = {
+                'bg': self.colors.bgButton,
+                'fg': self.colors.fgButton,
+                'activebackground': self.colors.bgButtonActive,
+                'activeforeground': self.colors.fgButton,
+                'highlightthickness': 0,
+                'relief': 'raised',
+                'borderwidth': 1
+            }
         Button(self, text='Close', command=self.destroy,
-               width=10).pack(pady=(0, 10))
+               width=10, **btn_config).pack(pady=(0, 10))
 
     def _add_judgment(self):
         """Add judgment text."""
