@@ -406,8 +406,25 @@ class WindowMain:
                 index='pyching_hlhtx_data.hlHelpData()')
             
     def ShowHelpHexInfo(self):
-        self.ShowHtml(title=pyching.title + ' - Hexagram Infomation Browser',
-                hexBrowser=1)
+        """Browse hexagram information using modern interface."""
+        # Prompt user for hexagram number
+        hexNum = tkSimpleDialog.askinteger(
+            'Browse Hexagram Information',
+            'Enter hexagram number (1-64):',
+            parent=self.master,
+            initialvalue=1,
+            minvalue=1,
+            maxvalue=64
+        )
+
+        if hexNum:
+            # Load the hexagram
+            from pyching.data import HexagramResolver
+            resolver = HexagramResolver()
+            hexagram = resolver.get_hexagram(hexNum)
+
+            # Display using modern HexagramInfoWindow (no changing lines for browsing)
+            HexagramInfoWindow(self.master, hexagram, changing_lines=[])
             
     def ShowText(self,title=None,textFile=None):
         #dialogTxt = DialogShowHtml(self.master,title=title,htmlFile=textFile,
