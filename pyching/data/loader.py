@@ -193,7 +193,7 @@ class HexagramDataLoader:
 
         # Convert to binary
         # 7 (yang) = 1, 8 (yin) = 0
-        binary = ''.join('1' if line == 7 else '0' for line in stable_lines)
+        binary = ''.join('1' if line == 7 else '0' for line in reversed(stable_lines))
 
         return self.get_hexagram_by_binary(binary)
 

@@ -984,7 +984,7 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         base_hex = Hexagram.from_number(hex_number, source=source)
 
         line_values = []
-        for i, bit in enumerate(base_hex.binary):
+        for i, bit in enumerate(reversed(base_hex.binary)):
             if bit == '1':
                 # Yang line - check if it's moving
                 if (i + 1) in moving_lines:
@@ -999,7 +999,8 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
                     line_values.append(8)  # Young yin (stable)
 
         # Create primary hexagram with line values
-        hex_data = Hexagram.from_number(hex_number, source=source, lines=line_values)
+        hex_data = Hexagram.from_number(hex_number, source=source)
+        hex_data.lines = line_values
 
         # Calculate relating hexagram if there are moving lines
         relating_hex = None
