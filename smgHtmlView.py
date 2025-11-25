@@ -81,9 +81,15 @@ class smgHtmlView(smgDialog):
         modal - boolean, true if viewer dialog should be modal
         imageModule - string, name of internal image data module
         bg, fg - background and foreground colours of html display area
+        colors - theme colors object (optional)
         """
-        self.colorViewerFg = fg
-        self.colorViewerBg = bg
+        # Use theme colors if provided, otherwise use fg/bg parameters
+        if colors:
+            self.colorViewerFg = fg if fg != '#000000' else colors.fgControls
+            self.colorViewerBg = bg if bg != '#e8e8e8' else colors.bgReading
+        else:
+            self.colorViewerFg = fg
+            self.colorViewerBg = bg
         self.index = index
         self.plainText = plainText
         self.hexNum=0
@@ -194,8 +200,11 @@ class smgHtmlView(smgDialog):
         self.textDisplay = Text(master,height=20,width=74,wrap=WORD,
                 insertofftime=0,font=baseFont,highlightthickness=0,
                 padx=4,pady=8,fg=self.colorViewerFg,bg=self.colorViewerBg)
+        # Apply theme colors to scrollbar if available
+        scrollbar_bg = self.colors.bgControls if self.colors else None
         scrollbarY=Scrollbar(master,orient=VERTICAL,width=13,
-                highlightthickness=0,command=self.textDisplay.yview)
+                highlightthickness=0,command=self.textDisplay.yview,
+                bg=scrollbar_bg if scrollbar_bg else None)
         #scrollbarX=Scrollbar(master,orient=HORIZONTAL,width=15,highlightthickness=0,
         #        command=textDisplay.xview)
         #textDisplay.configure(yscrollcommand=scrollbarY.set,
