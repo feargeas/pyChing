@@ -276,10 +276,10 @@ class WindowMain:
         self.MakeStatusBar(self.master)
 
         #main frame
-        self.frameMainBevel = Frame(self.master, bg=self.colors.bgControls, borderwidth=2, relief='sunken', highlightthickness=0)
+        self.frameMainBevel = Frame(self.master, bg=self.colors.bgControls, highlightthickness=0)
         self.frameMainBevel.pack(expand=True, fill='both', padx=4)#used as a bevel for the main frame
         self.frameMain = Frame(self.frameMainBevel, bg=self.colors.bgReading)#highlightthickness=4,borderwidth=4,relief='sunken')#,borderwidth=1,relief='solid'
-        self.frameMain.pack(expand=True, fill='both')
+        self.frameMain.pack(expand=True, fill='both', padx=2, pady=2)
         
         self.MakeCastDisplay(self.frameMain)
 
