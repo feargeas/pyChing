@@ -428,19 +428,12 @@ class WindowMain:
             
     def ShowHelpHexInfo(self):
         """Browse hexagram information using modern interface."""
-        # Prompt user for hexagram number
-        hexNum = tkSimpleDialog.askinteger(
-            'Browse Hexagram Information',
-            'Enter hexagram number (1-64):',
-            parent=self.master,
-            initialvalue=1,
-            minvalue=1,
-            maxvalue=64
-        )
+        # Prompt user for hexagram number using themed dialog
+        dialog = DialogGetHexNumber(self.master, colors=self.colors)
 
-        if hexNum:
+        if dialog.result:
             # Load the hexagram using the from_number class method
-            hexagram = Hexagram.from_number(hexNum)
+            hexagram = Hexagram.from_number(dialog.result)
 
             # Display using modern HexagramInfoWindow (no changing lines for browsing)
             HexagramInfoWindow(self.master, hexagram, changing_lines=[], colors=self.colors)
@@ -2428,6 +2421,49 @@ class DialogManualInput(smgDialog):
                                       message='Moving lines must be comma-separated numbers (e.g., 1,3,6).')
                 return 0
 
+        return 1
+
+class DialogGetHexNumber(smgDialog):
+    """
+    Simple dialog to get a hexagram number from user.
+    """
+    def __init__(self, parent: Any, colors: Any = None) -> None:
+        smgDialog.__init__(self, parent, title='Browse Hexagram Information',
+                    buttons=[{'name':'buttonOk','title':'Ok','binding':'Ok','underline':None,'hotKey':'<Return>'},
+                                {'name':'buttonCancel','title':'Cancel','binding':'Cancel','underline':None,'hotKey':'<Escape>'}],
+                    buttonsDef=-1, buttonsWidth=0, buttonsPad=5,
+                    resizeable=0, transient=1, wait=1, colors=colors)
+
+    def Body(self, master):
+        Label(master, text='Enter hexagram number (1-64):',
+              bg=self.colors.bgControls if self.colors else None,
+              fg=self.colors.fgControls if self.colors else None
+              ).grid(column=0, row=0, sticky='w', padx=5, pady=5)
+
+        self.hexNumberVar = StringVar()
+        self.hexNumberVar.set('1')
+        self.entryHexNumber = Entry(master, textvariable=self.hexNumberVar, width=10)
+        self.entryHexNumber.grid(column=0, row=1, sticky='w', padx=5, pady=5)
+
+        return self.entryHexNumber
+
+    def Apply(self):
+        try:
+            self.result = int(self.hexNumberVar.get())
+        except ValueError:
+            self.result = None
+
+    def Validate(self):
+        try:
+            hex_num = int(self.hexNumberVar.get())
+            if hex_num < 1 or hex_num > 64:
+                tkMessageBox.showerror(title='Invalid Hexagram Number',
+                                      message='Hexagram number must be between 1 and 64.')
+                return 0
+        except ValueError:
+            tkMessageBox.showerror(title='Invalid Input',
+                                  message='Please enter a valid number.')
+            return 0
         return 1
 
 class DialogCompareSources(Toplevel):
