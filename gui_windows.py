@@ -13,7 +13,7 @@ from tkinter import *
 from tkinter import font as tkFont
 from tkinter import messagebox as tkMessageBox
 from tkinter.scrolledtext import ScrolledText
-from typing import Optional, List
+from typing import Optional, List, Any
 try:
     from cairosvg import svg2png
     from PIL import Image, ImageTk
