@@ -1955,7 +1955,40 @@ class DialogSetColors(smgDialog):
                         fg=self.colors.fgLabelHint,bg=self.colors.bgLabelHint)
         self.labelHintDemo.grid(row=0,column=0)
         self.labelHintDemo.bind('<ButtonPress-1>',self.SetColorExampleDetails)
-        
+
+        # NEW: Demo widgets for control panel, buttons, and status bar
+        self.frameControlsDemo = Frame(self.frameDemo, bg=self.colors.bgControls,
+                                      borderwidth=2, relief='raised')
+        self.frameControlsDemo.grid(row=6, column=0, columnspan=2, sticky='ew', padx=5, pady=5)
+        self.frameControlsDemo.bind('<ButtonPress-1>',self.SetColorExampleDetails)
+
+        self.labelControlsDemo = Label(self.frameControlsDemo, text='Method: ',
+                                      font=self.fonts.label, borderwidth=0,
+                                      fg=self.colors.fgControls, bg=self.colors.bgControls)
+        self.labelControlsDemo.grid(row=0, column=0, padx=5, pady=3)
+        self.labelControlsDemo.bind('<ButtonPress-1>',self.SetColorExampleDetails)
+
+        self.buttonDemo = Button(self.frameDemo, text='Cast Button',
+                                font=self.fonts.button,
+                                bg=self.colors.bgButton, fg=self.colors.fgButton,
+                                activebackground=self.colors.bgButtonActive,
+                                activeforeground=self.colors.fgButton,
+                                highlightthickness=0, takefocus=False)
+        self.buttonDemo.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
+        self.buttonDemo.bind('<ButtonPress-1>',self.SetColorExampleDetails)
+
+        self.frameStatusDemo = Frame(self.frameDemo, bg=self.colors.bgStatusBar,
+                                     borderwidth=2, relief='sunken')
+        self.frameStatusDemo.grid(row=8, column=0, columnspan=2, sticky='ew', padx=5, pady=5)
+        self.frameStatusDemo.bind('<ButtonPress-1>',self.SetColorExampleDetails)
+
+        self.labelStatusDemo = Label(self.frameStatusDemo, text='Status Bar',
+                                    font=self.fonts.label, borderwidth=0,
+                                    fg=self.colors.fgStatusBar, bg=self.colors.bgStatusBar)
+        self.labelStatusDemo.grid(row=0, column=0, padx=5, pady=2)
+        self.labelStatusDemo.bind('<ButtonPress-1>',self.SetColorExampleDetails)
+        # END NEW
+
         self.SetColorButtonDetails()
 
         self.colorExampleDetails = { 'name': self.colorButtonDetails[0][0],
@@ -2009,7 +2042,7 @@ class DialogSetColors(smgDialog):
         self.buttonDefaults.invoke()
 
     def SetColorButtonDetails(self):
-        self.colorButtonDetails=( 
+        self.colorButtonDetails=(
                 ('Reading Background',self.colors.bgReading),
                 ('Hexagram Titles',self.colors.fgLabelHexTitles),
                 ('Reading Question',self.colors.fgMessageQuestion),
@@ -2019,7 +2052,14 @@ class DialogSetColors(smgDialog):
                 ('Line Hint Text',self.colors.fgLabelHint),
                 ('Hexagram Line Body',self.colors.colorLineBody),
                 ('Hexagram Line Highlight',self.colors.colorLineHighlight),
-                ('Hexagram Line Shadow',self.colors.colorLineShadow) )
+                ('Hexagram Line Shadow',self.colors.colorLineShadow),
+                ('Control Panel Background',self.colors.bgControls),
+                ('Control Panel Text',self.colors.fgControls),
+                ('Button Background',self.colors.bgButton),
+                ('Button Text',self.colors.fgButton),
+                ('Button Active Background',self.colors.bgButtonActive),
+                ('Status Bar Background',self.colors.bgStatusBar),
+                ('Status Bar Text',self.colors.fgStatusBar) )
 
     def SetColorExampleDetails(self,event):
         if event.widget == self.frameDemo:
@@ -2061,6 +2101,26 @@ class DialogSetColors(smgDialog):
             else: #background clicked
                 self.colorExampleDetails['name']=self.colorButtonDetails[0][0]
                 self.colorExampleDetails['color']=self.colorButtonDetails[0][1]
+        # NEW: Handle clicks on new demo widgets
+        elif event.widget == self.frameControlsDemo:
+            self.colorExampleDetails['name']=self.colorButtonDetails[10][0]
+            self.colorExampleDetails['color']=self.colorButtonDetails[10][1]
+        elif event.widget == self.labelControlsDemo:
+            self.colorExampleDetails['name']=self.colorButtonDetails[11][0]
+            self.colorExampleDetails['color']=self.colorButtonDetails[11][1]
+        elif event.widget == self.buttonDemo:
+            # Check if it's the active state by checking button state
+            # For simplicity, clicking button shows button background by default
+            # User can use dropdown to select Button Active Background
+            self.colorExampleDetails['name']=self.colorButtonDetails[12][0]
+            self.colorExampleDetails['color']=self.colorButtonDetails[12][1]
+        elif event.widget == self.frameStatusDemo:
+            self.colorExampleDetails['name']=self.colorButtonDetails[15][0]
+            self.colorExampleDetails['color']=self.colorButtonDetails[15][1]
+        elif event.widget == self.labelStatusDemo:
+            self.colorExampleDetails['name']=self.colorButtonDetails[16][0]
+            self.colorExampleDetails['color']=self.colorButtonDetails[16][1]
+        # END NEW
 
         self.SetColorExample()
     
@@ -2088,19 +2148,19 @@ class DialogSetColors(smgDialog):
             #self.frameDemo.update() #redraw new colors
     
     def UpdateColors(self):
-        if self.colorExampleDetails['name'] == self.colorButtonDetails[0][0]: 
+        if self.colorExampleDetails['name'] == self.colorButtonDetails[0][0]:
             self.colors.bgReading = self.colorExampleDetails['color']
-        elif self.colorExampleDetails['name'] == self.colorButtonDetails[1][0]: 
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[1][0]:
             self.colors.fgLabelHexTitles = self.colorExampleDetails['color']
-        elif self.colorExampleDetails['name'] == self.colorButtonDetails[2][0]: 
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[2][0]:
             self.colors.fgMessageQuestion = self.colorExampleDetails['color']
-        elif self.colorExampleDetails['name'] == self.colorButtonDetails[3][0]: 
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[3][0]:
             self.colors.fgLabelPlaces = self.colorExampleDetails['color']
-        elif self.colorExampleDetails['name'] == self.colorButtonDetails[4][0]: 
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[4][0]:
             self.colors.fgLabelLines = self.colorExampleDetails['color']
-        elif self.colorExampleDetails['name'] == self.colorButtonDetails[5][0]: 
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[5][0]:
             self.colors.bgLabelHint = self.colorExampleDetails['color']
-        elif self.colorExampleDetails['name'] == self.colorButtonDetails[6][0]: 
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[6][0]:
             self.colors.fgLabelHint = self.colorExampleDetails['color']
         elif self.colorExampleDetails['name'] == self.colorButtonDetails[7][0]:
             self.colors.colorLineBody = self.colorExampleDetails['color']
@@ -2108,11 +2168,27 @@ class DialogSetColors(smgDialog):
             self.colors.colorLineHighlight = self.colorExampleDetails['color']
         elif self.colorExampleDetails['name'] == self.colorButtonDetails[9][0]:
             self.colors.colorLineShadow = self.colorExampleDetails['color']
+        # NEW: Handle new color properties
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[10][0]:
+            self.colors.bgControls = self.colorExampleDetails['color']
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[11][0]:
+            self.colors.fgControls = self.colorExampleDetails['color']
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[12][0]:
+            self.colors.bgButton = self.colorExampleDetails['color']
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[13][0]:
+            self.colors.fgButton = self.colorExampleDetails['color']
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[14][0]:
+            self.colors.bgButtonActive = self.colorExampleDetails['color']
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[15][0]:
+            self.colors.bgStatusBar = self.colorExampleDetails['color']
+        elif self.colorExampleDetails['name'] == self.colorButtonDetails[16][0]:
+            self.colors.fgStatusBar = self.colorExampleDetails['color']
+        # END NEW
     
     def RepaintColors(self):
-        #print 'ConfigureWidgetCustomColors frameDemo bg was =',self.frameDemo.cget('bg') 
+        #print 'ConfigureWidgetCustomColors frameDemo bg was =',self.frameDemo.cget('bg')
         self.frameDemo.configure(bg=self.colors.bgReading)
-        #print 'ConfigureWidgetCustomColors frameDemo bg is =',self.frameDemo.cget('bg') 
+        #print 'ConfigureWidgetCustomColors frameDemo bg is =',self.frameDemo.cget('bg')
         self.labelTitleDemo.configure(fg=self.colors.fgLabelHexTitles,bg=self.colors.bgReading)
         self.labelQuestionDemo.configure(fg=self.colors.fgMessageQuestion,bg=self.colors.bgReading)
         self.labelPlaceDemo.configure(fg=self.colors.fgLabelPlaces,bg=self.colors.bgReading)
@@ -2120,11 +2196,22 @@ class DialogSetColors(smgDialog):
         self.labelNoMovingDemo.configure(fg=self.colors.fgLabelLines,bg=self.colors.bgReading)
         self.frameHintBgDemo.configure(bg=self.colors.bgLabelHint)
         self.labelHintDemo.configure(fg=self.colors.fgLabelHint,bg=self.colors.bgLabelHint)
+
+        # NEW: Repaint new demo widgets
+        self.frameControlsDemo.configure(bg=self.colors.bgControls)
+        self.labelControlsDemo.configure(fg=self.colors.fgControls, bg=self.colors.bgControls)
+        self.buttonDemo.configure(bg=self.colors.bgButton, fg=self.colors.fgButton,
+                                  activebackground=self.colors.bgButtonActive,
+                                  activeforeground=self.colors.fgButton)
+        self.frameStatusDemo.configure(bg=self.colors.bgStatusBar)
+        self.labelStatusDemo.configure(fg=self.colors.fgStatusBar, bg=self.colors.bgStatusBar)
+        # END NEW
+
         self.frameDemo.update()
-        for item in self.lineDemos: 
+        for item in self.lineDemos:
             #item.configure(bg=self.colors.bgReading)
             item.colors = self.colors
-            item.Draw(linetype=item.value)  
+            item.Draw(linetype=item.value)
 
         self.SetColorButtonDetails()
 
