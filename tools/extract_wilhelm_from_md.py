@@ -64,13 +64,13 @@ def extract_hexagram_from_md(md_content: str, hex_num: int) -> Optional[Dict[str
     # Now parse sections
     judgment = extract_section(hex_lines, "THE JUDGMENT")
     image = extract_section(hex_lines, "THE IMAGE")
-    line_texts = extract_lines(hex_lines)
+    line_texts, all_lines_changing = extract_lines(hex_lines, hex_num)
 
     if not judgment or not image or len(line_texts) != 6:
         print(f"⚠ Hexagram {hex_num}: incomplete data (judgment={bool(judgment)}, image={bool(image)}, lines={len(line_texts)})")
         return None
 
-    return {
+    result = {
         'chinese_name': chinese_name,
         'english_name': english_name,
         'judgment': judgment.strip(),
@@ -78,14 +78,21 @@ def extract_hexagram_from_md(md_content: str, hex_num: int) -> Optional[Dict[str
         'lines': line_texts
     }
 
+    # Add special "all lines changing" commentary for hexagrams 1 and 2
+    if all_lines_changing:
+        result['all_lines_changing'] = all_lines_changing
+
+    return result
+
 
 def extract_section(hex_lines: list[str], section_name: str) -> Optional[str]:
     """Extract text from a named section like THE JUDGMENT or THE IMAGE."""
 
-    # Find section start
+    # Find section start (handle typo in hexagram 38: "THE IMAGE.")
     section_start = None
     for i, line in enumerate(hex_lines):
-        if line.strip() == section_name:
+        stripped = line.strip()
+        if stripped == section_name or stripped == section_name + '.':
             section_start = i + 1
             break
 
@@ -120,8 +127,12 @@ def extract_section(hex_lines: list[str], section_name: str) -> Optional[str]:
     return text
 
 
-def extract_lines(hex_lines: list[str]) -> Dict[str, Dict[str, str]]:
-    """Extract the 6 line interpretations."""
+def extract_lines(hex_lines: list[str], hex_num: int) -> tuple[Dict[str, Dict[str, str]], Optional[str]]:
+    """Extract the 6 line interpretations and optional all-lines-changing commentary.
+
+    Returns:
+        tuple: (line_texts dict, all_lines_changing text or None)
+    """
 
     # Find THE LINES section
     lines_start = None
@@ -131,11 +142,11 @@ def extract_lines(hex_lines: list[str]) -> Dict[str, Dict[str, str]]:
             break
 
     if lines_start is None:
-        return {}
+        return {}, None
 
-    # Line patterns
+    # Line patterns (handle typo in hexagram 18: "in the beginning" vs "at the beginning")
     line_patterns = [
-        (r"^(Nine|Six) at the beginning means:", 1),
+        (r"^(Nine|Six) (at|in) the beginning means:", 1),
         (r"^(Nine|Six) in the second place means:", 2),
         (r"^(Nine|Six) in the third place means:", 3),
         (r"^(Nine|Six) in the fourth place means:", 4),
@@ -146,9 +157,40 @@ def extract_lines(hex_lines: list[str]) -> Dict[str, Dict[str, str]]:
     line_texts = {}
     current_line_num = None
     current_text = []
+    all_lines_changing = None
 
     for i in range(lines_start, len(hex_lines)):
         line = hex_lines[i].strip()
+
+        # Skip markdown navigation artifacts
+        if line in ['[index](#index)', ''] or re.match(r'^\[\]\{#\d+\}', line):
+            continue
+
+        # Check for special "all lines changing" section (hexagrams 1 and 2 only)
+        if re.match(r'^When all the lines are (nines|sixes)', line):
+            # Save current line first
+            if current_line_num is not None:
+                text = '\n'.join(current_text[1:]).strip()
+                text = clean_markdown_artifacts(text)
+                line_texts[str(current_line_num)] = {
+                    'position': get_position_name(current_line_num),
+                    'type': 'nine' if current_text[0].startswith('Nine') else 'six',
+                    'text': text
+                }
+
+            # Collect all-lines-changing commentary (collect until we hit [index] marker)
+            all_lines_text = [line]
+            for j in range(i + 1, len(hex_lines)):
+                next_line = hex_lines[j].strip()
+                # Stop at navigation markers
+                if next_line == '[index](#index)' or re.match(r'^\[\]\{#\d+\}', next_line):
+                    break
+                # Include both empty and non-empty lines (preserve paragraph structure)
+                all_lines_text.append(next_line)
+
+            all_lines_changing = '\n'.join(all_lines_text).strip()
+            all_lines_changing = clean_markdown_artifacts(all_lines_changing)
+            break  # Done with this hexagram
 
         # Check if this is a new line marker
         matched_new_line = False
@@ -156,10 +198,12 @@ def extract_lines(hex_lines: list[str]) -> Dict[str, Dict[str, str]]:
             if re.match(pattern, line):
                 # Save previous line if any
                 if current_line_num is not None:
+                    text = '\n'.join(current_text[1:]).strip()
+                    text = clean_markdown_artifacts(text)
                     line_texts[str(current_line_num)] = {
                         'position': get_position_name(current_line_num),
                         'type': 'nine' if current_text[0].startswith('Nine') else 'six',
-                        'text': '\n'.join(current_text[1:]).strip()
+                        'text': text
                     }
 
                 # Start new line
@@ -173,15 +217,31 @@ def extract_lines(hex_lines: list[str]) -> Dict[str, Dict[str, str]]:
             if line:
                 current_text.append(line)
 
-    # Save last line
-    if current_line_num is not None:
+    # Save last line if we didn't encounter all-lines-changing
+    if current_line_num is not None and all_lines_changing is None:
+        text = '\n'.join(current_text[1:]).strip()
+        text = clean_markdown_artifacts(text)
         line_texts[str(current_line_num)] = {
             'position': get_position_name(current_line_num),
             'type': 'nine' if current_text[0].startswith('Nine') else 'six',
-            'text': '\n'.join(current_text[1:]).strip()
+            'text': text
         }
 
-    return line_texts
+    return line_texts, all_lines_changing
+
+
+def clean_markdown_artifacts(text: str) -> str:
+    """Remove markdown navigation artifacts from text."""
+    # Remove [index](#index) links
+    text = re.sub(r'\[index\]\(#index\)', '', text)
+    # Remove empty anchor tags like []{#2}
+    text = re.sub(r'\[\]\{#\d+\}', '', text)
+    # Convert markdown links [text](#ref) to just the number in parens
+    # e.g., "hexagram K'un, THE RECEPTIVE ([2](#2))" becomes "hexagram K'un, THE RECEPTIVE (2)"
+    text = re.sub(r'\[(\d+)\]\(#\d+\)', r'\1', text)
+    # Clean up excessive whitespace
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    return text.strip()
 
 
 def get_position_name(line_num: int) -> str:
@@ -205,7 +265,7 @@ def convert_to_yaml(hex_data: Dict[str, Any], hex_num: int) -> Dict[str, Any]:
     loader = HexagramDataLoader(source='legge')
     ref_data = loader.get_hexagram_by_number(hex_num)
 
-    return {
+    result = {
         'metadata': {
             'hexagram': hex_num,
             'king_wen_sequence': hex_num,
@@ -225,6 +285,12 @@ def convert_to_yaml(hex_data: Dict[str, Any], hex_num: int) -> Dict[str, Any]:
         'image': hex_data['image'],
         'lines': hex_data['lines']
     }
+
+    # Add special "all lines changing" commentary if present (hexagrams 1 and 2)
+    if 'all_lines_changing' in hex_data:
+        result['all_lines_changing'] = hex_data['all_lines_changing']
+
+    return result
 
 
 def extract_single_hexagram(hex_num: int,
