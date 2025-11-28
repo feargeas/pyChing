@@ -1,0 +1,22 @@
+Wilhelm/Baynes I Ching Translation
+
+GitHub Source: https://github.com/clovemedia/i_ching
+Accessed: 2025-11-26
+License: GPL v3 (see LICENSE file)
+
+Origin chain:
+1. Wilhelm/Baynes 1950 book translation
+2. deYoung website (http://www2.unipr.it/~deyoung/)
+3. clovemedia GitHub (corrections/improvements)
+4. This archive
+
+Contents:
+- I_Ching_Wilhelm_Baynes_Translation.html (main source)
+- wilhelm.md (pandoc extraction for YAML generation)
+- images/ (trigram/hexagram diagrams)
+- index.html, LICENSE, README.md (documentation)
+
+Notes:
+- Includes corrections to typos, omissions, references
+- Enhanced with appendices on oracle consultation
+- Designed for electronic/mobile reading
