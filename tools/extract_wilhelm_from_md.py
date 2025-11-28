@@ -104,8 +104,8 @@ def extract_section(hex_lines: list[str], section_name: str) -> Optional[str]:
     for i in range(section_start, len(hex_lines)):
         line = hex_lines[i].strip()
 
-        # Stop at next major section
-        if line in ['THE JUDGMENT', 'THE IMAGE', 'THE LINES']:
+        # Stop at next major section (with or without period)
+        if line in ['THE JUDGMENT', 'THE IMAGE', 'THE IMAGE.', 'THE LINES']:
             break
 
         # Skip empty lines at start
