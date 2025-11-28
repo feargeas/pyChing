@@ -88,10 +88,11 @@ def extract_hexagram_from_md(md_content: str, hex_num: int) -> Optional[Dict[str
 def extract_section(hex_lines: list[str], section_name: str) -> Optional[str]:
     """Extract text from a named section like THE JUDGMENT or THE IMAGE."""
 
-    # Find section start
+    # Find section start (handle typo in hexagram 38: "THE IMAGE.")
     section_start = None
     for i, line in enumerate(hex_lines):
-        if line.strip() == section_name:
+        stripped = line.strip()
+        if stripped == section_name or stripped == section_name + '.':
             section_start = i + 1
             break
 
@@ -143,9 +144,9 @@ def extract_lines(hex_lines: list[str], hex_num: int) -> tuple[Dict[str, Dict[st
     if lines_start is None:
         return {}, None
 
-    # Line patterns
+    # Line patterns (handle typo in hexagram 18: "in the beginning" vs "at the beginning")
     line_patterns = [
-        (r"^(Nine|Six) at the beginning means:", 1),
+        (r"^(Nine|Six) (at|in) the beginning means:", 1),
         (r"^(Nine|Six) in the second place means:", 2),
         (r"^(Nine|Six) in the third place means:", 3),
         (r"^(Nine|Six) in the fourth place means:", 4),
