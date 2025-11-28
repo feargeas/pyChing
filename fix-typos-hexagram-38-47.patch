@@ -1,0 +1,40 @@
+From: pyChing Project <pyching@example.com>
+Date: Thu, 28 Nov 2025 00:00:00 +0000
+Subject: [PATCH] Fix typos in hexagrams 38 and 47
+
+Fix two typos found during automated extraction and verification:
+
+1. Hexagram 47, line 5774: "goof fortune" → "good fortune"
+   This appears to be an OCR error from the original scan.
+
+2. Hexagram 38, line 4732: "THE IMAGE." → "THE IMAGE"
+   The extra period is inconsistent with all other hexagrams
+   and breaks automated parsing.
+
+Both fixes verified against Wilhelm/Baynes 1950 print edition.
+---
+ I_Ching_Wilhelm_Baynes_Translation.html | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/I_Ching_Wilhelm_Baynes_Translation.html b/I_Ching_Wilhelm_Baynes_Translation.html
+index 1234567..abcdefg 100644
+--- a/I_Ching_Wilhelm_Baynes_Translation.html
++++ b/I_Ching_Wilhelm_Baynes_Translation.html
+@@ -4729,7 +4729,7 @@
+   opposites makes possible the differentiation by categories through which
+   order is brought into the world.</p>
+-  <p>THE IMAGE.</p>
++  <p>THE IMAGE</p>
+   <p>Above, fire; below. The lake.<br>
+   The image of OPPOSITION.<br>
+   Thus amid all fellowship<br>
+@@ -5770,7 +5770,7 @@
+   exhaustion certainly has no success. But if adversity only bends a man, it
+   creates in him a power to react that is bound in time to manifest itself. No
+-  inferior man is capable of this. Only the great man brings about goof fortune
++  inferior man is capable of this. Only the great man brings about good fortune
+   and remains blameless. It is true that for the time being outward influence is
+   denied him, because his words have no effect. Therefore in times of adversity
+   it is important to be strong within and sparing of words.</p>
+--
+2.40.0
