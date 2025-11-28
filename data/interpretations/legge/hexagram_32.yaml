@@ -1,0 +1,51 @@
+metadata:
+  hexagram: 32
+  king_wen_sequence: 32
+  fu_xi_sequence: 32
+  binary: '001110'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Hong
+english_name: The Long Enduring
+title: 32. Hong / The Long Enduring
+trigrams:
+  upper: zhen
+  lower: xun
+judgment: Hong indicates successful progress and no error in what it denotes. But
+  the advantage will come from being firm and correct; and movement in any direction
+  whatever will be advantageous.
+image: The trigram representing thunder and that for wind form Hong. The superior
+  person, in accordance with this, stands firm, and does not change their method of
+  operation.
+lines:
+  '1':
+    position: bottom
+    type: six
+    text: shows its subject deeply desirous of long continuance. Even with firm correctness
+      there will be evil; there will be no advantage in any way.
+  '2':
+    position: second
+    type: nine
+    text: shows all occasion for repentance disappearing.
+  '3':
+    position: third
+    type: nine
+    text: shows one who does not continuously maintain their virtue. There are those
+      who will impute this to them as a disgrace. However firm they may be, there
+      will be grounds for regret
+  '4':
+    position: fourth
+    type: nine
+    text: shows a field where there is no game.
+  '5':
+    position: fifth
+    type: six
+    text: shows its subject continuously maintaining the virtue indicated by it. In
+      a wife this will be fortunate; in a husband, evil.
+  '6':
+    position: topmost
+    type: six
+    text: shows its subject exciting themself to long continuance. There will be evil.

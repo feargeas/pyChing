@@ -1,0 +1,56 @@
+metadata:
+  hexagram: 2
+  king_wen_sequence: 2
+  fu_xi_sequence: 2
+  binary: '000000'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Koun
+english_name: The Receptive
+title: 2. Koun / The Receptive
+trigrams:
+  upper: kun
+  lower: kun
+judgment: Koun represents what is great and originating, penetrating, advantageous,
+  correct and having the firmness of a mare. When the superior person here denoted
+  has to make any movement, if they take the initiative, they will go astray ; if
+  they follow, they will find their proper lord. The advantage will be seen in their
+  making friends in the south-west, and losing friends in the north-east. If they
+  rest in correctness and firmness, there will be good fortune.
+image: The capacity and sustaining power of the earth is what is denoted by Koun.
+  The superior person, in accordance with this, supports people and things with their
+  great virtue.
+lines:
+  '1':
+    position: bottom
+    type: six
+    text: we see its subject treading on hoarfrost. The strong ice will come by and
+      by.
+  '2':
+    position: second
+    type: six
+    text: shows the attribute of being straight, square, and great. Its operation,
+      without repeated efforts, will be in every respect advantageous.
+  '3':
+    position: third
+    type: six
+    text: shows its subject keeping their excellence under restraint, but firmly maintaining
+      it. If they should have occasion to engage in the king's service, though they
+      will not claim the success for themselves, they will bring affairs to a good
+      outcome.
+  '4':
+    position: fourth
+    type: six
+    text: shows the symbol of a sack tied up. There will be no ground for blame or
+      for praise.
+  '5':
+    position: fifth
+    type: six
+    text: shows the yellow lower garment. There will be great good fortune.
+  '6':
+    position: topmost
+    type: six
+    text: shows dragons fighting in the wild. Their blood is purple and yellow.

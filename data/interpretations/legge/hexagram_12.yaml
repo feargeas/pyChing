@@ -1,0 +1,57 @@
+metadata:
+  hexagram: 12
+  king_wen_sequence: 12
+  fu_xi_sequence: 12
+  binary: '111000'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: P'i
+english_name: Stagnation, Obstruction
+title: 12. P'i / Stagnation, Obstruction
+trigrams:
+  upper: qian
+  lower: kun
+judgment: In P'i there is the want of good understanding between people at different
+  levels of development, and its indication is unfavourable to the firm and correct
+  course of the superior person. We see in it the great gone and the small comming.
+image: The trigrams of heaven and earth, not in intercommunication, form P'i. The
+  superior person, in accordance with this, restrains the manifestation of their virtue,
+  and avoids the calamities that threaten them. There is no opportunity of conferring
+  on them the glory of reward in their employment.
+lines:
+  '1':
+    position: bottom
+    type: six
+    text: suggests the idea of grass pulled up, and bringing with it other stalks
+      with whose roots it is connected. With firm correctness on the part of its subject,
+      there will be good fortune and progress.
+  '2':
+    position: second
+    type: six
+    text: shows its subject as patient and obedient. The small person is comporting
+      themselves so there will be good fortune. If the great person comports themself
+      as the distress and obstruction require, they will have success.
+  '3':
+    position: third
+    type: six
+    text: shows its subject ashamed of the purpose folded in their breast.
+  '4':
+    position: fourth
+    type: nine
+    text: shows its subject acting in accordance with the ordination of Heaven, and
+      committing no error. Their companions will come and share in their happiness.
+  '5':
+    position: fifth
+    type: nine
+    text: we see they who bring the distress and obstruction to a close, the person
+      great and fortunate. But let them say, 'We may perish! We may perish !', so
+      shall the state of things become firm, as if bound to a clump of bushy mulberry
+      trees.
+  '6':
+    position: topmost
+    type: nine
+    text: shows the overthrow and removal of the condition of distress and obstruction.
+      Before this there was that condition. Hereafter there will be joy.

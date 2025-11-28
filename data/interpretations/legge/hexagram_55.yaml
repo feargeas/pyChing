@@ -1,0 +1,60 @@
+metadata:
+  hexagram: 55
+  king_wen_sequence: 55
+  fu_xi_sequence: 55
+  binary: '001101'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Fong
+english_name: Abundance, Fullness
+title: 55. Fong / Abundance, Fullness
+trigrams:
+  upper: zhen
+  lower: li
+judgment: Fong intimates progress and development. When a king has reached the point
+  which the name denotes, there is no occasion to be anxious through fear of change.
+  Let them be as the sun at noon.
+image: The trigrams representing thunder and lightning combine to form Fong. The superior
+  person, in accordance with this, decides cases of litigation, and apportions punishments
+  with exactness.
+lines:
+  '1':
+    position: bottom
+    type: nine
+    text: shows its subject meeting with their mate. Though they are both of the same
+      character, there will be no error. Advance will call forth approval.
+  '2':
+    position: second
+    type: six
+    text: shows its subject surrounded by screens so large and thick that at midday
+      they can see from them the constellation of the Bushel. If they go and try to
+      enlighten their ruler who is thus emblemed, they will make themselves to be
+      viewed with suspicion and dislike. Let them cherish their feeling of sincere
+      devotion that they may thereby move their ruler's mind, and there will be good
+      fortune.
+  '3':
+    position: third
+    type: nine
+    text: shows its subject with an additional screen of a large and thick banner,
+      through which at midday they can see the small Mei star. In the darkness they
+      break their right arm; but there will be no error.
+  '4':
+    position: fourth
+    type: nine
+    text: shows its subject in a tent so large and thick that at midday they can see
+      from it the constellation of the Bushel. But they meet with the subject of the
+      first line, as nine like themselves. There will be good fortune.
+  '5':
+    position: fifth
+    type: six
+    text: shows its subject bringing around them people of brilliant ability. There
+      will be occasion for congratulation and praise. There will be good fortune.
+  '6':
+    position: topmost
+    type: six
+    text: shows its subject with their house made large, but only serving as a screen
+      to their household. When they look at their door, it is still, and there is
+      nobody about it. For three years no one is to be seen. There will be evil.

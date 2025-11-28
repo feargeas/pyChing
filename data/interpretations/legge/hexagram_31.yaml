@@ -1,0 +1,51 @@
+metadata:
+  hexagram: 31
+  king_wen_sequence: 31
+  fu_xi_sequence: 31
+  binary: '011100'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Hsien
+english_name: Attraction
+title: 31. Hsien / Attraction
+trigrams:
+  upper: dui
+  lower: gen
+judgment: Hsien indicates that, on the fulfilment of the conditions implied in it,
+  there will be a free course and success. Its advantage will depend on being firm
+  and correct, as in marrying suitably. There will be good fortune.
+image: The trigram representing a mountain, and above it that for the waters of a
+  marsh, form Hsien. The superior person, in accordance with this, keeps their mind
+  free from pre-occupations, and open to receive the influence of others.
+lines:
+  '1':
+    position: bottom
+    type: six
+    text: shows one moving their big toes.
+  '2':
+    position: second
+    type: six
+    text: shows one moving the calves of their leg. There will be evil. If they abide
+      quietly in their place, there will be good fortune.
+  '3':
+    position: third
+    type: nine
+    text: shows one moving their thighs, and keeping close hold of those whom they
+      follow. Going forward in this way will cause regret.
+  '4':
+    position: fourth
+    type: nine
+    text: shows that they will be unsettled in their movements, only their friends
+      will follow their purpose.
+  '5':
+    position: fifth
+    type: nine
+    text: shows one moving the flesh along the spine above the heart. There will be
+      no occasion for repentance.
+  '6':
+    position: topmost
+    type: six
+    text: shows one moving their jaws and tongue.

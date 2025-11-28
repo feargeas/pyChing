@@ -1,0 +1,63 @@
+metadata:
+  hexagram: 51
+  king_wen_sequence: 51
+  fu_xi_sequence: 51
+  binary: '001001'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Tchen
+english_name: The Thunder
+title: 51. Tchen / The Thunder
+trigrams:
+  upper: zhen
+  lower: zhen
+judgment: Tchen gives the intimation of ease and development. When the time of movement
+  which it indicates comes, the subject of the hexagram will be found looking out
+  with apprehension, and yet smiling and talking cheerfully. When the movement like
+  a crash of thunder terrifies all within a hundred miles, they will be like the sincere
+  worshipper who is not startled into letting go their ladle and cup of sacrificial
+  spirits.
+image: The trigram representing thunder, being repeated, forms Tchen. The superior
+  person, in accordance with this, is fearful and apprehensive, cultivates their virtues,
+  and examines their faults.
+lines:
+  '1':
+    position: bottom
+    type: nine
+    text: shows its subject, when the movement approaches, looking out and around
+      with apprehension, and afterwards smiling and talking cheerfully. There will
+      be good fortune.
+  '2':
+    position: second
+    type: six
+    text: shows its subject, when the movement approaches, in a position of peril.
+      They judge it better to let go the articles in their possession, and to ascend
+      a very lofty height. There is no occasion for them to pursue after the things
+      they have let go; in seven days they will find them.
+  '3':
+    position: third
+    type: six
+    text: shows its subject distraught amid the startling movements going on. If those
+      movements excite them to right action, there will be no mistake.
+  '4':
+    position: fourth
+    type: nine
+    text: shows its subject amid the startling movements, supinely sinking deeper
+      in the mud.
+  '5':
+    position: fifth
+    type: six
+    text: shows its subject going and coming amidst the startling movements of the
+      time, and always in peril, but perhaps they will not incur loss, and find business
+      which they can accomplish.
+  '6':
+    position: topmost
+    type: six
+    text: shows its subject, amidst the startling movements of the time, in breathless
+      dismay and looking round them with trembling apprehension. If they take action,
+      there will be evil. If, while the startling movements have not reached their
+      own person and their neighbourhood, they were to take precautions, there would
+      be no error, but their relatives might still speak against them.

@@ -1,0 +1,55 @@
+metadata:
+  hexagram: 60
+  king_wen_sequence: 60
+  fu_xi_sequence: 60
+  binary: '010011'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Tchieh
+english_name: Limitation
+title: 60. Tchieh / Limitation
+trigrams:
+  upper: kan
+  lower: dui
+judgment: Tchieh intimates that under its conditions there will be progress and attainment.
+  But if the regulations which it prescribes be severe and difficult, they cannot
+  be permanent.
+image: The trigram representing a lake, and above it that for water, form Tchieh.
+  The superior person, in accordance with this, constructs their methods of numbering
+  and measurement, and discusses points of virtue and conduct.
+lines:
+  '1':
+    position: bottom
+    type: nine
+    text: shows its subject not quitting the courtyard outside their door. There will
+      be no error.
+  '2':
+    position: second
+    type: nine
+    text: shows its subject not quitting the courtyard inside their gate. There will
+      be evil.
+  '3':
+    position: third
+    type: six
+    text: shows its subject with no appearance of observing the proper regulations,
+      in which case we shall see them lamenting. But there will be no one to blame
+      but themselves.
+  '4':
+    position: fourth
+    type: six
+    text: shows its subject quietly and naturally attentive to all regulations. There
+      will be progress and success.
+  '5':
+    position: fifth
+    type: nine
+    text: shows its subject sweetly and acceptably enacting their regulations. There
+      will be good fortune. Their onward progress will afford grounds for admiration.
+  '6':
+    position: topmost
+    type: six
+    text: shows its subject enacting regulations severe and difficult. Even with Firmness
+      and correctness there will be evil. But though there will be cause for repentance,
+      it will by and by disappear.

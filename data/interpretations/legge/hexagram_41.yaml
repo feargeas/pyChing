@@ -1,0 +1,60 @@
+metadata:
+  hexagram: 41
+  king_wen_sequence: 41
+  fu_xi_sequence: 41
+  binary: '100011'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Soun
+english_name: Reduction
+title: 41. Soun / Reduction
+trigrams:
+  upper: gen
+  lower: dui
+judgment: 'In what is denoted by Soun, if there be sincerity in they who employs it,
+  there will be great good fortune: freedom for error; firmness and correctness that
+  can be maintained; an advantage in every movement that shall be made. In what shall
+  this sincerity in the exercise of Soun be employed? Even in sacrifice, two baskets
+  of grain, though there be nothing else, may be presented.'
+image: The trigram representing a mountain, and beneath it that for the waters of
+  a marsh, form Soun. The superior person, in accordance with this, restrains their
+  wrath and controls their desires.
+lines:
+  '1':
+    position: bottom
+    type: nine
+    text: shows its subject suspending their own affairs, and hurrying away to help
+      the subject of the fourth line. They will commit no error, but let them consider
+      how far they should contribute of what is theirs for the other.
+  '2':
+    position: second
+    type: nine
+    text: shows that it will be advantageous for its subject to maintain a firm correctness,
+      and that action on their part will be evil. They can give increase to their
+      correlate without taking from themselves.
+  '3':
+    position: third
+    type: six
+    text: shows how, of three people walking together, the number is diminished by
+      one; and how one, walking, finds their friend.
+  '4':
+    position: fourth
+    type: six
+    text: shows its subject diminishing the ailment under which they labour by making
+      the subject of the first line hasten to their help, and making them glad. There
+      will be no error.
+  '5':
+    position: fifth
+    type: six
+    text: shows parties adding to the stores of its subject ten pairs of tortoise
+      shells, and accepting no refusal. There will be great good fortune.
+  '6':
+    position: topmost
+    type: nine
+    text: shows its subject giving increase to others without taking from themselves.
+      There will be no error. With firm correctness there will be good fortune. There
+      will be advantage in every movement that shall be made. They will find ministers
+      more than can be counted by their clans.

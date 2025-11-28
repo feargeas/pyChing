@@ -1,0 +1,52 @@
+metadata:
+  hexagram: 28
+  king_wen_sequence: 28
+  fu_xi_sequence: 28
+  binary: '011110'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Ta Kouo
+english_name: Excess
+title: 28. Ta Kouo / Excess
+trigrams:
+  upper: dui
+  lower: xun
+judgment: Ta Kouo suggest to us a beam that is weak. There will be advantage in moving
+  under these conditions in any directions whatever; there will be success.
+image: The trigram representing trees, hidden beneath that for the waters of a marsh,
+  form Ta Kouo. The superior person, in accordance with this, stands up alone and
+  has no fear, and stays retired from the world without regret.
+lines:
+  '1':
+    position: bottom
+    type: six
+    text: shows one placing mats of the dried grass under things set on the ground.
+      There will be no error.
+  '2':
+    position: second
+    type: nine
+    text: shows a decayed willow producing shoots. There will be advantage in every
+      way.
+  '3':
+    position: third
+    type: nine
+    text: shows a beam that is weak. There will be evil.
+  '4':
+    position: fourth
+    type: nine
+    text: shows a beam curving upwards. There will be good fortune. If the subject
+      of it looks for support elsewhere, there will be cause for regret.
+  '5':
+    position: fifth
+    type: nine
+    text: shows a decayed willow producing flowers. There will be occasion neither
+      for blame nor for praise.
+  '6':
+    position: topmost
+    type: six
+    text: shows its subject with extraordinary boldness wading through a stream, till
+      the water hides the crown of their head. There will be evil, but no ground for
+      blame.

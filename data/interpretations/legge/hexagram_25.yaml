@@ -1,0 +1,56 @@
+metadata:
+  hexagram: 25
+  king_wen_sequence: 25
+  fu_xi_sequence: 25
+  binary: '111001'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Wou Wang
+english_name: Integrity
+title: 25. Wou Wang / Integrity
+trigrams:
+  upper: qian
+  lower: zhen
+judgment: Wou Wang indicates great progress and success, while there will be advantage
+  in being firm and correct. If its subject and their action be not correct, they
+  will fall into errors, and it will not be advantageous for them to move in any direction.
+image: The thunder rolls all under the sky, and to everything there is given its nature,
+  free from all insincerity. The ancient kings, in accordance with this, made their
+  regulations in complete accordance with the seasons, thereby nourishing all things.
+lines:
+  '1':
+    position: bottom
+    type: nine
+    text: shows its subject free from all insincerity. Their advance will be accompanied
+      with good fortune.
+  '2':
+    position: second
+    type: six
+    text: shows one who reaps and gathers the produce of their third year's fields
+      without having cultivated them the first year for that end. To such a one there
+      will be advantage in whatever direction they may move.
+  '3':
+    position: third
+    type: six
+    text: 'shows calamity happening to one who is free from insincerity; as in the
+      case of an ox that has been tied up: a passer by finds it and carries it off,
+      while the people in the neighbourhood have the calamity of being accused and
+      apprehended.'
+  '4':
+    position: fourth
+    type: nine
+    text: shows a case in which, if its subject can remain firm and correct, there
+      will be no error.
+  '5':
+    position: fifth
+    type: nine
+    text: shows one who is free from insincerity, and yet has fallen ill. Let them
+      not use medicine, and they will have occasion for joy in their recovery.
+  '6':
+    position: topmost
+    type: nine
+    text: shows its subject free from insincerity, yet sure to fall into error if
+      they take action. Their action will not be advantageous in any way.

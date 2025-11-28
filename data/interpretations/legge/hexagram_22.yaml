@@ -1,0 +1,55 @@
+metadata:
+  hexagram: 22
+  king_wen_sequence: 22
+  fu_xi_sequence: 22
+  binary: '100101'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Pi
+english_name: Elegance
+title: 22. Pi / Elegance
+trigrams:
+  upper: gen
+  lower: li
+judgment: Pi indicates that there should be free course in what it denotes. There
+  will be little advantage however if it be allowed to advance and take the lead.
+image: The trigram representing a mountain with that for fire under it form Pi. The
+  superior person, in accordance with this, throws a brilliancy around their various
+  processes of government, but does not dare in a similar way to decide cases of criminal
+  litigation.
+lines:
+  '1':
+    position: bottom
+    type: nine
+    text: shows one adorning the way of their feet. They can discard a carriage and
+      walk on foot.
+  '2':
+    position: second
+    type: six
+    text: shows one adorning their beard.
+  '3':
+    position: third
+    type: nine
+    text: shows its subject with the appearance of being adorned and bedewed with
+      rich favours. But let them ever maintain their firm correctness, and there will
+      be good fortune.
+  '4':
+    position: fourth
+    type: six
+    text: shows one looking as if adorned, but only in white. As if mounted on a white
+      horse, and furnished with wings, they seek union with the subject of the first
+      line, while the intervening third pursues, not as a robber, but intent on a
+      matrimonial alliance.
+  '5':
+    position: fifth
+    type: six
+    text: shows its subject adorned by the occupants of the heights and gardens. They
+      bear their roll of silk, small and slight. They may appear stingy; but there
+      will be good fortune in the end.
+  '6':
+    position: topmost
+    type: nine
+    text: has its subject with white as their only ornament. There will be no error.

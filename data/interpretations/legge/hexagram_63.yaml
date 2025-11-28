@@ -1,0 +1,53 @@
+metadata:
+  hexagram: 63
+  king_wen_sequence: 63
+  fu_xi_sequence: 63
+  binary: '010101'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Tchi Tchi
+english_name: After The Achievement
+title: 63. Tchi Tchi / After The Achievement
+trigrams:
+  upper: kan
+  lower: li
+judgment: Tchi Tchi intimates progress and success in small matters. There will be
+  advantage in being firm and correct. There has been good fortune in the beginning;
+  there may be disorder in the end.
+image: The trigram representing fire, and that for water above it, form Tchi Tchi.
+  The superior person, in accordance with this, thinks of evil that may come, and
+  beforehand guards against it.
+lines:
+  '1':
+    position: bottom
+    type: nine
+    text: shows as a driver who drags back their wheel, or as a fox which has wet
+      their tail. There will be no error.
+  '2':
+    position: second
+    type: six
+    text: shows as a wife who has lost her carriage-screen. There is no occasion to
+      go in pursuit of it. In seven days she will find it.
+  '3':
+    position: third
+    type: nine
+    text: suggests the case of Ko Chung who attacked the Demon region, but was three
+      years in subduing it. Small men should not be employed in such enterprises.
+  '4':
+    position: fourth
+    type: six
+    text: shows its subject with rags provided against any leak in their boat, and
+      on their guard all day long.
+  '5':
+    position: fifth
+    type: nine
+    text: shows  the neighbour in the east who slaughters an ox for their sacrifice;
+      but this is not equal to the small spring sacrifice of the neighbour in the
+      west, whose sincerity receives the blessing.
+  '6':
+    position: topmost
+    type: six
+    text: shows its subject with even their head immersed. The position is perilous.

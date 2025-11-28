@@ -1,0 +1,55 @@
+metadata:
+  hexagram: 40
+  king_wen_sequence: 40
+  fu_xi_sequence: 40
+  binary: '001010'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Tchieh
+english_name: The Release, The Outcome
+title: 40. Tchieh / The Release, The Outcome
+trigrams:
+  upper: zhen
+  lower: kan
+judgment: In the state indicated by Tchieh advantage will be found in the south-west.
+  If no further operations are called for, there will be good fortune in coming back
+  to the earlier conditions and good fortune in the early progression of them.
+image: The trigram representing thunder and that for rain, with these phenomena in
+  a state of manifestation, form Tchieh. The superior person, in accordance with this,
+  forgives errors, and deals gently with crimes.
+lines:
+  '1':
+    position: bottom
+    type: six
+    text: shows that its subject will commit no error.
+  '2':
+    position: second
+    type: nine
+    text: shows its subject catching, in hunting, three foxes, and obtaining the golden
+      arrows. With firm correctness there will be good fortune.
+  '3':
+    position: third
+    type: six
+    text: shows a porter with their burden, yet riding in a carriage. They will only
+      tempt robbers to attack them. However firm and correct they may try to be, there
+      will be cause for regret.
+  '4':
+    position: fourth
+    type: nine
+    text: says of its subject, 'Remove your toes. Friends will then come, between
+      you and they there will be mutual confidence.'
+  '5':
+    position: fifth
+    type: six
+    text: shows its subject, the superior person, executing their function of removing
+      whatever is injurious to the idea of the hexagram, in which case there will
+      be good fortune, and confidence in them will be shown even by the small people.
+  '6':
+    position: topmost
+    type: six
+    text: shows a feudal prince with their bow shooting at a falcon on the top of
+      a high wall, and hitting it. The effect of their action will be in every way
+      advantageous.

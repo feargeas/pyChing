@@ -1,0 +1,54 @@
+metadata:
+  hexagram: 52
+  king_wen_sequence: 52
+  fu_xi_sequence: 52
+  binary: '100100'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Ken
+english_name: The Stilling, The Mountain
+title: 52. Ken / The Stilling, The Mountain
+trigrams:
+  upper: gen
+  lower: gen
+judgment: When one's resting is like that of the back, and they lose all consciousness
+  of self; when they walk in their courtyard, and do not see any of the persons in
+  it, there will be no error.
+image: Two trigrams representing a mountain, one over the other, form Ken. The superior
+  person, in accordance with this, does not go in their thoughts beyond the duties
+  of the position in which they are.
+lines:
+  '1':
+    position: bottom
+    type: six
+    text: shows its subject keeping their toes at rest. There will be no error; but
+      it will be advantageous for them to be persistently firm and correct
+  '2':
+    position: second
+    type: six
+    text: shows its subject keeping the calves of their legs at rest. They cannot
+      help the subject of the line above whom they follow, and are dissatisfied in
+      their mind.
+  '3':
+    position: third
+    type: nine
+    text: shows its subject keeping their loins at rest, and separating the ribs from
+      the body below. The situation is perilous, and the heart glows with suppressed
+      excitement.
+  '4':
+    position: fourth
+    type: six
+    text: shows its subject keeping their trunk at rest. There will be no error.
+  '5':
+    position: fifth
+    type: six
+    text: shows its subject keeping their jawbones at rest, so that their words are
+      all orderly. Occasion for repentance will disappear.
+  '6':
+    position: topmost
+    type: nine
+    text: shows its subject devotedly maintaining their restfulness. There will be
+      good fortune.

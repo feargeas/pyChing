@@ -1,0 +1,51 @@
+metadata:
+  hexagram: 58
+  king_wen_sequence: 58
+  fu_xi_sequence: 58
+  binary: '011011'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Touei
+english_name: Happyness, The Lake
+title: 58. Touei / Happyness, The Lake
+trigrams:
+  upper: dui
+  lower: dui
+judgment: Touei intimates that under its conditions there will be progress and attainment,
+  but it will be advantageous to be firm and correct.
+image: Two symbols representing the waters of a marsh, one over the other, form Touei.
+  The superior person, in accordance with this, encourages the conversation of friends
+  and the stimulus of their common practice.
+lines:
+  '1':
+    position: bottom
+    type: nine
+    text: shows the pleasure of inward harmony. There will be good fortune.
+  '2':
+    position: second
+    type: nine
+    text: shows the pleasure arising from inward sincerity. There will be good fortune.
+      Occasion for repentance will disappear.
+  '3':
+    position: third
+    type: six
+    text: shows its subject bringing round themselves whatever can give pleasure.
+      There will be evil.
+  '4':
+    position: fourth
+    type: nine
+    text: shows its subject deliberating about what to seek their pleasure in, and
+      not at rest. They border on what would be injurious, but there will be cause
+      for joy.
+  '5':
+    position: fifth
+    type: nine
+    text: shows its subject trusting in one who would injure them. The situation is
+      perilous.
+  '6':
+    position: topmost
+    type: six
+    text: shows the pleasure of its subject in leading and attracting others.

@@ -1,0 +1,62 @@
+metadata:
+  hexagram: 3
+  king_wen_sequence: 3
+  fu_xi_sequence: 3
+  binary: '010001'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: T'oun
+english_name: Difficult Beginnings
+title: 3. T'oun / Difficult Beginnings
+trigrams:
+  upper: kan
+  lower: zhen
+judgment: T'oun indicates that there can be great progress and success, and the advantage
+  will come from being correct and firm. But any movement in advance should not be
+  lightly undertaken. There will be advantage in appointing feudal princes.
+image: The trigram representing clouds and that representing thunder form T'oun. The
+  superior person, in accordance with this, adjusts their measures of government as
+  in sorting the threads of the warp and weft.
+lines:
+  '1':
+    position: bottom
+    type: nine
+    text: shows the difficulty its subject has in advancing. It will be advantageous
+      for them to abide in the correct and firm; advantageous also to be made a feudal
+      ruler.
+  '2':
+    position: second
+    type: six
+    text: shows its subject distressed and obliged to return; even the horses of her
+      chariot also seem to be retreating. But not by a despoiler is she assailed,
+      rather by one who seeks her to be her wife. The young lady maintains her firm
+      correctness, and declines a union. After ten years she will be united, and have
+      children.
+  '3':
+    position: third
+    type: six
+    text: shows one following the deer without the guidance of the forester, and only
+      finding themselves in the midst of the forest. The superior person, acquainted
+      with the secret risk, thinks it better to give up the chase. If they went forward,
+      they would regret it.
+  '4':
+    position: fourth
+    type: six
+    text: shows a lady, the horses of whose chariot appear to be in retreat. She seeks,
+      however, the help of those who seek her to be their wife. Advance will be fortunate,
+      all will turn out advantageously.
+  '5':
+    position: fifth
+    type: nine
+    text: shows the difficulties in the way of the subject's dispensing the rich favours
+      that might be expected from them. With firmness and correctness there will be
+      good fortune in small things; but even with them, in great things there will
+      be evil.
+  '6':
+    position: topmost
+    type: six
+    text: shows its subject with the horses of their chariot obliged to retreat, and
+      weeping tears of blood in streams.

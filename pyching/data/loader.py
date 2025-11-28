@@ -1,17 +1,18 @@
 """
 Hexagram data loader.
 
-Loads hexagram data from JSON files with caching for performance.
+Loads hexagram data from YAML files with caching for performance.
 """
 
 import json
+import yaml
 from pathlib import Path
 from typing import Optional, Dict, Any
 
 
 class HexagramDataLoader:
     """
-    Loads hexagram data from JSON files.
+    Loads hexagram data from YAML files.
 
     Provides efficient loading with caching and multiple lookup methods:
     - By hexagram number (1-64)
@@ -20,13 +21,14 @@ class HexagramDataLoader:
     - By trigram pair (e.g., "qian_qian")
     """
 
-    def __init__(self, data_dir: Path = None):
+    def __init__(self, data_dir: Path = None, source: str = 'legge'):
         """
         Initialize the loader.
 
         Args:
             data_dir: Path to data directory. If None, uses default
                      (project_root/data)
+            source: Default source to load from (default: 'legge')
         """
         if data_dir is None:
             # Default to data/ directory relative to project root
@@ -34,7 +36,8 @@ class HexagramDataLoader:
             data_dir = Path(__file__).parent.parent.parent / 'data'
 
         self.data_dir = Path(data_dir)
-        self.hexagrams_dir = self.data_dir / 'hexagrams'
+        self.source = source
+        self.interpretations_dir = self.data_dir / 'interpretations' / source
         self.mappings_path = self.data_dir / 'mappings.json'
         self.sources_path = self.data_dir / 'sources_metadata.json'
 
@@ -51,18 +54,18 @@ class HexagramDataLoader:
             hexagram_id: Hexagram identifier (e.g., "hexagram_01")
 
         Returns:
-            dict: Complete hexagram data including canonical and sources
+            dict: Complete hexagram data from YAML
 
         Raises:
             FileNotFoundError: If hexagram file doesn't exist
-            json.JSONDecodeError: If file contains invalid JSON
+            yaml.YAMLError: If file contains invalid YAML
         """
         # Check cache first
         if hexagram_id in self._hexagram_cache:
             return self._hexagram_cache[hexagram_id]
 
-        # Load from file
-        hex_file = self.hexagrams_dir / f"{hexagram_id}.json"
+        # Load from YAML file
+        hex_file = self.interpretations_dir / f"{hexagram_id}.yaml"
 
         if not hex_file.exists():
             raise FileNotFoundError(
@@ -71,7 +74,34 @@ class HexagramDataLoader:
             )
 
         with open(hex_file, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+            yaml_data = yaml.safe_load(f)
+
+        # Transform YAML structure to match old JSON structure for backward compatibility
+        # YAML is flattened, but existing code expects nested 'canonical' section
+        data = {
+            'hexagram_id': hexagram_id,
+            'number': yaml_data['metadata']['hexagram'],
+            'king_wen_sequence': yaml_data['metadata']['king_wen_sequence'],
+            'fu_xi_sequence': yaml_data['metadata']['fu_xi_sequence'],
+            'binary': yaml_data['metadata']['binary'],
+            'trigrams': yaml_data['trigrams'],
+            'canonical': {
+                'source_id': yaml_data['metadata']['source'],
+                'name': yaml_data['name'],
+                'english_name': yaml_data['english_name'],
+                'title': yaml_data['title'],
+                'judgment': yaml_data['judgment'],
+                'image': yaml_data['image'],
+                'lines': yaml_data['lines'],
+                'metadata': {
+                    'translator': yaml_data['metadata']['translator'],
+                    'year': yaml_data['metadata']['year'],
+                    'language': yaml_data['metadata']['language'],
+                    'verified': yaml_data['metadata']['verified']
+                }
+            },
+            'sources': {}  # Placeholder for future multi-source support
+        }
 
         # Cache and return
         self._hexagram_cache[hexagram_id] = data

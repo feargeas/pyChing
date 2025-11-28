@@ -1,0 +1,52 @@
+metadata:
+  hexagram: 26
+  king_wen_sequence: 26
+  fu_xi_sequence: 26
+  binary: '100111'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Ta Tch'ou
+english_name: The Great Accumulating
+title: 26. Ta Tch'ou / The Great Accumulating
+trigrams:
+  upper: gen
+  lower: qian
+judgment: Under the condition of Ta Tch'ou it will be advantageous to be firm and
+  correct. If its subject does not seek to enjoy their revenues in their own family
+  without taking service at court, there will be good fortune. It will be advantageous
+  for them to cross the great stream.
+image: The trigram representing a mountain, and in the midst of it that representing
+  heaven, form Ta Tch'ou. The superior person, in accordance with this, remembers
+  the words and deeds of former people, to assist in the accumulation of their virtue.
+lines:
+  '1':
+    position: bottom
+    type: nine
+    text: shows its subject in a position of peril. It will be advantageous for them
+      to stop their advance.
+  '2':
+    position: second
+    type: nine
+    text: shows a carriage with the strap under it removed.
+  '3':
+    position: third
+    type: nine
+    text: shows its subject urging their way with good horses. It will be advantageous
+      for them to realise the difficulty of their course, and to be firm and correct,
+      exercising themselves daily in their charioteering and methods of defence; then
+      there will be advantage in whatever direction they may advance.
+  '4':
+    position: fourth
+    type: six
+    text: shows the young bull, yet it has a piece of wood over its horns.
+  '5':
+    position: fifth
+    type: six
+    text: shows the teeth of a castrated hog. There will be good fortune.
+  '6':
+    position: topmost
+    type: nine
+    text: shows itself in command of the firmament of heaven. There will be progress.

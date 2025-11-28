@@ -1,0 +1,56 @@
+metadata:
+  hexagram: 50
+  king_wen_sequence: 50
+  fu_xi_sequence: 50
+  binary: '101110'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Ting
+english_name: The Cauldron
+title: 50. Ting / The Cauldron
+trigrams:
+  upper: li
+  lower: xun
+judgment: Ting gives the intimation of great progress and success.
+image: The trigram representing wood, and above it that for fire, form Ting. The superior
+  person, in accordance with this, keeps their every position correct, and maintains
+  secure the appointment of Heaven.
+lines:
+  '1':
+    position: bottom
+    type: six
+    text: shows the caldron overthrown and its feet turned up, but there will be advantage
+      in its getting rid of what was in it. Or it shows us the concubine whose position
+      is improved by means of her son. There will be no error.
+  '2':
+    position: second
+    type: nine
+    text: shows the caldron with the things to be cooked in it. If its subject can
+      say, 'My enemy dislikes me, but they cannot approach me', there will be good
+      fortune.
+  '3':
+    position: third
+    type: nine
+    text: shows the caldron with the places of its handles changed. The progress of
+      its subject is thus stopped. The flesh of the pheasant which is in the caldron
+      with not be eaten. But the genial rain will come, and the grounds for repentance
+      will disappear. There will be good fortune in the end.
+  '4':
+    position: fourth
+    type: nine
+    text: shows the caldron with its feet broken; and its contents, designed for the
+      ruler's use, overturned and spilt. Its subject will be made to blush for shame.
+      There will be evil.
+  '5':
+    position: fifth
+    type: six
+    text: shows the caldron with yellow ears and rings of metal in them. There will
+      be advantage through being firm and correct.
+  '6':
+    position: topmost
+    type: nine
+    text: shows the caldron with rings of jade. There will be great good fortune,
+      and all action taken will be in every way advantageous.

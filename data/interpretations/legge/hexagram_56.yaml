@@ -1,0 +1,54 @@
+metadata:
+  hexagram: 56
+  king_wen_sequence: 56
+  fu_xi_sequence: 56
+  binary: '101100'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Lu
+english_name: The Traveler
+title: 56. Lu / The Traveler
+trigrams:
+  upper: li
+  lower: gen
+judgment: Lu intimates that in the condition which it denotes there may be some little
+  attainment and progress. If the stranger or traveller be firm and correct as they
+  ought to be, there will be good fortune.
+image: The trigram representing a mountain, and above it that for fire, form Lu. The
+  superior person, in accordance with this, exerts their wisdom and caution in the
+  use of punishments and in not allowing litigations to continue.
+lines:
+  '1':
+    position: bottom
+    type: six
+    text: shows the stranger mean and meanly occupied. It is thus that they bring
+      on themselves further calamity.
+  '2':
+    position: second
+    type: six
+    text: shows the stranger, occupying their lodging-house, carrying with them their
+      means of livelihood, and provided with good and trusty servants.
+  '3':
+    position: third
+    type: nine
+    text: shows the stranger burning their lodging-house, and having lost their servants.
+      However firm and correct they try to be, they will be in peril.
+  '4':
+    position: fourth
+    type: nine
+    text: shows the traveller in a resting-place, having also the means of livelihood
+      and the axe, but still saying, ' I am not at ease in my mind.'
+  '5':
+    position: fifth
+    type: six
+    text: shows its subject shooting a pheasant. They will lose their arrow, but in
+      the end they will obtain praise and a high charge.
+  '6':
+    position: topmost
+    type: nine
+    text: suggests the idea of a bird burning its nest. The stranger, thus represented,
+      first laughs and then cries out. They have lost their ox-like docility too readily
+      and easily. There will be evil.

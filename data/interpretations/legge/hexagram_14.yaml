@@ -1,0 +1,54 @@
+metadata:
+  hexagram: 14
+  king_wen_sequence: 14
+  fu_xi_sequence: 14
+  binary: '101111'
+  source: legge_1882
+  translator: James Legge
+  year: 1882
+  language: en
+  verified: true
+name: Ta You
+english_name: Big Strength
+title: 14. Ta You / Big Strength
+trigrams:
+  upper: li
+  lower: qian
+judgment: Ta You indicates that, under the circumstances which it implies, there will
+  be great progress and success.
+image: The trigram for heaven and that of fire above it form Ta You. The superior
+  person, in accordance with this, represses what is evil and gives distinction to
+  what is good, in sympathy with the excellent Heaven-conferred nature.
+lines:
+  '1':
+    position: bottom
+    type: nine
+    text: there is no approach to what is injurious, and there is no error. Let there
+      be a realisation of the difficulty and danger of the position, and there will
+      be no error to the end.
+  '2':
+    position: second
+    type: nine
+    text: we have a large wagon with its load. In whatever direction advance is made,
+      there will be no error.
+  '3':
+    position: third
+    type: nine
+    text: shows us a feudal prince presenting their offerings to the Son of Heaven.
+      A small person would be unequal to such a duty.
+  '4':
+    position: fourth
+    type: nine
+    text: shows its subject keeping their great resources under restraint. There will
+      be no error.
+  '5':
+    position: fifth
+    type: six
+    text: shows the sincerity of its subject reciprocated by that of all the others
+      represented in the hexagram. Let them display a proper majesty, and there will
+      be good fortune.
+  '6':
+    position: topmost
+    type: nine
+    text: shows its subject with help accorded to them from Heaven. There will be
+      good fortune, advantage in every respect.

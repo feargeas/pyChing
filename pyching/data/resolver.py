@@ -38,15 +38,14 @@ class HexagramResolver:
 
     def resolve(self,
                 hexagram_id: str,
-                source: str = 'canonical') -> Dict[str, Any]:
+                source: str = 'legge') -> Dict[str, Any]:
         """
         Resolve hexagram data from specified source.
 
         Args:
             hexagram_id: Hexagram identifier (e.g., "hexagram_01")
-            source: Source ID (defaults to 'canonical')
-                   For canonical, uses 'canonical' directly
-                   For others, looks in sources dict
+            source: Source ID (defaults to 'legge')
+                   Currently only 'legge' is supported (migrated from canonical)
 
         Returns:
             dict: Resolved hexagram data formatted for display
@@ -54,19 +53,11 @@ class HexagramResolver:
         Raises:
             FileNotFoundError: If hexagram file doesn't exist
         """
+        # Load YAML data (already flattened structure from migration)
         hex_data = self.loader.load_hexagram(hexagram_id)
 
-        # If requesting canonical or source not available, return canonical
-        if source == 'canonical' or source not in hex_data.get('sources', {}):
-            return self._format_for_display(hex_data['canonical'], hex_data, source_id='canonical')
-
-        # Get requested source
-        source_data = hex_data['sources'][source]
-
-        # Merge with canonical for missing fields
-        merged = self._merge_with_canonical(source_data, hex_data['canonical'])
-
-        return self._format_for_display(merged, hex_data, source_id=source)
+        # YAML data is already in display format, just add hexagram_id context
+        return self._format_for_display(hex_data, source_id=source)
 
     def resolve_multiple(self,
                         hexagram_id: str,
@@ -208,37 +199,40 @@ class HexagramResolver:
         return merged
 
     def _format_for_display(self,
-                           source_data: Dict[str, Any],
                            hex_data: Dict[str, Any],
                            source_id: str = None) -> Dict[str, Any]:
         """
         Format hexagram data for display, adding contextual information.
 
         Args:
-            source_data: Resolved source data
-            hex_data: Full hexagram data (for context like number, trigrams)
-            source_id: Override source_id (if None, uses source_data's source_id)
+            hex_data: Hexagram data from YAML (already flattened structure)
+            source_id: Source identifier
 
         Returns:
             dict: Formatted data with context
         """
-        if source_id is None:
-            source_id = source_data.get('source_id', 'canonical')
+        # YAML data already has the right structure, just add hexagram_id
+        # and ensure source_id is set
+        result = hex_data.copy()
 
-        return {
-            'hexagram_id': hex_data['hexagram_id'],
-            'number': hex_data['number'],
-            'binary': hex_data['binary'],
-            'trigrams': hex_data['trigrams'],
-            'name': source_data.get('name', ''),
-            'english_name': source_data.get('english_name', ''),
-            'title': source_data.get('title', ''),
-            'judgment': source_data.get('judgment', ''),
-            'image': source_data.get('image', ''),
-            'lines': source_data.get('lines', {}),
-            'metadata': source_data.get('metadata', {}),
-            'source_id': source_id
-        }
+        # Generate hexagram_id from metadata if not present
+        if 'hexagram_id' not in result:
+            hexagram_num = result['metadata']['hexagram']
+            result['hexagram_id'] = f"hexagram_{hexagram_num:02d}"
+
+        # Add number field at top level if not present (from metadata)
+        if 'number' not in result:
+            result['number'] = result['metadata']['hexagram']
+
+        # Add binary at top level if not present (from metadata)
+        if 'binary' not in result:
+            result['binary'] = result['metadata']['binary']
+
+        # Set source_id
+        if source_id:
+            result['source_id'] = source_id
+
+        return result
 
     def validate_source_completeness(self, hexagram_id: str, source_id: str) -> Dict[str, bool]:
         """
