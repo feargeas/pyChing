@@ -150,16 +150,23 @@ def extract_lines(hex_lines: list[str]) -> Dict[str, Dict[str, str]]:
     for i in range(lines_start, len(hex_lines)):
         line = hex_lines[i].strip()
 
+        # Skip markdown navigation artifacts
+        if line in ['[index](#index)', ''] or re.match(r'^\[\]\{#\d+\}', line):
+            continue
+
         # Check if this is a new line marker
         matched_new_line = False
         for pattern, line_num in line_patterns:
             if re.match(pattern, line):
                 # Save previous line if any
                 if current_line_num is not None:
+                    text = '\n'.join(current_text[1:]).strip()
+                    # Clean markdown artifacts from text
+                    text = clean_markdown_artifacts(text)
                     line_texts[str(current_line_num)] = {
                         'position': get_position_name(current_line_num),
                         'type': 'nine' if current_text[0].startswith('Nine') else 'six',
-                        'text': '\n'.join(current_text[1:]).strip()
+                        'text': text
                     }
 
                 # Start new line
@@ -175,13 +182,27 @@ def extract_lines(hex_lines: list[str]) -> Dict[str, Dict[str, str]]:
 
     # Save last line
     if current_line_num is not None:
+        text = '\n'.join(current_text[1:]).strip()
+        # Clean markdown artifacts from text
+        text = clean_markdown_artifacts(text)
         line_texts[str(current_line_num)] = {
             'position': get_position_name(current_line_num),
             'type': 'nine' if current_text[0].startswith('Nine') else 'six',
-            'text': '\n'.join(current_text[1:]).strip()
+            'text': text
         }
 
     return line_texts
+
+
+def clean_markdown_artifacts(text: str) -> str:
+    """Remove markdown navigation artifacts from text."""
+    # Remove [index](#index) links
+    text = re.sub(r'\[index\]\(#index\)', '', text)
+    # Remove empty anchor tags like []{#2}
+    text = re.sub(r'\[\]\{#\d+\}', '', text)
+    # Clean up excessive whitespace
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    return text.strip()
 
 
 def get_position_name(line_num: int) -> str:
