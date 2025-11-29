@@ -28,7 +28,7 @@ class HexagramDataLoader:
         Args:
             data_dir: Path to data directory. If None, uses default
                      (project_root/data)
-            source: Default source to load from (default: 'legge')
+            source: Default/canonical source to use (default: 'legge')
         """
         if data_dir is None:
             # Default to data/ directory relative to project root
@@ -37,7 +37,7 @@ class HexagramDataLoader:
 
         self.data_dir = Path(data_dir)
         self.source = source
-        self.interpretations_dir = self.data_dir / 'interpretations' / source
+        self.interpretations_dir = self.data_dir / 'interpretations'
         self.mappings_path = self.data_dir / 'mappings.json'
         self.sources_path = self.data_dir / 'sources_metadata.json'
 
@@ -48,60 +48,100 @@ class HexagramDataLoader:
 
     def load_hexagram(self, hexagram_id: str) -> Dict[str, Any]:
         """
-        Load a hexagram by ID.
+        Load a hexagram by ID from all available sources.
 
         Args:
             hexagram_id: Hexagram identifier (e.g., "hexagram_01")
 
         Returns:
-            dict: Complete hexagram data from YAML
+            dict: Complete hexagram data with canonical and all available sources
 
         Raises:
-            FileNotFoundError: If hexagram file doesn't exist
+            FileNotFoundError: If hexagram file doesn't exist in any source
             yaml.YAMLError: If file contains invalid YAML
         """
         # Check cache first
         if hexagram_id in self._hexagram_cache:
             return self._hexagram_cache[hexagram_id]
 
-        # Load from YAML file
-        hex_file = self.interpretations_dir / f"{hexagram_id}.yaml"
+        # Load canonical source (default)
+        canonical_file = self.interpretations_dir / self.source / f"{hexagram_id}.yaml"
 
-        if not hex_file.exists():
+        if not canonical_file.exists():
             raise FileNotFoundError(
-                f"Hexagram file not found: {hex_file}. "
+                f"Hexagram file not found: {canonical_file}. "
                 f"Expected hexagram_id format: 'hexagram_NN' where NN is 01-64"
             )
 
-        with open(hex_file, 'r', encoding='utf-8') as f:
-            yaml_data = yaml.safe_load(f)
+        with open(canonical_file, 'r', encoding='utf-8') as f:
+            canonical_yaml = yaml.safe_load(f)
 
-        # Transform YAML structure to match old JSON structure for backward compatibility
-        # YAML is flattened, but existing code expects nested 'canonical' section
+        # Build base structure from canonical source
         data = {
             'hexagram_id': hexagram_id,
-            'number': yaml_data['metadata']['hexagram'],
-            'king_wen_sequence': yaml_data['metadata']['king_wen_sequence'],
-            'fu_xi_sequence': yaml_data['metadata']['fu_xi_sequence'],
-            'binary': yaml_data['metadata']['binary'],
-            'trigrams': yaml_data['trigrams'],
+            'number': canonical_yaml['metadata']['hexagram'],
+            'king_wen_sequence': canonical_yaml['metadata']['king_wen_sequence'],
+            'fu_xi_sequence': canonical_yaml['metadata']['fu_xi_sequence'],
+            'binary': canonical_yaml['metadata']['binary'],
+            'trigrams': canonical_yaml['trigrams'],
             'canonical': {
-                'source_id': yaml_data['metadata']['source'],
-                'name': yaml_data['name'],
-                'english_name': yaml_data['english_name'],
-                'title': yaml_data['title'],
-                'judgment': yaml_data['judgment'],
-                'image': yaml_data['image'],
-                'lines': yaml_data['lines'],
+                'source_id': canonical_yaml['metadata']['source'],
+                'name': canonical_yaml['name'],
+                'english_name': canonical_yaml['english_name'],
+                'title': canonical_yaml['title'],
+                'judgment': canonical_yaml['judgment'],
+                'image': canonical_yaml['image'],
+                'lines': canonical_yaml['lines'],
                 'metadata': {
-                    'translator': yaml_data['metadata']['translator'],
-                    'year': yaml_data['metadata']['year'],
-                    'language': yaml_data['metadata']['language'],
-                    'verified': yaml_data['metadata']['verified']
+                    'translator': canonical_yaml['metadata']['translator'],
+                    'year': canonical_yaml['metadata']['year'],
+                    'language': canonical_yaml['metadata']['language'],
+                    'verified': canonical_yaml['metadata']['verified']
                 }
             },
-            'sources': {}  # Placeholder for future multi-source support
+            'sources': {}
         }
+
+        # Load all other available sources
+        if self.interpretations_dir.exists():
+            for source_dir in self.interpretations_dir.iterdir():
+                if not source_dir.is_dir():
+                    continue
+
+                source_name = source_dir.name
+
+                # Skip canonical source (already loaded)
+                if source_name == self.source:
+                    continue
+
+                source_file = source_dir / f"{hexagram_id}.yaml"
+                if source_file.exists():
+                    try:
+                        with open(source_file, 'r', encoding='utf-8') as f:
+                            source_yaml = yaml.safe_load(f)
+
+                        # Map source directory name to source_id from metadata
+                        source_id = source_yaml['metadata']['source']
+
+                        data['sources'][source_id] = {
+                            'source_id': source_id,
+                            'name': source_yaml['name'],
+                            'english_name': source_yaml['english_name'],
+                            'title': source_yaml['title'],
+                            'judgment': source_yaml['judgment'],
+                            'image': source_yaml['image'],
+                            'lines': source_yaml['lines'],
+                            'metadata': {
+                                'translator': source_yaml['metadata']['translator'],
+                                'year': source_yaml['metadata']['year'],
+                                'language': source_yaml['metadata']['language'],
+                                'verified': source_yaml['metadata']['verified']
+                            }
+                        }
+                    except (yaml.YAMLError, KeyError) as e:
+                        # Skip malformed source files
+                        print(f"Warning: Could not load source {source_name} for {hexagram_id}: {e}")
+                        continue
 
         # Cache and return
         self._hexagram_cache[hexagram_id] = data
