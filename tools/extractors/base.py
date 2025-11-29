@@ -14,6 +14,22 @@ from dataclasses import dataclass
 import yaml
 
 
+# Custom YAML representer to use literal block scalars for multi-line strings
+class LiteralString(str):
+    """String that should be dumped as literal block scalar."""
+    pass
+
+
+def literal_string_representer(dumper, data):
+    """Represent strings with newlines as literal block scalars."""
+    if '\n' in data:
+        return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
+    return dumper.represent_scalar('tag:yaml.org,2002:str', data)
+
+
+yaml.add_representer(LiteralString, literal_string_representer)
+
+
 @dataclass
 class SourceMetadata:
     """Metadata for an I Ching source."""
@@ -118,6 +134,15 @@ class BaseExtractor(ABC):
         loader = HexagramDataLoader(source='legge')
         ref_data = loader.get_hexagram_by_number(hex_data.hexagram_number)
 
+        # Wrap multi-line strings in LiteralString for proper YAML formatting
+        lines_formatted = {}
+        for line_num, line_data in hex_data.lines.items():
+            lines_formatted[line_num] = {
+                'position': line_data['position'],
+                'type': line_data['type'],
+                'text': LiteralString(line_data['text'])
+            }
+
         result = {
             'metadata': {
                 'hexagram': hex_data.hexagram_number,
@@ -134,17 +159,19 @@ class BaseExtractor(ABC):
             'english_name': hex_data.english_name,
             'title': f"{hex_data.hexagram_number}. {hex_data.chinese_name} / {hex_data.english_name}",
             'trigrams': ref_data['trigrams'],
-            'judgment': hex_data.judgment,
-            'image': hex_data.image,
-            'lines': hex_data.lines
+            'judgment': LiteralString(hex_data.judgment),
+            'image': LiteralString(hex_data.image),
+            'lines': lines_formatted
         }
 
         # Add optional fields
         if hex_data.all_lines_changing:
-            result['all_lines_changing'] = hex_data.all_lines_changing
+            result['all_lines_changing'] = LiteralString(hex_data.all_lines_changing)
 
         if hex_data.additional_sections:
-            result['additional_sections'] = hex_data.additional_sections
+            result['additional_sections'] = {
+                k: LiteralString(v) for k, v in hex_data.additional_sections.items()
+            }
 
         return result
 
@@ -181,8 +208,7 @@ class BaseExtractor(ABC):
             yaml.dump(yaml_data, f,
                      allow_unicode=True,
                      default_flow_style=False,
-                     sort_keys=False,
-                     width=80)
+                     sort_keys=False)
 
         return True
 

@@ -145,6 +145,9 @@ class WilhelmMarkdownExtractor(BaseExtractor):
         text = '\n'.join(text_lines).strip()
         text = re.sub(r'\n{3,}', '\n\n', text)
 
+        # Clean markdown artifacts and backslashes
+        text = self._clean_markdown(text)
+
         return text
 
     def _extract_lines(self, hex_lines: list[str]) -> tuple[Dict[str, Dict[str, str]], Optional[str]]:
@@ -236,10 +239,20 @@ class WilhelmMarkdownExtractor(BaseExtractor):
         return line_texts, all_lines_changing
 
     def _clean_markdown(self, text: str) -> str:
-        """Remove markdown artifacts."""
+        """Remove markdown artifacts and inappropriate backslashes."""
         text = re.sub(r'\[index\]\(#index\)', '', text)
         text = re.sub(r'\[\]\{#\d+\}', '', text)
         text = re.sub(r'\[(\d+)\]\(#\d+\)', r'\1', text)
+
+        # Remove trailing backslashes (markdown line continuations)
+        text = re.sub(r'\\\n', '\n', text)
+
+        # Remove backslash-escaped brackets and quotes
+        text = text.replace('\\[', '[')
+        text = text.replace('\\]', ']')
+        text = text.replace("\\'", "'")
+        text = text.replace('\\"', '"')
+
         text = re.sub(r'\n{3,}', '\n\n', text)
         return text.strip()
 

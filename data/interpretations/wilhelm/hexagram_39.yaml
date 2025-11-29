@@ -14,11 +14,11 @@ title: 39. Chien / Obstruction
 trigrams:
   upper: kan
   lower: gen
-judgment: 'OBSTRUCTION. The southwest furthers.\
+judgment: 'OBSTRUCTION. The southwest furthers.
 
-  The northeast does not further.\
+  The northeast does not further.
 
-  It furthers one to see the great man.\
+  It furthers one to see the great man.
 
   Perseverance brings good fortune.
 
@@ -44,11 +44,11 @@ judgment: 'OBSTRUCTION. The southwest furthers.\
   end. An obstruction that lasts only for a time is useful for
 
   self-development. This is the value of adversity.'
-image: 'Water on the mountain:\
+image: 'Water on the mountain:
 
-  The image of OBSTRUCTION.\
+  The image of OBSTRUCTION.
 
-  Thus the superior man turns his attention to himself\
+  Thus the superior man turns his attention to himself
 
   And molds his character.
 
@@ -66,7 +66,7 @@ lines:
   '1':
     position: bottom
     type: six
-    text: 'Going leads to obstructions,\
+    text: 'Going leads to obstructions,
 
       Coming meets with praise.
 
@@ -82,7 +82,7 @@ lines:
   '2':
     position: second
     type: six
-    text: 'The King\''s servant is beset by obstruction upon obstruction,\
+    text: 'The King''s servant is beset by obstruction upon obstruction,
 
       But it is not his own fault.
 
@@ -104,7 +104,7 @@ lines:
   '3':
     position: third
     type: nine
-    text: 'Going leads to obstructions;\
+    text: 'Going leads to obstructions;
 
       Hence he comes back.
 
@@ -122,7 +122,7 @@ lines:
   '4':
     position: fourth
     type: six
-    text: 'Going leads to obstructions,\
+    text: 'Going leads to obstructions,
 
       Coming leads to union.
 
@@ -146,7 +146,7 @@ lines:
   '5':
     position: fifth
     type: nine
-    text: 'In the midst of the greatest obstructions,\
+    text: 'In the midst of the greatest obstructions,
 
       Friends come.
 
@@ -164,9 +164,9 @@ lines:
   '6':
     position: topmost
     type: six
-    text: 'Going leads to obstructions,\
+    text: 'Going leads to obstructions,
 
-      Coming leads to great good fortune.\
+      Coming leads to great good fortune.
 
       It furthers one to see the great man.
 
