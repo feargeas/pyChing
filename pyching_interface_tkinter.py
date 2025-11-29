@@ -432,8 +432,11 @@ class WindowMain:
         dialog = DialogGetHexNumber(self.master, colors=self.colors)
 
         if dialog.result:
+            # Get currently selected source
+            source = self.sourceVar.get()
+
             # Load the hexagram using the from_number class method
-            hexagram = Hexagram.from_number(dialog.result)
+            hexagram = Hexagram.from_number(dialog.result, source=source)
 
             # Display using modern HexagramInfoWindow (no changing lines for browsing)
             HexagramInfoWindow(self.master, hexagram, changing_lines=[], colors=self.colors)
@@ -1103,8 +1106,14 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         if not hasattr(self, 'reading') or not self.reading:
             return
 
+        # Get currently selected source
+        source = self.sourceVar.get()
+
+        # Reload hexagram with current source selection
+        hex_data = Hexagram.from_number(self.reading.primary.number, source=source)
+
         # Open sophisticated info window with changing lines
-        window = HexagramInfoWindow(self.master, self.reading.primary,
+        window = HexagramInfoWindow(self.master, hex_data,
                                     changing_lines=self.reading.changing_lines,
                                     colors=self.colors)
 
@@ -1113,8 +1122,14 @@ EWNBU5A6lhkJgkUJkxRxVXDIssrLkCYKAAA7"""
         if not hasattr(self, 'reading') or not self.reading or not self.reading.relating:
             return
 
+        # Get currently selected source
+        source = self.sourceVar.get()
+
+        # Reload relating hexagram with current source selection
+        hex_data = Hexagram.from_number(self.reading.relating.number, source=source)
+
         # For hex2, no changing lines (they've already transformed)
-        window = HexagramInfoWindow(self.master, self.reading.relating,
+        window = HexagramInfoWindow(self.master, hex_data,
                                     changing_lines=[],
                                     colors=self.colors)
 
